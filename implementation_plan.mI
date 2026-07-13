@@ -1,0 +1,34 @@
+# Plan d'Ajout de la Galerie
+
+L'objectif est d'ajouter un nouvel onglet "Galerie" dans la barre de navigation et de créer une page `galerie.html` pour présenter les photos et vidéos de l'académie.
+
+## Révision Utilisateur Requise
+
+> [!NOTE]
+> J'utiliserai des images générées et des placeholders pour les vidéos pour l'instant, car je n'ai pas accès à vos fichiers multimédias réels.
+
+## Changements Proposés
+
+### [Navigation]
+#### [MODIFIER] Tous les fichiers HTML
+- Ajouter `<li><a href="galerie.html">Galerie</a></li>` dans la `nav-menu`.
+- Fichiers concernés : `index.html`, `programmes.html`, `equipes.html`, `entrainements.html`, `contact.html`.
+
+### [HTML]
+#### [NOUVEAU] [galerie.html](file:///c:/Users/Ibrahima%20Sory%20Bald%C3%A9/Documents/Academie/html/galerie.html)
+- Créer une nouvelle page avec la structure commune (navbar, footer).
+- Ajouter une section "Galerie" avec deux sous-sections : "Photos" et "Vidéos".
+- Implémenter une grille responsive pour les photos et une section pour les vidéos.
+
+### [CSS]
+#### [MODIFIER] [styles.css](file:///c:/Users/Ibrahima%20Sory%20Bald%C3%A9/Documents/Academie/css/styles.css)
+- Ajouter des styles pour la grille de la galerie et les conteneurs vidéo.
+
+## Plan de Vérification
+
+### Tests Automatisés
+- Vérifier que le lien "Galerie" est présent sur toutes les pages.
+- Vérifier que la page `galerie.html` s'affiche correctement avec ses sections.
+
+### Vérification Manuelle
+- S'assurer que le lien "Galerie" est mis en évidence lorsqu'on est sur la page correspondante.

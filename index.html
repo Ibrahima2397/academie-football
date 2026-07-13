@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie de Football Elite - Formation Professionnelle</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li class="dropdown">
+                    <a href="html/programmes.html">Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="html/equipes.html">Équipes</a></li>
+                        <li><a href="html/entrainements.html">Entraînements</a></li>
+                    </ul>
+                </li>
+                <li><a href="html/galerie.html">Galerie</a></li>
+                <li><a href="html/contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" placeholder="Recherche...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="auth-links">
+                    <a href="html/connexion.html" class="auth-btn login">Connexion</a>
+                    <a href="html/inscription.html" class="auth-btn signup">Inscription</a>
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h2>Bienvenue à l'Académie Elite Football</h2>
+            <p>Développer les talents de demain depuis 2023</p>
+            <button class="cta-button" onclick="window.location.href='html/contact.html'">
+                Rejoignez-nous
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+            <div class="social-links">
+                <a href="https://facebook.com" class="social-icon facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" class="social-icon instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com" class="social-icon twitter" target="_blank" title="X / Twitter"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

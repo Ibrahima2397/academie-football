@@ -1,0 +1,27 @@
+# Plan d'Ajout des Photos des Entraîneurs
+
+L'objectif est d'ajouter une photo de profil pour chaque entraîneur dans les cartes de la page "Nos Équipes".
+
+## Révision Utilisateur Requise
+
+> [!NOTE]
+> J'ai utilisé des placeholders (initiales) pour les photos pour le moment car je n'ai pas les fichiers images réels. Vous pourrez les remplacer par les vraies photos plus tard.
+
+## Changements Proposés
+
+### [HTML]
+#### [MODIFIER] [equipes.html](file:///c:/Users/Ibrahima%20Sory%20Bald%C3%A9/Documents/Academie/html/equipes.html)
+- Ajouter une balise `<img>` avec la classe `coach-photo` au début de chaque `equipe-card`.
+
+### [CSS]
+#### [MODIFIER] [styles.css](file:///c:/Users/Ibrahima%20Sory%20Bald%C3%A9/Documents/Academie/css/styles.css)
+- Ajouter des styles pour `.coach-photo` (forme circulaire, bordure, taille).
+- Mettre à jour `.equipe-card` pour centrer le contenu verticalement.
+
+## Plan de Vérification
+
+### Tests Automatisés
+- Vérifier que chaque carte d'équipe contient une image.
+
+### Vérification Manuelle
+- S'assurer que les photos sont bien circulaires et centrées dans les cartes.

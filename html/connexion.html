@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Académie de Football Elite</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <a href="../index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i> Retour à l'accueil
+    </a>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <img src="../images/logo.png" alt="Logo" class="auth-logo">
+            <h2>Connexion</h2>
+            <p>Heureux de vous revoir !</p>
+        </div>
+        
+        <form class="auth-form">
+            <div class="form-group">
+                <label for="email">Adresse Email</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="votre@email.com" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="auth-submit">Se connecter</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Pas encore de compte ? <a href="inscription.html">Créer un compte</a></p>
+            <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #e2e8f0;">
+            <a href="../index.html" class="back-link-bottom"><i class="fas fa-home"></i> Retour à l'accueil</a>
+        </div>
+    </div>
+</body>
+</html>
