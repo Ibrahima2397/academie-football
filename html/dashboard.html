@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Membre - Académie de Football Elite</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html">Accueil</a></li>
+                <li class="dropdown">
+                    <a href="programmes.html">Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="equipes.html">Équipes</a></li>
+                        <li><a href="entrainements.html">Entraînements</a></li>
+                    </ul>
+                </li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="auth-links" id="navbarAuthLinks">
+                    <!-- Rempli par le script -->
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar" id="sidebarAvatar">👤</div>
+                <h3 id="sidebarUserName">Utilisateur</h3>
+                <span class="role-badge" id="sidebarUserRole">Rôle</span>
+            </div>
+            <nav class="sidebar-nav">
+                <!-- Onglets Joueur -->
+                <a href="#" class="nav-tab-link active" data-target="player-profile" id="tabPlayerProfile"><i class="fas fa-id-card"></i> Mon Profil</a>
+                <a href="#" class="nav-tab-link" data-target="player-status" id="tabPlayerStatus"><i class="fas fa-file-signature"></i> Mon Inscription</a>
+                <a href="#" class="nav-tab-link" data-target="player-schedule" id="tabPlayerSchedule"><i class="fas fa-calendar-alt"></i> Mon Planning</a>
+                
+                <!-- Onglets Coach -->
+                <a href="#" class="nav-tab-link" data-target="coach-profile" id="tabCoachProfile"><i class="fas fa-user-tie"></i> Profil Coach</a>
+                <a href="#" class="nav-tab-link" data-target="coach-roster" id="tabCoachRoster"><i class="fas fa-users"></i> Mes Joueurs</a>
+                
+                <!-- Onglets Admin -->
+                <a href="#" class="nav-tab-link" data-target="admin-inscriptions" id="tabAdminInscriptions"><i class="fas fa-user-check"></i> Inscriptions</a>
+                <a href="#" class="nav-tab-link" data-target="admin-messages" id="tabAdminMessages"><i class="fas fa-envelope-open-text"></i> Messages</a>
+                <a href="#" class="nav-tab-link" data-target="admin-management" id="tabAdminManagement"><i class="fas fa-cogs"></i> Gestion Club</a>
+
+                <hr class="sidebar-divider">
+                <a href="#" class="logout-link" id="sidebarLogout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-content">
+            <!-- Loader -->
+            <div class="dashboard-loader" id="dashboardLoader">
+                <div class="spinner"></div>
+                <p>Chargement de vos informations...</p>
+            </div>
+
+            <!-- TABS CONTENT -->
+
+            <!-- 1. Profil Joueur -->
+            <section class="dashboard-section" id="player-profile">
+                <div class="section-title">
+                    <h2><i class="fas fa-user-edit"></i> Compléter mon Profil Joueur</h2>
+                    <p>Ces informations sont obligatoires pour valider votre dossier d'inscription.</p>
+                </div>
+                <div class="dashboard-card">
+                    <form id="playerProfileForm" class="dashboard-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="playerFirstname">Prénom <span class="required">*</span></label>
+                                <input type="text" id="playerFirstname" required placeholder="Ex. Jean">
+                            </div>
+                            <div class="form-group">
+                                <label for="playerLastname">Nom de famille <span class="required">*</span></label>
+                                <input type="text" id="playerLastname" required placeholder="Ex. Dupont">
+                            </div>
+                            <div class="form-group">
+                                <label for="playerBirthDate">Date de naissance <span class="required">*</span></label>
+                                <input type="date" id="playerBirthDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="playerPosition">Poste préféré <span class="required">*</span></label>
+                                <select id="playerPosition" required>
+                                    <option value="">Sélectionnez un poste</option>
+                                    <option value="Gardien">Gardien de but</option>
+                                    <option value="Défenseur">Défenseur</option>
+                                    <option value="Milieu">Milieu de terrain</option>
+                                    <option value="Attaquant">Attaquant</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="playerCategory">Programme / Catégorie souhaitée <span class="required">*</span></label>
+                                <select id="playerCategory" required>
+                                    <option value="">Sélectionnez une catégorie</option>
+                                    <!-- Options chargées dynamiquement -->
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;"><i class="fas fa-save"></i> Enregistrer mon profil</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 2. Statut Joueur -->
+            <section class="dashboard-section hidden" id="player-status">
+                <div class="section-title">
+                    <h2><i class="fas fa-file-alt"></i> Statut de mon Inscription</h2>
+                    <p>Suivez l'avancement de votre inscription à l'académie.</p>
+                </div>
+                <div class="dashboard-card status-card">
+                    <div class="status-container">
+                        <div class="status-icon-box" id="statusIconBox">⌛</div>
+                        <div class="status-details">
+                            <h3>Statut actuel : <span id="statusLabel" class="badge">En attente</span></h3>
+                            <p id="statusDesc">Votre profil a été enregistré. Un administrateur va étudier votre dossier prochainement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-card hidden" id="teamDetailsCard">
+                    <h3><i class="fas fa-shield-alt"></i> Mon Équipe</h3>
+                    <div class="team-details-grid">
+                        <div>
+                            <p><strong>Équipe :</strong> <span id="userTeamName">Non assigné</span></p>
+                            <p><strong>Catégorie de formation :</strong> <span id="userCategoryName">Non spécifiée</span></p>
+                        </div>
+                        <div>
+                            <p><strong>Cotisation Mensuelle :</strong> <span id="userCategoryPrice">0</span> €</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Planning Joueur -->
+            <section class="dashboard-section hidden" id="player-schedule">
+                <div class="section-title">
+                    <h2><i class="fas fa-calendar-week"></i> Mon Planning d'Entraînements</h2>
+                    <p>Retrouvez les jours et les horaires d'entraînement de votre catégorie.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="schedule-table-wrapper">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>Jour</th>
+                                    <th>Horaires</th>
+                                    <th>Lieu / Terrain</th>
+                                </tr>
+                            </thead>
+                            <tbody id="playerTrainingsBody">
+                                <tr>
+                                    <td colspan="3" class="text-center">Veuillez d'abord compléter votre profil ou attendre l'assignation de votre équipe.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Profil Coach -->
+            <section class="dashboard-section hidden" id="coach-profile">
+                <div class="section-title">
+                    <h2><i class="fas fa-user-tie"></i> Mon Profil d'Entraîneur</h2>
+                    <p>Complétez vos détails professionnels pour le site web et le suivi des joueurs.</p>
+                </div>
+                <div class="dashboard-card">
+                    <form id="coachProfileForm" class="dashboard-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="coachSpecialty">Spécialité <span class="required">*</span></label>
+                                <input type="text" id="coachSpecialty" placeholder="Ex. U14 / Technique tactique" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coachExperience">Années d'expérience <span class="required">*</span></label>
+                                <input type="number" id="coachExperience" min="0" placeholder="Ex. 5" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="coachBio">Biographie / Philosophie d'entraînement <span class="required">*</span></label>
+                                <textarea id="coachBio" rows="4" placeholder="Décrivez votre parcours et vos méthodes..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="margin-top: 1.5rem;"><i class="fas fa-save"></i> Enregistrer le profil</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 5. Roster Coach -->
+            <section class="dashboard-section hidden" id="coach-roster">
+                <div class="section-title">
+                    <h2><i class="fas fa-users"></i> Effectif de mon Équipe</h2>
+                    <p>Liste des joueurs sous votre direction pour cette saison.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Joueur</th>
+                                    <th>Date de Naissance</th>
+                                    <th>Poste</th>
+                                    <th>Email Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="coachRosterBody">
+                                <tr>
+                                    <td colspan="4" class="text-center">Aucun joueur assigné ou aucune équipe sous votre responsabilité pour le moment.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Admin Inscriptions -->
+            <section class="dashboard-section hidden" id="admin-inscriptions">
+                <div class="section-title">
+                    <h2><i class="fas fa-users-cog"></i> Gestion des Inscriptions</h2>
+                    <p>Validez les candidatures des joueurs et assignez-les aux équipes de l'académie.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Candidat</th>
+                                    <th>Poste / Naissance</th>
+                                    <th>Catégorie Demandée</th>
+                                    <th>Statut</th>
+                                    <th>Équipe Assignée</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminInscriptionsBody">
+                                <!-- Rempli dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Admin Messages -->
+            <section class="dashboard-section hidden" id="admin-messages">
+                <div class="section-title">
+                    <h2><i class="fas fa-envelope-open-text"></i> Messages de Contact</h2>
+                    <p>Gérez les demandes de contact reçues depuis le formulaire du site.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Expéditeur</th>
+                                    <th>Catégorie / Sujet</th>
+                                    <th>Message</th>
+                                    <th>Statut</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminMessagesBody">
+                                <!-- Rempli dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Admin Management (Équipes et entraînements) -->
+            <section class="dashboard-section hidden" id="admin-management">
+                <div class="section-title">
+                    <h2><i class="fas fa-tasks"></i> Administration du Club</h2>
+                    <p>Ajoutez de nouvelles équipes et planifiez les séances d'entraînement.</p>
+                </div>
+                
+                <div class="admin-grid-forms">
+                    <!-- Formulaire Équipe -->
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-plus-circle"></i> Créer une Équipe</h3>
+                        <form id="adminCreateTeamForm" class="dashboard-form">
+                            <div class="form-group">
+                                <label for="teamName">Nom de l'équipe <span class="required">*</span></label>
+                                <input type="text" id="teamName" required placeholder="Ex. U14 Élite">
+                            </div>
+                            <div class="form-group">
+                                <label for="teamCategory">Catégorie d'âge <span class="required">*</span></label>
+                                <select id="teamCategory" required>
+                                    <!-- Rempli dynamiquement -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="teamCoach">Entraîneur responsable <span class="required">*</span></label>
+                                <select id="teamCoach" required>
+                                    <!-- Rempli dynamiquement -->
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;"><i class="fas fa-shield-alt"></i> Créer l'équipe</button>
+                        </form>
+                    </div>
+
+                    <!-- Formulaire Entraînement -->
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-calendar-plus"></i> Ajouter un Entraînement</h3>
+                        <form id="adminCreateTrainingForm" class="dashboard-form">
+                            <div class="form-group">
+                                <label for="trainingTeam">Équipe <span class="required">*</span></label>
+                                <select id="trainingTeam" required>
+                                    <!-- Rempli dynamiquement -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="trainingDay">Jour de la semaine <span class="required">*</span></label>
+                                <select id="trainingDay" required>
+                                    <option value="Lundi">Lundi</option>
+                                    <option value="Mardi">Mardi</option>
+                                    <option value="Mercredi">Mercredi</option>
+                                    <option value="Jeudi">Jeudi</option>
+                                    <option value="Vendredi">Vendredi</option>
+                                    <option value="Samedi">Samedi</option>
+                                    <option value="Dimanche">Dimanche</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="trainingStart">Début <span class="required">*</span></label>
+                                    <input type="text" id="trainingStart" placeholder="17h30" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trainingEnd">Fin <span class="required">*</span></label>
+                                    <input type="text" id="trainingEnd" placeholder="19h00" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="trainingLocation">Lieu / Terrain <span class="required">*</span></label>
+                                <input type="text" id="trainingLocation" placeholder="Ex. Terrain Nord" required>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;"><i class="fas fa-clock"></i> Ajouter le créneau</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Alert helper & JS logic -->
+    <script src="../js/script.js"></script>
+    
+    <!-- Script spécifique pour la dynamique du Dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert('Veuillez vous connecter pour accéder à cette page.');
+                window.location.href = 'connexion.html';
+                return;
+            }
+
+            // Configurer les textes du menu de gauche
+            document.getElementById('sidebarUserName').textContent = user.fullname;
+            document.getElementById('sidebarUserRole').textContent = 
+                user.role === 'admin' ? 'Administrateur' : (user.role === 'coach' ? 'Entraîneur' : 'Joueur');
+            
+            // Masquer les onglets selon le rôle
+            configureTabs(user.role);
+
+            // Charger les catégories pour le formulaire joueur
+            await loadCategoriesSelects();
+
+            // Charger les profils et données selon le rôle
+            await fetchAndRenderDashboardData(user);
+
+            // Cacher le loader
+            document.getElementById('dashboardLoader').style.display = 'none';
+
+            // Configurer le commutateur d'onglets
+            const tabLinks = document.querySelectorAll('.nav-tab-link');
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Désactiver tous les onglets
+                    tabLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
+
+                    // Activer l'onglet cliqué
+                    this.classList.add('active');
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.remove('hidden');
+                });
+            });
+
+            // Gérer la déconnexion
+            document.getElementById('sidebarLogout').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                window.location.href = '../index.html';
+            });
+
+            // Soumission du profil joueur
+            document.getElementById('playerProfileForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const firstname = document.getElementById('playerFirstname').value;
+                const lastname = document.getElementById('playerLastname').value;
+                const birth_date = document.getElementById('playerBirthDate').value;
+                const position = document.getElementById('playerPosition').value;
+                const category_id = parseInt(document.getElementById('playerCategory').value);
+
+                try {
+                    const res = await fetch(`${API_URL}/profile`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-User-Id': user.id
+                        },
+                        body: JSON.stringify({ firstname, lastname, birth_date, position, category_id })
+                    });
+                    if (res.ok) {
+                        showAlert('Profil enregistré avec succès !', 'success');
+                        // Recharger les données
+                        await fetchAndRenderDashboardData(user);
+                    } else {
+                        const errData = await res.json();
+                        showAlert(errData.message || 'Erreur lors de la sauvegarde.', 'error');
+                    }
+                } catch (err) {
+                    showAlert('Erreur de connexion avec le serveur.', 'error');
+                }
+            });
+
+            // Soumission du profil coach
+            document.getElementById('coachProfileForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const specialty = document.getElementById('coachSpecialty').value;
+                const experience_years = parseInt(document.getElementById('coachExperience').value);
+                const bio = document.getElementById('coachBio').value;
+
+                try {
+                    const res = await fetch(`${API_URL}/profile`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-User-Id': user.id
+                        },
+                        body: JSON.stringify({ specialty, experience_years, bio })
+                    });
+                    if (res.ok) {
+                        showAlert('Profil entraîneur enregistré !', 'success');
+                        await fetchAndRenderDashboardData(user);
+                    } else {
+                        showAlert('Erreur de sauvegarde.', 'error');
+                    }
+                } catch (err) {
+                    showAlert('Erreur de connexion.', 'error');
+                }
+            });
+
+            // Admin: Création d'équipe
+            document.getElementById('adminCreateTeamForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('teamName').value;
+                const category_id = parseInt(document.getElementById('teamCategory').value);
+                const coach_id = parseInt(document.getElementById('teamCoach').value);
+
+                try {
+                    const res = await fetch(`${API_URL}/admin/teams`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-User-Id': user.id
+                        },
+                        body: JSON.stringify({ name, category_id, coach_id })
+                    });
+                    if (res.ok) {
+                        showAlert('Équipe créée avec succès !', 'success');
+                        this.reset();
+                        await loadAdminManagementSelects();
+                    } else {
+                        showAlert('Erreur de création.', 'error');
+                    }
+                } catch (err) {
+                    showAlert('Erreur serveur.', 'error');
+                }
+            });
+
+            // Admin: Création entraînement
+            document.getElementById('adminCreateTrainingForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const team_id = parseInt(document.getElementById('trainingTeam').value);
+                const day_of_week = document.getElementById('trainingDay').value;
+                const start_time = document.getElementById('trainingStart').value;
+                const end_time = document.getElementById('trainingEnd').value;
+                const location = document.getElementById('trainingLocation').value;
+
+                try {
+                    const res = await fetch(`${API_URL}/admin/trainings`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-User-Id': user.id
+                        },
+                        body: JSON.stringify({ team_id, day_of_week, start_time, end_time, location })
+                    });
+                    if (res.ok) {
+                        showAlert('Créneau d\'entraînement ajouté !', 'success');
+                        this.reset();
+                    } else {
+                        showAlert('Erreur de création.', 'error');
+                    }
+                } catch (err) {
+                    showAlert('Erreur serveur.', 'error');
+                }
+            });
+        });
+
+        // Configurer les onglets visibles en fonction du rôle
+        function configureTabs(role) {
+            // Cacher tout
+            document.querySelectorAll('.nav-tab-link').forEach(link => link.style.display = 'none');
+            
+            if (role === 'admin') {
+                document.getElementById('tabAdminInscriptions').style.display = 'block';
+                document.getElementById('tabAdminMessages').style.display = 'block';
+                document.getElementById('tabAdminManagement').style.display = 'block';
+                
+                // Activer par défaut le premier onglet admin
+                document.getElementById('tabAdminInscriptions').classList.add('active');
+                document.getElementById('admin-inscriptions').classList.remove('hidden');
+                document.getElementById('player-profile').classList.add('hidden');
+            } else if (role === 'coach') {
+                document.getElementById('tabCoachProfile').style.display = 'block';
+                document.getElementById('tabCoachRoster').style.display = 'block';
+                
+                document.getElementById('tabCoachProfile').classList.add('active');
+                document.getElementById('coach-profile').classList.remove('hidden');
+                document.getElementById('player-profile').classList.add('hidden');
+            } else {
+                // player / parent
+                document.getElementById('tabPlayerProfile').style.display = 'block';
+                document.getElementById('tabPlayerStatus').style.display = 'block';
+                document.getElementById('tabPlayerSchedule').style.display = 'block';
+            }
+        }
+
+        // Charger les dropdowns des catégories
+        async function loadCategoriesSelects() {
+            try {
+                const res = await fetch(`${API_URL}/categories`);
+                if (res.ok) {
+                    const categories = await res.json();
+                    const selects = [document.getElementById('playerCategory'), document.getElementById('teamCategory')];
+                    selects.forEach(select => {
+                        if (select) {
+                            select.innerHTML = '<option value="">Sélectionnez une option</option>';
+                            categories.forEach(c => {
+                                select.innerHTML += `<option value="${c.id}">${c.name} (${c.price_per_month}€/mois)</option>`;
+                            });
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error('Erreur chargement catégories', err);
+            }
+        }
+
+        // Charger les données de l'espace membre
+        async function fetchAndRenderDashboardData(user) {
+            try {
+                const res = await fetch(`${API_URL}/profile`, {
+                    headers: { 'X-User-Id': user.id }
+                });
+                
+                if (!res.ok) return;
+                const data = await res.json();
+
+                if (user.role === 'coach') {
+                    // Render profil coach
+                    if (data.coach) {
+                        document.getElementById('coachSpecialty').value = data.coach.specialty || '';
+                        document.getElementById('coachExperience').value = data.coach.experience_years || 0;
+                        document.getElementById('coachBio').value = data.coach.bio || '';
+                    }
+                    // Roster du coach
+                    await loadCoachRoster(user.id);
+                } else if (user.role === 'admin') {
+                    // Charger les listes de l'admin
+                    await loadAdminInscriptions(user.id);
+                    await loadAdminMessages(user.id);
+                    await loadAdminManagementSelects();
+                } else {
+                    // Render profil joueur
+                    if (data.player) {
+                        document.getElementById('playerFirstname').value = data.player.firstname;
+                        document.getElementById('playerLastname').value = data.player.lastname;
+                        document.getElementById('playerBirthDate').value = data.player.birth_date;
+                        document.getElementById('playerPosition').value = data.player.position;
+                        document.getElementById('playerCategory').value = data.player.category_id;
+                        
+                        // Afficher le statut de l'inscription
+                        const status = data.player.inscription_status || 'en_attente';
+                        const label = document.getElementById('statusLabel');
+                        label.textContent = formatStatus(status);
+                        label.className = `badge badge-${status}`;
+                        
+                        const desc = document.getElementById('statusDesc');
+                        if (status === 'en_attente') {
+                            desc.textContent = "Votre dossier est en cours d'examen par nos entraîneurs.";
+                        } else if (status === 'approuvé') {
+                            desc.textContent = "Félicitations ! Votre inscription a été approuvée. Veuillez procéder au paiement pour finaliser.";
+                        } else if (status === 'payé') {
+                            desc.textContent = "Votre inscription est complète et votre cotisation est à jour. Bienvenue à l'académie !";
+                        } else {
+                            desc.textContent = "Votre inscription a été annulée ou rejetée. Contactez le secrétariat.";
+                        }
+
+                        // Afficher l'équipe
+                        document.getElementById('teamDetailsCard').classList.remove('hidden');
+                        document.getElementById('userTeamName').textContent = data.player.team_name || 'Non assigné encore';
+                        document.getElementById('userCategoryName').textContent = data.player.category_name || 'Non spécifiée';
+                        document.getElementById('userCategoryPrice').textContent = data.player.category_id === 1 ? 50 : (data.player.category_id === 2 ? 75 : 120);
+
+                        // Charger l'emploi du temps
+                        await loadPlayerTrainings(data.player.team_id);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function formatStatus(status) {
+            if (status === 'en_attente') return 'En attente';
+            if (status === 'approuvé') return 'Approuvé';
+            if (status === 'payé') return 'Payé';
+            return 'Annulé';
+        }
+
+        // Roster coach
+        async function loadCoachRoster(userId) {
+            try {
+                const res = await fetch(`${API_URL}/coach/roster`, {
+                    headers: { 'X-User-Id': userId }
+                });
+                if (res.ok) {
+                    const players = await res.json();
+                    const body = document.getElementById('coachRosterBody');
+                    if (players.length > 0) {
+                        body.innerHTML = '';
+                        players.forEach(p => {
+                            body.innerHTML += `
+                                <tr>
+                                    <td><strong>${p.firstname} ${p.lastname}</strong></td>
+                                    <td>${p.birth_date}</td>
+                                    <td><span class="position-tag">${p.position}</span></td>
+                                    <td><a href="mailto:${p.email}">${p.email}</a></td>
+                                </tr>
+                            `;
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Entraînements du joueur
+        async function loadPlayerTrainings(teamId) {
+            const body = document.getElementById('playerTrainingsBody');
+            if (!teamId) {
+                body.innerHTML = '<tr><td colspan="3" class="text-center">Votre équipe n\'a pas encore été assignée. Contactez l\'administrateur.</td></tr>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/trainings`);
+                if (res.ok) {
+                    const trainings = await res.json();
+                    // Filtrer ceux de l'équipe du joueur
+                    const filtered = trainings.filter(t => t.team_name && t.team_name === document.getElementById('userTeamName').textContent);
+                    
+                    if (filtered.length > 0) {
+                        body.innerHTML = '';
+                        filtered.forEach(tr => {
+                            body.innerHTML += `
+                                <tr>
+                                    <td><strong>${tr.day_of_week}</strong></td>
+                                    <td>${tr.start_time} - ${tr.end_time}</td>
+                                    <td>📍 ${tr.location}</td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        body.innerHTML = '<tr><td colspan="3" class="text-center">Aucun créneau d\'entraînement programmé pour votre équipe.</td></tr>';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Admin: Charger inscriptions
+        async function loadAdminInscriptions(adminId) {
+            try {
+                const teamsRes = await fetch(`${API_URL}/teams`);
+                const teams = teamsRes.ok ? await teamsRes.json() : [];
+
+                const res = await fetch(`${API_URL}/admin/players`, {
+                    headers: { 'X-User-Id': adminId }
+                });
+                if (res.ok) {
+                    const players = await res.json();
+                    const body = document.getElementById('adminInscriptionsBody');
+                    if (players.length > 0) {
+                        body.innerHTML = '';
+                        players.forEach(p => {
+                            let teamOptions = '<option value="none">Aucune</option>';
+                            teams.forEach(t => {
+                                teamOptions += `<option value="${t.id}" ${p.team_id === t.id ? 'selected' : ''}>${t.name}</option>`;
+                            });
+
+                            body.innerHTML += `
+                                <tr>
+                                    <td>
+                                        <strong>${p.firstname} ${p.lastname}</strong><br>
+                                        <small class="text-muted">${p.email}</small>
+                                    </td>
+                                    <td>
+                                        <span class="position-tag">${p.position}</span><br>
+                                        <small class="text-muted">${p.birth_date}</small>
+                                    </td>
+                                    <td>${p.category_name || 'Non spécifiée'}</td>
+                                    <td>
+                                        <select class="admin-select-status" data-id="${p.inscription_id}" onchange="updateInscriptionStatus(${p.inscription_id}, this.value)">
+                                            <option value="en_attente" ${p.inscription_status === 'en_attente' ? 'selected' : ''}>En attente</option>
+                                            <option value="approuvé" ${p.inscription_status === 'approuvé' ? 'selected' : ''}>Approuvé</option>
+                                            <option value="payé" ${p.inscription_status === 'payé' ? 'selected' : ''}>Payé</option>
+                                            <option value="annulé" ${p.inscription_status === 'annulé' ? 'selected' : ''}>Annulé</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="admin-select-team" onchange="assignPlayerTeam(${p.player_id}, this.value)">
+                                            ${teamOptions}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action btn-danger" onclick="updateInscriptionStatus(${p.inscription_id}, 'annulé')">Rejeter</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        body.innerHTML = '<tr><td colspan="6" class="text-center">Aucune inscription enregistrée.</td></tr>';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        window.updateInscriptionStatus = async function(inscriptionId, newStatus) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            try {
+                const res = await fetch(`${API_URL}/admin/inscriptions/${inscriptionId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-User-Id': user.id
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                if (res.ok) {
+                    showAlert('Statut mis à jour !', 'success');
+                    await fetchAndRenderDashboardData(user);
+                }
+            } catch (err) {
+                showAlert('Erreur réseau.', 'error');
+            }
+        };
+
+        window.assignPlayerTeam = async function(playerId, teamId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            try {
+                const res = await fetch(`${API_URL}/admin/players/${playerId}/team`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-User-Id': user.id
+                    },
+                    body: JSON.stringify({ team_id: teamId })
+                });
+                if (res.ok) {
+                    showAlert('Joueur assigné avec succès !', 'success');
+                    await fetchAndRenderDashboardData(user);
+                }
+            } catch (err) {
+                showAlert('Erreur.', 'error');
+            }
+        };
+
+        async function loadAdminMessages(adminId) {
+            try {
+                const res = await fetch(`${API_URL}/admin/contacts`, {
+                    headers: { 'X-User-Id': adminId }
+                });
+                if (res.ok) {
+                    const messages = await res.json();
+                    const body = document.getElementById('adminMessagesBody');
+                    if (messages.length > 0) {
+                        body.innerHTML = '';
+                        messages.forEach(m => {
+                            const date = new Date(m.created_at).toLocaleDateString('fr-FR', {
+                                hour: '2-digit', minute: '2-digit'
+                            });
+                            body.innerHTML += `
+                                <tr>
+                                    <td><small>${date}</small></td>
+                                    <td>
+                                        <strong>${m.name}</strong><br>
+                                        <small class="text-muted">${m.email}</small><br>
+                                        <small class="text-muted">${m.phone || ''}</small>
+                                    </td>
+                                    <td><span class="subject-tag">${m.category || 'Général'}</span></td>
+                                    <td><div class="message-text">${m.message}</div></td>
+                                    <td><span class="badge badge-msg-${m.status}">${m.status === 'nouveau' ? 'Nouveau' : 'Traité'}</span></td>
+                                    <td>
+                                        ${m.status === 'nouveau' ? `<button class="btn-action btn-success" onclick="treatMessage(${m.id})">Traiter</button>` : '✔️'}
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        body.innerHTML = '<tr><td colspan="6" class="text-center">Aucun message reçu.</td></tr>';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        window.treatMessage = async function(msgId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            try {
+                const res = await fetch(`${API_URL}/admin/contacts/${msgId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-User-Id': user.id
+                    },
+                    body: JSON.stringify({ status: 'traite' })
+                });
+                if (res.ok) {
+                    showAlert('Message marqué comme traité.', 'success');
+                    await fetchAndRenderDashboardData(user);
+                }
+            } catch (err) {
+                showAlert('Erreur.', 'error');
+            }
+        };
+
+        async function loadAdminManagementSelects() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            try {
+                const coachesRes = await fetch(`${API_URL}/admin/coaches`, {
+                    headers: { 'X-User-Id': user.id }
+                });
+                if (coachesRes.ok) {
+                    const coaches = await coachesRes.json();
+                    const coachSelect = document.getElementById('teamCoach');
+                    coachSelect.innerHTML = '<option value="">Sélectionnez un entraîneur</option>';
+                    coaches.forEach(c => {
+                        coachSelect.innerHTML += `<option value="${c.coach_id}">${c.fullname} (${c.specialty})</option>`;
+                    });
+                }
+
+                const teamsRes = await fetch(`${API_URL}/teams`);
+                if (teamsRes.ok) {
+                    const teams = await teamsRes.json();
+                    const teamSelect = document.getElementById('trainingTeam');
+                    teamSelect.innerHTML = '<option value="">Sélectionnez une équipe</option>';
+                    teams.forEach(t => {
+                        teamSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>

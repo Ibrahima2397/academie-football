@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique - Académie Elite Football</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Boutique</h2>
+                <p>Les articles disponibles issus du catalogue seront listés ci-dessous.</p>
+            </div>
+        </section>
+
+        <section id="produits" class="products">
+            <h3>Catalogue d'Équipements</h3>
+            <p>Guide complet des articles disponibles dans la boutique. Cliquez sur une catégorie pour afficher les produits correspondants.</p>
+
+            <div id="category-tabs" class="category-tabs">
+                <button class="category-btn active" data-category="equipements-joueur">Équipements du Joueur &amp; Tenues</button>
+                <button class="category-btn" data-category="gardien">Équipements Gardien de But</button>
+                <button class="category-btn" data-category="ballons">Ballons de Football</button>
+                <button class="category-btn" data-category="entrainement">Matériel d'Entraînement</button>
+                <button class="category-btn" data-category="terrain">Équipements de Terrain &amp; Match</button>
+                <button class="category-btn" data-category="accessoires">Accessoires &amp; Soins</button>
+            </div>
+
+            <div id="product-list" class="product-list grid">
+                <!-- 1. Équipements du Joueur & Tenues -->
+                <div class="product-card" data-category="equipements-joueur">
+                    <img src="https://via.placeholder.com/320x200?text=Crampons+FG" alt="Crampons FG">
+                    <h4>Crampons (FG/SG/AG/TF/IC)</h4>
+                    <p>Adaptés selon le terrain (FG, SG, AG, TF, IC)</p>
+                    <div class="price">Prix: 40 € – 280 €</div>
+                </div>
+                <div class="product-card" data-category="equipements-joueur">
+                    <img src="https://via.placeholder.com/320x200?text=Maillot+%26+Short" alt="Maillot & Short">
+                    <h4>Maillots &amp; Shorts</h4>
+                    <p>Tissu respirant (Dri-FIT / Aeroready)</p>
+                    <div class="price">Prix: 20 € – 140 €</div>
+                </div>
+                <div class="product-card" data-category="equipements-joueur">
+                    <img src="https://via.placeholder.com/320x200?text=Chaussettes" alt="Chaussettes de Football">
+                    <h4>Chaussettes de Football</h4>
+                    <p>Hautes, antidérapantes (Grip socks)</p>
+                    <div class="price">Prix: 8 € – 30 €</div>
+                </div>
+                <div class="product-card" data-category="equipements-joueur">
+                    <img src="https://via.placeholder.com/320x200?text=Prot%C3%A8ge-tibias" alt="Protège-tibias">
+                    <h4>Protège-tibias</h4>
+                    <p>Rigides, carbone, ou manchons avec mousse</p>
+                    <div class="price">Prix: 10 € – 60 €</div>
+                </div>
+                <div class="product-card" data-category="equipements-joueur">
+                    <img src="https://via.placeholder.com/320x200?text=Sous-v%C3%AAtements+Thermiques" alt="Sous-vêtements Thermiques">
+                    <h4>Sous-vêtements Thermiques</h4>
+                    <p>Maillots de compression et leggings</p>
+                    <div class="price">Prix: 25 € – 70 €</div>
+                </div>
+
+                <!-- 2. Équipements Gardien -->
+                <div class="product-card" data-category="gardien">
+                    <img src="https://via.placeholder.com/320x200?text=Gants+Gardien" alt="Gants de Gardien">
+                    <h4>Gants de Gardien</h4>
+                    <p>Mousses latex professionnelles, protection doigts</p>
+                    <div class="price">Prix: 25 € – 160 €</div>
+                </div>
+                <div class="product-card" data-category="gardien">
+                    <img src="https://via.placeholder.com/320x200?text=Tenues+Matelass%C3%A9es" alt="Maillots matelassés">
+                    <h4>Maillots &amp; Pantalons Matelassés</h4>
+                    <p>Renforcés pour amortir les plongeons</p>
+                    <div class="price">Prix: 35 € – 110 €</div>
+                </div>
+                <div class="product-card" data-category="gardien">
+                    <img src="https://via.placeholder.com/320x200?text=Spray+Grip" alt="Spray Grip">
+                    <h4>Nettoyant &amp; Spray Grip</h4>
+                    <p>Entretien et amélioration de l'adhérence</p>
+                    <div class="price">Prix: 10 € – 20 €</div>
+                </div>
+
+                <!-- 3. Ballons de Football -->
+                <div class="product-card" data-category="ballons">
+                    <img src="https://via.placeholder.com/320x200?text=Ballon+Match" alt="Ballon Match">
+                    <h4>Ballons Match Homologués</h4>
+                    <p>Certifiés FIFA Quality Pro, thermosoudés</p>
+                    <div class="price">Prix: 80 € – 160 €</div>
+                </div>
+                <div class="product-card" data-category="ballons">
+                    <img src="https://via.placeholder.com/320x200?text=Ballon+Entra%C3%AEnement" alt="Ballon Entraînement">
+                    <h4>Ballons d'Entraînement</h4>
+                    <p>Robustes, pour usage quotidien</p>
+                    <div class="price">Prix: 15 € – 35 €</div>
+                </div>
+                <div class="product-card" data-category="ballons">
+                    <img src="https://via.placeholder.com/320x200?text=Ballon+Futsal" alt="Ballon Futsal">
+                    <h4>Ballons Spécifiques</h4>
+                    <p>Futsal, Beach Soccer, mini-ballons</p>
+                    <div class="price">Prix: 12 € – 40 €</div>
+                </div>
+
+                <!-- 4. Matériel d'Entraînement -->
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Plots+%26+C%C3%B4nes" alt="Plots & Cônes">
+                    <h4>Plots &amp; Cônes</h4>
+                    <p>Coupelles multicolores, cônes perforés</p>
+                    <div class="price">Prix: 10 € – 35 € (lot)</div>
+                </div>
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Echelle+Agilit%C3%A9" alt="Échelle d'agilité">
+                    <h4>Échelle de Rythme / Agilité</h4>
+                    <p>Longueurs 4 m à 8 m</p>
+                    <div class="price">Prix: 12 € – 30 €</div>
+                </div>
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Haies" alt="Haies de fréquence">
+                    <h4>Haies de Fréquence</h4>
+                    <p>Haies ajustables 15–40 cm</p>
+                    <div class="price">Prix: 20 € – 60 € (lot)</div>
+                </div>
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Chasubles" alt="Chasubles">
+                    <h4>Chasubles de Couleurs</h4>
+                    <p>Maille respirante pour différencier les équipes</p>
+                    <div class="price">Prix: 2 € – 6 € / unité</div>
+                </div>
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Mannequins" alt="Mannequins de coup franc">
+                    <h4>Mannequins de Coup Franc</h4>
+                    <p>Fixes ou rétractables</p>
+                    <div class="price">Prix: 60 € – 250 €</div>
+                </div>
+                <div class="product-card" data-category="entrainement">
+                    <img src="https://via.placeholder.com/320x200?text=Parachute+Vitesse" alt="Parachute de vitesse">
+                    <h4>Parachute de Vitesse / Élastiques</h4>
+                    <p>Accessoires de résistance</p>
+                    <div class="price">Prix: 15 € – 45 €</div>
+                </div>
+
+                <!-- 5. Équipements de Terrain & Matériel de Match -->
+                <div class="product-card" data-category="terrain">
+                    <img src="https://via.placeholder.com/320x200?text=Filets+de+but" alt="Filets de but">
+                    <h4>Filets &amp; Cibles</h4>
+                    <p>Filets de remplacement et bâches cibles</p>
+                    <div class="price">Prix: 30 € – 180 €</div>
+                </div>
+                <div class="product-card" data-category="terrain">
+                    <img src="https://via.placeholder.com/320x200?text=Buts+Transportables" alt="Buts transportables">
+                    <h4>Buts Transportables / Pop-up</h4>
+                    <p>Kits démontables en aluminium</p>
+                    <div class="price">Prix: 40 € – 200 €</div>
+                </div>
+                <div class="product-card" data-category="terrain">
+                    <img src="https://via.placeholder.com/320x200?text=Rebondeur" alt="Rebondeur">
+                    <h4>Rebondeurs (Rebounder)</h4>
+                    <p>Filets de renvoi pour travail de passe et de réflexes</p>
+                    <div class="price">Prix: 50 € – 150 €</div>
+                </div>
+
+                <!-- 6. Accessoires, Soins & Arbitre/Coach -->
+                <div class="product-card" data-category="accessoires">
+                    <img src="https://via.placeholder.com/320x200?text=Pompe+%26+Manom%C3%A8tre" alt="Pompe & Manomètre">
+                    <h4>Pompes &amp; Manomètres</h4>
+                    <p>Pompes à main et compresseurs</p>
+                    <div class="price">Prix: 8 € – 50 €</div>
+                </div>
+                <div class="product-card" data-category="accessoires">
+                    <img src="https://via.placeholder.com/320x200?text=Sacs+%26+Filets" alt="Sacs de transport">
+                    <h4>Sacs de Transport &amp; Filets à Ballons</h4>
+                    <p>Sacs à dos, roulettes ou filets pour 10–16 ballons</p>
+                    <div class="price">Prix: 15 € – 70 €</div>
+                </div>
+                <div class="product-card" data-category="accessoires">
+                    <img src="https://via.placeholder.com/320x200?text=Kit+Arbitre" alt="Kit Arbitre">
+                    <h4>Kit Arbitre Complet</h4>
+                    <p>Sifflets Fox 40, cartes, drapeaux, carnets</p>
+                    <div class="price">Prix: 15 € – 60 €</div>
+                </div>
+                <div class="product-card" data-category="accessoires">
+                    <img src="https://via.placeholder.com/320x200?text=Tableau+Tactique" alt="Tableau Tactique">
+                    <h4>Tableaux Tactiques Magnétiques</h4>
+                    <p>Effaçables avec pions magnétiques</p>
+                    <div class="price">Prix: 20 € – 55 €</div>
+                </div>
+                <div class="product-card" data-category="accessoires">
+                    <img src="https://via.placeholder.com/320x200?text=Trousse+1er+Secours" alt="Trousse 1er secours">
+                    <h4>Trousse de Premier Secours &amp; Spray Froid</h4>
+                    <p>Bandes, sprays froids, soins légers</p>
+                    <div class="price">Prix: 15 € – 80 €</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

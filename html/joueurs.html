@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information des Joueurs - Académie FADY Football</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .joueurs-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #1a3a70;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            border-color: #1a3a70;
+        }
+
+        .category-card.active {
+            background: #1a3a70;
+            color: white;
+            border-color: #1a3a70;
+        }
+
+        .category-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            margin: 0 auto 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .category-card:nth-child(1) .category-icon {
+            background: #FFA500;
+        }
+
+        .category-card.active:nth-child(1) .category-icon {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .category-card:nth-child(2) .category-icon {
+            background: #1a3a70;
+        }
+
+        .category-card.active:nth-child(2) .category-icon {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .category-card:nth-child(3) .category-icon {
+            background: #DC143C;
+        }
+
+        .category-card.active:nth-child(3) .category-icon {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .category-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: inherit;
+        }
+
+        .category-description {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .category-card.active .category-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .joueurs-list {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .joueurs-list.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .joueur-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .joueur-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .joueur-photo {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .joueur-info h3 {
+            color: #1a3a70;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .joueur-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95em;
+        }
+
+        .joueur-detail:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1a3a70;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html">Accueil</a></li>
+                <li class="dropdown">
+                    <a href="#">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staff.html">Notre Staff</a></li>
+                        <li><a href="entraineurs.html">Les Entraîneurs</a></li>
+                        <li><a href="joueurs.html" class="active">Information des Joueurs</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="programmes.html">Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="equipes.html">Équipes</a></li>
+                        <li><a href="entrainements.html">Entraînements</a></li>
+                    </ul>
+                </li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" placeholder="Recherche...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="auth-links">
+                    <a href="connexion.html" class="auth-btn login">Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup">Inscription</a>
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="joueurs-container">
+        <h1 class="page-title">Information des Joueurs</h1>
+
+        <!-- Categories -->
+        <div class="categories-grid">
+            <div class="category-card active" data-category="enfants" onclick="afficherJoueurs('enfants', this)">
+                <div class="category-icon">U1</div>
+                <h2 class="category-title">U8 - U12 (Enfants)</h2>
+                <p class="category-description">Initiation au football</p>
+            </div>
+
+            <div class="category-card" data-category="jeunes" onclick="afficherJoueurs('jeunes', this)">
+                <div class="category-icon">U1</div>
+                <h2 class="category-title">U13 - U17 (Jeunes)</h2>
+                <p class="category-description">Développement technique</p>
+            </div>
+
+            <div class="category-card" data-category="elite" onclick="afficherJoueurs('elite', this)">
+                <div class="category-icon">EL</div>
+                <h2 class="category-title">U18+ (Élite)</h2>
+                <p class="category-description">Préparation professionnelle</p>
+            </div>
+        </div>
+
+        <!-- Joueurs Lists -->
+        <div id="joueurs-enfants" class="joueurs-list active" data-category="enfants">
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Mohamed Diallo</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Mohamed Diallo</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">10 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,42 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">35 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Attaquant</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">7</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Vitesse, dribble, finition</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Défense, endurance</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">18</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">12</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">6</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">1 jaune</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">540</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Amadou Bah</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Amadou Bah</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">9 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,35 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">32 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Gauche</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Milieu</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">5</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Passes courtes, vision, pressing</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Tirs lointains, concentration</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">20</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">8</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">10</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">1 jaune</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">600</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Fatoumata Sow</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Fatoumata Sow</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">11 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,48 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">38 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Défenseur</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">3</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Couverture, relance, tacle</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Vitesse de course</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">16</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">2</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">4</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">2 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">480</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="joueurs-jeunes" class="joueurs-list" data-category="jeunes">
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Ibrahima Diallo</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Ibrahima Diallo</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">15 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,68 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">62 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Attaquant</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">9</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Finition, accélération, placement</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Défense, maîtrise du ballon</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">25</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">16</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">8</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">2 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">1 200</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Mamadou Camara</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Mamadou Camara</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">14 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,72 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">68 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Gardien</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">1</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Réflexes, jeu au pied, leadership</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Sorties rapides, anticipation</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">22</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">0</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">3</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">1 jaune</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">1 980</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Aïssatou Diagne</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Aïssatou Diagne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">16 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Sénégalaise</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,65 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">58 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Milieu</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">4</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Contrôle, circulation, énergie</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Finition finale, puissance</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">24</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">6</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">11</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">2 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">1 520</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="joueurs-elite" class="joueurs-list" data-category="elite">
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Ousmane Keita</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Ousmane Keita</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">20 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,78 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">75 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Attaquant</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">10</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Vitesse, finition, dribble</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Pressing, décision</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">34</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">21</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">12</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">3 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">2 850</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Lamine Diallo</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Lamine Diallo</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">22 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Guinéenne</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,86 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">80 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Droit</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Défenseur</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">2</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Interceptions, duel aérien, leadership</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Sorties trop longues</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">29</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">2</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">5</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">4 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">2 430</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="joueur-card">
+                <div class="joueur-photo">⚽</div>
+                <div class="joueur-info">
+                    <h3>Oumou Toure</h3>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nom complet:</span>
+                        <span class="detail-value">Oumou Toure</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Âge:</span>
+                        <span class="detail-value">19 ans</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Nationalité:</span>
+                        <span class="detail-value">Sénégalaise</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Taille:</span>
+                        <span class="detail-value">1,70 m</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poids:</span>
+                        <span class="detail-value">72 kg</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Pied fort:</span>
+                        <span class="detail-value">Gauche</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Poste:</span>
+                        <span class="detail-value">Milieu</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Numéro de maillot:</span>
+                        <span class="detail-value">6</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points forts:</span>
+                        <span class="detail-value">Passes longues, mouvement, énergie</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Points faibles:</span>
+                        <span class="detail-value">Tirs en puissance</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Statistiques:</span>
+                        <span class="detail-value"></span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Matchs joués:</span>
+                        <span class="detail-value">31</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Buts:</span>
+                        <span class="detail-value">9</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Passes décisives:</span>
+                        <span class="detail-value">14</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Cartons:</span>
+                        <span class="detail-value">2 jaunes</span>
+                    </div>
+                    <div class="joueur-detail">
+                        <span class="detail-label">Minutes jouées:</span>
+                        <span class="detail-value">2 600</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-logo">
+                        <img src="../images/logo.png" alt="Académie FADY" class="logo-img">
+                        <div class="logo-text">
+                            <span class="logo-main">Académie</span>
+                            <span class="logo-sub">FADY Football</span>
+                        </div>
+                    </a>
+                    <p>L'excellence dans la formation des jeunes footballeurs. Nous forgeons les champions de demain avec rigueur, passion et professionnalisme.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/profile.php?id=61575062458470" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb8msXY5vKAFggmlpn3N" class="social-link" target="_blank" title="Suivre la chaîne Académie Fady Foot Balle ⚽️ sur WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="programmes.html"><i class="fas fa-chevron-right"></i> Programmes</a></li>
+                        <li><a href="galerie.html"><i class="fas fa-chevron-right"></i> Galerie</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Programs -->
+                <div class="footer-column">
+                    <h4>Nos Offres</h4>
+                    <ul class="footer-links">
+                        <li><a href="equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
+                        <li><a href="entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
+                        <li><a href="connexion.html"><i class="fas fa-chevron-right"></i> Espace Membre</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Labé, Guinée<br>Quartier Tata, Stade Régional</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+224 620 00 00 00</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@academiefady.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+                <div class="footer-legal">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Politique de Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function afficherJoueurs(categorie, element) {
+            const categoryKey = categorie.trim().toLowerCase();
+            const targetList = document.getElementById('joueurs-' + categoryKey);
+
+            document.querySelectorAll('.joueurs-list').forEach(list => {
+                const isActive = list.dataset.category === categoryKey;
+                list.classList.toggle('active', isActive);
+                list.style.display = isActive ? 'grid' : 'none';
+            });
+
+            document.querySelectorAll('.category-card').forEach(card => {
+                const isActive = card.dataset.category === categoryKey;
+                card.classList.toggle('active', isActive);
+            });
+
+            if (element) {
+                element.classList.add('active');
+            }
+
+            if (targetList) {
+                targetList.classList.add('active');
+            }
+        }
+
+        // Menu mobile
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+    </script>
+</body>
+</html>
