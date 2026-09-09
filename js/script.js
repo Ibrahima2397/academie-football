@@ -16,31 +16,20 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle('active');
         });
         
-        // Fermer le menu quand on clique sur un lien
+        // Fermer le menu quand on clique sur un lien (sauf sur le parent dropdown)
         navLinks?.forEach(link => {
             link.addEventListener('click', (e) => {
-                // Ne pas fermer si c'est un dropdown
-                if (!link.closest('.dropdown')) {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                }
-            });
-        });
-        
-        // Gestion des dropdowns sur mobile
-        dropdowns?.forEach(dropdown => {
-            const dropdownLink = dropdown.querySelector('a:first-child');
-            const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-            
-            if (dropdownLink && dropdownMenu) {
-                dropdownLink.addEventListener('click', (e) => {
-                    // Sur mobile (écran < 768px)
+                if (link.parentElement.classList.contains('dropdown')) {
+                    // Si c'est le lien principal d'un dropdown sur mobile
                     if (window.innerWidth <= 768) {
                         e.preventDefault();
-                        dropdown.classList.toggle('active');
+                        link.parentElement.classList.toggle('active');
                     }
-                });
-            }
+                } else {
+                    if (hamburger) hamburger.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                }
+            });
         });
         
         // Fermer le menu quand on clique en dehors
@@ -48,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!e.target.closest('.navbar')) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.querySelectorAll('.notif-panel, .lang-dropdown').forEach(el => el.classList.remove('active'));
             }
         });
         
@@ -62,7 +52,100 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Gestion des Notifications
+    const notifBtn = document.getElementById('notifBtn');
+    const notifPanel = document.getElementById('notifPanel');
+    if (notifBtn && notifPanel) {
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifPanel.classList.toggle('active');
+            const langDropdown = document.getElementById('langDropdown');
+            if (langDropdown) langDropdown.classList.remove('active');
+        });
+    }
+
+    // Gestion de la Langue (Français / English)
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    if (langBtn && langDropdown) {
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+            if (notifPanel) notifPanel.classList.remove('active');
+        });
+    }
+
+    // Recherche Globale
+    const searchInputs = document.querySelectorAll('.search-container input');
+    searchInputs.forEach(input => {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = input.value.trim();
+                if (query) {
+                    showAlert(`Recherche pour: "${query}"...`, 'success');
+                    const isSubfolder = window.location.pathname.includes('/html/');
+                    const targetPage = isSubfolder ? 'actualites.html' : 'html/actualites.html';
+                    window.location.href = `${targetPage}?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+    });
+
+    // Restaurer la langue enregistrée
+    const savedLang = localStorage.getItem('lang') || 'fr';
+    if (savedLang === 'en') {
+        switchLanguage('en', false);
+    }
 });
+
+// Dictionnaire de traduction FR / EN
+const translations = {
+    fr: {
+        searchPlaceholder: "Rechercher...",
+        loginBtn: "Connexion",
+        signupBtn: "Inscription",
+        notifTitle: "Alertes & Notifications",
+        notifMatchTitle: "Match U17 ce samedi",
+        notifMatchDesc: "Victoire 3-1 contre Labé FC au Stade Régional.",
+        notifTrainingTitle: "Session de détection",
+        notifTrainingDesc: "Inscriptions ouvertes pour la promo 2026.",
+        notifPartnerTitle: "Nouveau partenaire",
+        notifPartnerDesc: "Bienvenue à notre nouvel équipementier !"
+    },
+    en: {
+        searchPlaceholder: "Search...",
+        loginBtn: "Login",
+        signupBtn: "Register",
+        notifTitle: "Alerts & Notifications",
+        notifMatchTitle: "U17 Match this Saturday",
+        notifMatchDesc: "3-1 Victory against Labé FC at the Regional Stadium.",
+        notifTrainingTitle: "Scouting Session",
+        notifTrainingDesc: "Registration open for class of 2026.",
+        notifPartnerTitle: "New Partner",
+        notifPartnerDesc: "Welcome to our new kit supplier!"
+    }
+};
+
+function switchLanguage(lang, notify = true) {
+    localStorage.setItem('lang', lang);
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    if (langBtn) {
+        langBtn.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()} <i class="fas fa-chevron-down"></i>`;
+    }
+    if (langDropdown) langDropdown.classList.remove('active');
+
+    const dict = translations[lang] || translations.fr;
+
+    document.querySelectorAll('.search-container input').forEach(input => {
+        input.placeholder = dict.searchPlaceholder;
+    });
+
+    if (notify) {
+        showAlert(lang === 'fr' ? 'Langue changée en Français 🇫🇷' : 'Language switched to English 🇬🇧', 'success');
+    }
+}
 
 // Fonction pour afficher les alertes
 function showAlert(message, type) {

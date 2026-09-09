@@ -3,12 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Équipes - Académie de Football Elite</title>
+    <title>Services - Académie FADY Football</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #dc2626 100%);
+            color: var(--white);
+            padding: 3.5rem 1.25rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .content-section {
+            padding: 3.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .content-section:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .section-title i {
+            color: var(--accent-color);
+        }
+        .service-card-box {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+            margin-top: 1rem;
+        }
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+        .feature-list li i {
+            color: #10b981;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Header Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
@@ -35,7 +87,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <a href="services.html" class="active"><i class="fas fa-users-cog"></i> Services</a>
                     <ul class="dropdown-menu">
                         <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
                         <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
@@ -166,102 +218,100 @@
         </div>
     </div>
 
-    <!-- Équipes Section -->
-    <section id="equipes" class="equipes">
+    <!-- Header Banner -->
+    <header class="page-header">
         <div class="container">
-            <h2>Nos Équipes</h2>
-            <div class="equipes-grid">
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Jean+Dupont&background=f59e0b&color=fff" alt="Coach Jean Dupont" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U10 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Jean Dupont</p>
-                        <p><strong>Joueurs:</strong> 14</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
-                    </div>
-                </div>
+            <h1>Nos Services d'Excellence</h1>
+            <p>Accompagnement complet : sport, éducation, santé et orientation professionnelle</p>
+        </div>
+    </header>
 
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Balde+Ibrahima+Sory&background=f59e0b&color=fff" alt="Coach Baldé Ibrahima Sory" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U14 Élite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Baldé Ibrahima Sory</p>
-                        <p><strong>Joueurs:</strong> 16</p>
-                        <p><strong>Lieu:</strong> Terrain Nord</p>
-                    </div>
-                </div>
-
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Camara&background=f59e0b&color=fff" alt="Coach Camara" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U18 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Camara</p>
-                        <p><strong>Joueurs:</strong> 18</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
-                    </div>
-                </div>
-
+    <!-- Section 1: Formation des Joueurs -->
+    <section id="formation" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Formation des Joueurs</h2>
+            <div class="service-card-box">
+                <p>Notre cursus de formation est structuré pour développer le joueur sur le plan technico-tactique, physique et mental, du jeune débutant jusqu'à l'équipe seniors.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Entraînements tactiques quotidiens selon les standards de la CAF.</li>
+                    <li><i class="fas fa-check-circle"></i> Ateliers techniques spécifiques par poste (Gardiens, Défenseurs, Milieux, Attaquants).</li>
+                    <li><i class="fas fa-check-circle"></i> Analyse vidéo individuelle et collective d'après-match.</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Classements Section -->
-    <section id="classements" style="padding: 4rem 0; background: #f8fafc;">
+    <!-- Section 2: Détection & Recrutement -->
+    <section id="detection" class="content-section">
         <div class="container">
-            <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                <i class="fas fa-trophy" style="color: var(--accent-color);"></i> Classements des Équipes de l'Académie
-            </h2>
-            <div style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead>
-                        <tr style="background: var(--primary-color); color: var(--white);">
-                            <th style="padding: 0.85rem;">Pos</th>
-                            <th style="padding: 0.85rem;">Équipe</th>
-                            <th style="padding: 0.85rem;">Catégorie</th>
-                            <th style="padding: 0.85rem;">MJ</th>
-                            <th style="padding: 0.85rem;">V</th>
-                            <th style="padding: 0.85rem;">N</th>
-                            <th style="padding: 0.85rem;">D</th>
-                            <th style="padding: 0.85rem;">Diff</th>
-                            <th style="padding: 0.85rem;">Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #e2e8f0; font-weight: 700; background: #f1f5f9;">
-                            <td style="padding: 0.85rem; color: #10b981;">🥇 1er</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color);">Académie FADY U17</td>
-                            <td style="padding: 0.85rem;">U17 Régional</td>
-                            <td style="padding: 0.85rem;">8</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">0</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+18</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">22</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #3b82f6;">🥈 2ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY Seniors</td>
-                            <td style="padding: 0.85rem;">Seniors D1</td>
-                            <td style="padding: 0.85rem;">10</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">2</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+14</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">23</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #f59e0b;">🥉 3ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY U15</td>
-                            <td style="padding: 0.85rem;">U15 Régional</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">5</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+9</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">16</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h2 class="section-title"><i class="fas fa-search-plus"></i> Détection & Recrutement</h2>
+            <div class="service-card-box" style="border-top-color: var(--secondary-color);">
+                <p>Nous organisons des journées de détection régulières à Labé et dans toute la région pour repérer les pépites et futurs espoirs du football guinéen.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Détections annuelles ouvertes aux jeunes de 10 à 20 ans.</li>
+                    <li><i class="fas fa-check-circle"></i> Évaluation complète : vitesse, agilité, vision du jeu et mentalité.</li>
+                    <li><i class="fas fa-check-circle"></i> Réseau de recruteurs et partenariats avec clubs nationaux et internationaux.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Suivi des Joueurs -->
+    <section id="suivi" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> Suivi des Joueurs</h2>
+            <div class="service-card-box" style="border-top-color: var(--accent-color);">
+                <p>Un bilan personnalisé est établi pour chaque athlète avec des rapports trimestriels sur sa progression physique, médicale et sportive.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Statistiques précises de matchs (temps de jeu, passes réussies, tirs, kilomètres parcourus).</li>
+                    <li><i class="fas fa-check-circle"></i> Carnet de santé et bilan nutritionnel personnalisé.</li>
+                    <li><i class="fas fa-check-circle"></i> Entretiens individuels de coaching mental.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Accompagnement Scolaire -->
+    <section id="scolaire" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-book-reader"></i> Accompagnement Scolaire</h2>
+            <div class="service-card-box">
+                <p>À l'Académie FADY Football, les études sont indissociables de la pratique sportive. Un suivi scolaire rigoureux est garanti.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Heures d'étude supervisées et soutien scolaire individuel.</li>
+                    <li><i class="fas fa-check-circle"></i> Aménagement d'horaires d'entraînement compatibles avec les cours scolaires.</li>
+                    <li><i class="fas fa-check-circle"></i> Bulletin de notes exigé pour participer aux compétitions officielles.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Préparation Physique -->
+    <section id="physique" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-dumbbell"></i> Préparation Physique</h2>
+            <div class="service-card-box" style="border-top-color: var(--secondary-color);">
+                <p>Un programme athlétique sur-mesure pour optimiser l'endurance, l'explosivité, la force et prévenir les risques de blessures.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Tests de VMA et bilans de puissance musculaire.</li>
+                    <li><i class="fas fa-check-circle"></i> Séances spécifiques de gainage, proprioception et réathlétisation.</li>
+                    <li><i class="fas fa-check-circle"></i> Programme de récupération active après chaque rencontre officielle.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Stages & Tournois -->
+    <section id="stages" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Stages & Tournois</h2>
+            <div class="service-card-box" style="border-top-color: var(--accent-color);">
+                <p>Participation à des tournois régionaux, nationaux et organisation de stages d'immersion pendant les vacances scolaires.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> Stages d'été intensifs pour perfectionnement technique.</li>
+                    <li><i class="fas fa-check-circle"></i> Confrontations contre des académies de renommée nationale.</li>
+                    <li><i class="fas fa-check-circle"></i> Immersion en conditions de match professionnel.</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -270,7 +320,6 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <!-- Brand Column -->
                 <div class="footer-brand">
                     <a href="../index.html" class="footer-logo">
                         <img src="../images/logo.png" alt="Académie FADY" class="logo-img">
@@ -281,36 +330,34 @@
                     </a>
                     <p>L'excellence dans la formation des jeunes footballeurs. Nous forgeons les champions de demain avec rigueur, passion et professionnalisme.</p>
                     <div class="footer-socials">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61575062458470" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb8msXY5vKAFggmlpn3N" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="footer-column">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="academie.html"><i class="fas fa-chevron-right"></i> Académie</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
                         <li><a href="programmes.html"><i class="fas fa-chevron-right"></i> Programmes</a></li>
-                        <li><a href="galerie.html"><i class="fas fa-chevron-right"></i> Galerie</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="actualites.html"><i class="fas fa-chevron-right"></i> Actualités</a></li>
                     </ul>
                 </div>
 
-                <!-- Programs -->
                 <div class="footer-column">
                     <h4>Nos Offres</h4>
                     <ul class="footer-links">
                         <li><a href="equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
                         <li><a href="entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Boutique</a></li>
                         <li><a href="inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
-                        <li><a href="connexion.html"><i class="fas fa-chevron-right"></i> Espace Membre</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <div class="footer-contact-info">
@@ -331,7 +378,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+                <p>&copy; 2025 Académie FADY Football. Tous droits réservés.</p>
                 <div class="footer-legal">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Politique de Confidentialité</a>

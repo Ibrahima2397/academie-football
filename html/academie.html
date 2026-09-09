@@ -3,12 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Équipes - Académie de Football Elite</title>
+    <title>Académie - Académie FADY Football</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2d5e 100%);
+            color: var(--white);
+            padding: 3.5rem 1.25rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .content-section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .content-section:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title i {
+            color: var(--accent-color);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .facility-card, .partner-card, .staff-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        .facility-card:hover, .partner-card:hover, .staff-card:hover {
+            transform: translateY(-5px);
+        }
+        .facilities-grid, .partners-grid, .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Header Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
@@ -24,7 +85,7 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
                 <li class="dropdown">
-                    <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
+                    <a href="academie.html" class="active"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
                         <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
@@ -166,102 +227,142 @@
         </div>
     </div>
 
-    <!-- Équipes Section -->
-    <section id="equipes" class="equipes">
+    <!-- Banner Header -->
+    <header class="page-header">
         <div class="container">
-            <h2>Nos Équipes</h2>
-            <div class="equipes-grid">
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Jean+Dupont&background=f59e0b&color=fff" alt="Coach Jean Dupont" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U10 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Jean Dupont</p>
-                        <p><strong>Joueurs:</strong> 14</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
-                    </div>
-                </div>
+            <h1>L'Académie FADY Football</h1>
+            <p>Centre de Formation d'Élite & Développement Sportif à Labé, Guinée</p>
+        </div>
+    </header>
 
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Balde+Ibrahima+Sory&background=f59e0b&color=fff" alt="Coach Baldé Ibrahima Sory" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U14 Élite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Baldé Ibrahima Sory</p>
-                        <p><strong>Joueurs:</strong> 16</p>
-                        <p><strong>Lieu:</strong> Terrain Nord</p>
-                    </div>
+    <!-- Section 1: À propos de nous -->
+    <section id="a-propos" class="content-section">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> À propos de nous</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color);">
+                        L'<strong>Académie FADY Football</strong> est un centre d'excellence dédié à l'éclosion, au perfectionnement et à l'accompagnement global des jeunes footballeurs à Labé et en Guinée. Nous allions rigueur tactique, préparation physique de haut niveau et accompagnement éducatif rigoureux.
+                    </p>
+                    <p style="margin-top: 1rem; color: #475569;">
+                        Notre vision est de donner à chaque jeune talent les outils pour atteindre le niveau professionnel tout en développant des valeurs humaines fortes de discipline, respect et solidarité.
+                    </p>
                 </div>
-
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Camara&background=f59e0b&color=fff" alt="Coach Camara" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U18 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Camara</p>
-                        <p><strong>Joueurs:</strong> 18</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
-                    </div>
+                <div>
+                    <img src="../images/logo.png" alt="Académie FADY Football" style="max-width: 320px; margin: 0 auto; border-radius: 20px; box-shadow: var(--shadow);">
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Classements Section -->
-    <section id="classements" style="padding: 4rem 0; background: #f8fafc;">
+    <!-- Section 2: Notre Histoire -->
+    <section id="histoire" class="content-section">
         <div class="container">
-            <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                <i class="fas fa-trophy" style="color: var(--accent-color);"></i> Classements des Équipes de l'Académie
-            </h2>
-            <div style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead>
-                        <tr style="background: var(--primary-color); color: var(--white);">
-                            <th style="padding: 0.85rem;">Pos</th>
-                            <th style="padding: 0.85rem;">Équipe</th>
-                            <th style="padding: 0.85rem;">Catégorie</th>
-                            <th style="padding: 0.85rem;">MJ</th>
-                            <th style="padding: 0.85rem;">V</th>
-                            <th style="padding: 0.85rem;">N</th>
-                            <th style="padding: 0.85rem;">D</th>
-                            <th style="padding: 0.85rem;">Diff</th>
-                            <th style="padding: 0.85rem;">Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #e2e8f0; font-weight: 700; background: #f1f5f9;">
-                            <td style="padding: 0.85rem; color: #10b981;">🥇 1er</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color);">Académie FADY U17</td>
-                            <td style="padding: 0.85rem;">U17 Régional</td>
-                            <td style="padding: 0.85rem;">8</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">0</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+18</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">22</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #3b82f6;">🥈 2ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY Seniors</td>
-                            <td style="padding: 0.85rem;">Seniors D1</td>
-                            <td style="padding: 0.85rem;">10</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">2</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+14</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">23</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #f59e0b;">🥉 3ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY U15</td>
-                            <td style="padding: 0.85rem;">U15 Régional</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">5</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+9</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">16</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h2 class="section-title"><i class="fas fa-book-open"></i> Notre Histoire</h2>
+            <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); border-left: 5px solid var(--accent-color);">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Fondée en 2023 à Labé</h3>
+                <p style="line-height: 1.8;">
+                    Née de la passion d'éducateurs sportifs et d'anciens footballeurs passionnés, l'Académie FADY Football s'est imposée en quelques années comme une référence incontournable de la formation en Guinée. Partis de petits groupes de détection au Stade Régional de Labé, nous accueillons aujourd'hui plus de 150 jeunes répartis dans plusieurs catégories d'âge (U13, U15, U17, U19 et Seniors).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Notre Mission -->
+    <section id="mission" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Notre Mission</h2>
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <i class="fas fa-futbol" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Formation Technique</h3>
+                    <p>Développer l'intelligence de jeu, la maîtrise technique individuelle et les schémas tactiques modernes.</p>
+                </div>
+                <div class="facility-card">
+                    <i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Réussite Scolaire</h3>
+                    <p>Garantir un suivi éducatif strict pour que chaque joueur mène de front passion sportive et diplômes.</p>
+                </div>
+                <div class="facility-card">
+                    <i class="fas fa-heartbeat" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Santé & Éthique</h3>
+                    <p>Inculquer une hygiène de vie athlétique, la nutrition sportive et les valeurs d'esprit d'équipe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Nos Infrastructures -->
+    <section id="infrastructures" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-building"></i> Nos Infrastructures</h2>
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <i class="fas fa-stadium" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>Terrains Entraînement</h3>
+                    <p>Terrains réglementaires gazonnés et synthétiques au Stade Régional de Labé (Terrain Nord & Sud).</p>
+                </div>
+                <div class="facility-card">
+                    <i class="fas fa-dumbbell" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                    <h3>Salle de Musculation</h3>
+                    <p>Espace moderne de préparation physique spécialisée pour le renforcement et la prévention des blessures.</p>
+                </div>
+                <div class="facility-card">
+                    <i class="fas fa-user-md" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                    <h3>Centre Médical & Récupération</h3>
+                    <p>Cabinet de kinésithérapie, soins physiologiques et protocoles de récupération d'après-match.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Nos Partenaires -->
+    <section id="partenaires" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-handshake"></i> Nos Partenaires</h2>
+            <div class="partners-grid">
+                <div class="partner-card" style="text-align: center;">
+                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>Fédération Guinéenne de Football</h3>
+                    <p>Partenaire officiel pour l'homologation des diplômes et compétitions de jeunes.</p>
+                </div>
+                <div class="partner-card" style="text-align: center;">
+                    <i class="fas fa-tshirt" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                    <h3>Équipementiers Sportifs</h3>
+                    <p>Fournisseur officiel des tenues d'entraînement et de match de l'académie.</p>
+                </div>
+                <div class="partner-card" style="text-align: center;">
+                    <i class="fas fa-hospital" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                    <h3>Clinique Régionale de Labé</h3>
+                    <p>Suivi médical régulier et examens d'aptitude sportive pour nos athlètes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Staff Technique -->
+    <section id="staff" class="content-section">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-user-tie"></i> Staff Technique</h2>
+            <div class="staff-grid">
+                <div class="staff-card" style="text-align: center;">
+                    <img src="https://ui-avatars.com/api/?name=Coach+Mamadou&background=1e3a8a&color=fff&size=128" alt="Coach" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
+                    <h3 style="color: var(--primary-color);">Mamadou Diallo</h3>
+                    <p style="color: var(--accent-color); font-weight: bold;">Directeur Technique</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Licence CAF A, plus de 15 ans d'expérience dans le football professionnel.</p>
+                </div>
+                <div class="staff-card" style="text-align: center;">
+                    <img src="https://ui-avatars.com/api/?name=Coach+Ibrahima&background=dc2626&color=fff&size=128" alt="Coach" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
+                    <h3 style="color: var(--primary-color);">Ibrahima Bah</h3>
+                    <p style="color: var(--accent-color); font-weight: bold;">Entraîneur Principal U17 & U19</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Spécialiste de la préparation tactique et du développement individuel.</p>
+                </div>
+                <div class="staff-card" style="text-align: center;">
+                    <img src="https://ui-avatars.com/api/?name=Dr+Ousmane&background=f59e0b&color=fff&size=128" alt="Médecin" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
+                    <h3 style="color: var(--primary-color);">Dr. Ousmane Sow</h3>
+                    <p style="color: var(--accent-color); font-weight: bold;">Responsable Médical & Prépa Physique</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Médecin du sport, spécialisé dans le suivi physiologique des jeunes athlètes.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -270,7 +371,6 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <!-- Brand Column -->
                 <div class="footer-brand">
                     <a href="../index.html" class="footer-logo">
                         <img src="../images/logo.png" alt="Académie FADY" class="logo-img">
@@ -281,36 +381,34 @@
                     </a>
                     <p>L'excellence dans la formation des jeunes footballeurs. Nous forgeons les champions de demain avec rigueur, passion et professionnalisme.</p>
                     <div class="footer-socials">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61575062458470" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb8msXY5vKAFggmlpn3N" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="footer-column">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="academie.html"><i class="fas fa-chevron-right"></i> Académie</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
                         <li><a href="programmes.html"><i class="fas fa-chevron-right"></i> Programmes</a></li>
-                        <li><a href="galerie.html"><i class="fas fa-chevron-right"></i> Galerie</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="actualites.html"><i class="fas fa-chevron-right"></i> Actualités</a></li>
                     </ul>
                 </div>
 
-                <!-- Programs -->
                 <div class="footer-column">
                     <h4>Nos Offres</h4>
                     <ul class="footer-links">
                         <li><a href="equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
                         <li><a href="entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Boutique</a></li>
                         <li><a href="inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
-                        <li><a href="connexion.html"><i class="fas fa-chevron-right"></i> Espace Membre</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <div class="footer-contact-info">
@@ -331,7 +429,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+                <p>&copy; 2025 Académie FADY Football. Tous droits réservés.</p>
                 <div class="footer-legal">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Politique de Confidentialité</a>

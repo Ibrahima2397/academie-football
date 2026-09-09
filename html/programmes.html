@@ -3,9 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programmes - Académie de Football Elite</title>
+    <title>Programmes de Formation - Académie FADY Football</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2d5e 100%);
+            color: var(--white);
+            padding: 3.5rem 1.25rem;
+            text-align: center;
+        }
+        .prog-detail-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--primary-color);
+        }
+        .prog-detail-card.u15 { border-left-color: var(--secondary-color); }
+        .prog-detail-card.u17 { border-left-color: var(--accent-color); }
+        .prog-detail-card.u19 { border-left-color: #10b981; }
+        .prog-detail-card.seniors { border-left-color: #8b5cf6; }
+        .prog-detail-card.individuel { border-left-color: #ec4899; }
+        
+        .prog-header-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .prog-header-title h3 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+        }
+        .badge-age {
+            background: var(--light-bg);
+            color: var(--text-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -20,27 +62,91 @@
                     </div>
                 </a>
             </div>
+            
             <ul class="nav-menu" id="navMenu">
-                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
                 <li class="dropdown">
-                    <a href="programmes.html" class="active">Programmes</a>
+                    <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
-                        <li><a href="equipes.html">Équipes</a></li>
-                        <li><a href="entrainements.html">Entraînements</a></li>
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="academie.html#mission"><i class="fas fa-bullseye"></i> Notre mission</a></li>
+                        <li><a href="academie.html#infrastructures"><i class="fas fa-building"></i> Nos infrastructures</a></li>
+                        <li><a href="academie.html#partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a></li>
+                        <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
                     </ul>
                 </li>
-                <li><a href="galerie.html">Galerie</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                        <li><a href="services.html#stages"><i class="fas fa-trophy"></i> Stages & Tournois</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="programmes.html" class="active"><i class="fas fa-clipboard-list"></i> Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="programmes.html#u13"><i class="fas fa-user"></i> Programme U13</a></li>
+                        <li><a href="programmes.html#u15"><i class="fas fa-user"></i> Programme U15</a></li>
+                        <li><a href="programmes.html#u17"><i class="fas fa-user"></i> Programme U17</a></li>
+                        <li><a href="programmes.html#u19"><i class="fas fa-user"></i> Programme U19</a></li>
+                        <li><a href="programmes.html#seniors"><i class="fas fa-user"></i> Programme Seniors</a></li>
+                        <li><a href="programmes.html#individuel"><i class="fas fa-user-check"></i> Programme individuel</a></li>
+                    </ul>
+                </li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
 
             <div class="nav-actions">
                 <div class="search-container">
-                    <input type="text" placeholder="Recherche...">
+                    <input type="text" placeholder="Rechercher...">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="auth-links">
-                    <a href="connexion.html" class="auth-btn login">Connexion</a>
-                    <a href="inscription.html" class="auth-btn signup">Inscription</a>
+
+                <div class="nav-tool-wrapper">
+                    <button class="notif-btn" id="notifBtn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-badge">3</span>
+                    </button>
+                    <div class="notif-panel" id="notifPanel">
+                        <div class="notif-header">
+                            <span>Alertes & Notifications</span>
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Match U17 ce samedi</strong>
+                            <span>Victoire 3-1 contre Labé FC au Stade Régional.</span>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Session de détection</strong>
+                            <span>Inscriptions ouvertes pour la promo 2026.</span>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Nouveau partenaire</strong>
+                            <span>Bienvenue à notre nouvel équipementier !</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-tool-wrapper">
+                    <button class="lang-btn" id="langBtn" title="Langue">
+                        <i class="fas fa-globe"></i> FR <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="showAlert('Langue changée en Français', 'success')">🇫🇷 Français</button>
+                        <button onclick="showAlert('Language switched to English', 'success')">🇬🇧 English</button>
+                    </div>
+                </div>
+
+                <div class="auth-links" id="navbarAuthLinks">
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
                 </div>
             </div>
 
@@ -52,62 +158,150 @@
         </div>
     </nav>
 
-    <!-- Programmes Section -->
-    <section id="programmes" class="programmes">
+    <!-- Quick Access Bar -->
+    <div class="quick-access-bar">
         <div class="container">
-            <h2>Nos Programmes</h2>
-            <div class="programmes-grid">
-                <div class="programme-card">
-                    <div class="programme-logo">
-                        <img src="https://ui-avatars.com/api/?name=U12&background=f59e0b&color=1e3a8a&size=128&bold=true" alt="Logo U8-U12">
+            <div class="quick-access-grid">
+                <a href="actualites.html#calendrier" class="quick-card">
+                    <div class="icon-box"><i class="far fa-calendar-alt"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Calendrier des matchs</strong>
+                        <span>Voir les prochains matchs</span>
                     </div>
-                    <h3>U8 - U12 (Enfants)</h3>
-                    <p>Initiation au football avec apprentissage des techniques fondamentales et développement des capacités athlétiques.</p>
-                    <ul>
-                        <li>2 entraînements par semaine</li>
-                        <li>Jeux amicaux réguliers</li>
-                        <li>Formation ludique</li>
-                    </ul>
-                    <div class="programme-location">
-                        <p>📍 <strong>Terrain Sud</strong></p>
-                        <a href="https://maps.google.com/?q=Stade+Jean+Bouin+Paris" target="_blank" class="maps-link">Voir sur Google Maps ↗</a>
+                </a>
+                <a href="galerie_direct.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Résultats en direct</strong>
+                        <span>Scores en temps réel</span>
                     </div>
-                </div>
-
-                <div class="programme-card">
-                    <div class="programme-logo">
-                        <img src="https://ui-avatars.com/api/?name=U17&background=1e3a8a&color=f59e0b&size=128&bold=true" alt="Logo U13-U17">
+                </a>
+                <a href="equipes.html#classements" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-trophy"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Classements</strong>
+                        <span>Classements des équipes</span>
                     </div>
-                    <h3>U13 - U17 (Jeunes)</h3>
-                    <p>Développement technique et tactique avancé pour les jeunes joueurs en herbe.</p>
-                    <ul>
-                        <li>3 entraînements par semaine</li>
-                        <li>Compétitions régionales</li>
-                        <li>Suivi personnalisé</li>
-                    </ul>
-                    <div class="programme-location">
-                        <p>📍 <strong>Terrain Nord</strong></p>
-                        <a href="https://maps.google.com/?q=Stade+Sebastien+Charlety+Paris" target="_blank" class="maps-link">Voir sur Google Maps ↗</a>
+                </a>
+                <a href="joueurs.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-users"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Joueurs</strong>
+                        <span>Découvrir nos talents</span>
                     </div>
-                </div>
-
-                <div class="programme-card">
-                    <div class="programme-logo">
-                        <img src="https://ui-avatars.com/api/?name=ELITE&background=dc2626&color=ffffff&size=128&bold=true" alt="Logo U18+ Elite">
+                </a>
+                <a href="academie.html#staff" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Staff technique</strong>
+                        <span>Nos entraîneurs</span>
                     </div>
-                    <h3>U18+ (Élite)</h3>
-                    <p>Préparation professionnelle pour les jeunes visant une carrière en football.</p>
-                    <ul>
-                        <li>4 entraînements par semaine</li>
-                        <li>Matchs officiels</li>
-                        <li>Préparation physique intensive</li>
-                    </ul>
-                    <div class="programme-location">
-                        <p>📍 <strong>Terrain Principal</strong></p>
-                        <a href="https://maps.google.com/?q=Parc+des+Princes+Paris" target="_blank" class="maps-link">Voir sur Google Maps ↗</a>
+                </a>
+                <a href="boutique.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Boutique</strong>
+                        <span>Équipements et maillots</span>
                     </div>
-                </div>
+                </a>
             </div>
+        </div>
+    </div>
+
+    <!-- Header Banner -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Nos Programmes de Formation</h1>
+            <p>Un cursus adapté à chaque étape du développement sportif et humain du joueur</p>
+        </div>
+    </header>
+
+    <!-- Content Sections -->
+    <section style="padding: 4rem 0;">
+        <div class="container">
+            
+            <!-- Programme U13 -->
+            <div id="u13" class="prog-detail-card">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-child"></i> Programme U13 - École de Football</h3>
+                    <span class="badge-age">10 - 13 ans</span>
+                </div>
+                <p>Initiation aux bases fondamentales du football : contrôle de balle, passe, conduite de balle et développement de la motricité.</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> 2 entraînements / semaine + plateau le week-end</li>
+                    <li><strong>Lieu :</strong> Stade Régional de Labé (Terrain Sud)</li>
+                    <li><strong>Objectifs :</strong> Plaisir de jouer, apprentissage technique et règles du jeu.</li>
+                </ul>
+            </div>
+
+            <!-- Programme U15 -->
+            <div id="u15" class="prog-detail-card u15">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-running"></i> Programme U15 - Pré-Formation</h3>
+                    <span class="badge-age">13 - 15 ans</span>
+                </div>
+                <p>Développement de l'intelligence tactique, du placement sur le terrain et renforcement des capacités cardio-vasculaires.</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> 3 entraînements / semaine + match officiel</li>
+                    <li><strong>Lieu :</strong> Stade Régional de Labé (Terrain Nord)</li>
+                    <li><strong>Objectifs :</strong> Rigueur tactique, transitions et esprit d'équipe.</li>
+                </ul>
+            </div>
+
+            <!-- Programme U17 -->
+            <div id="u17" class="prog-detail-card u17">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-trophy"></i> Programme U17 - Formation Compétitive</h3>
+                    <span class="badge-age">15 - 17 ans</span>
+                </div>
+                <p>Perfectionnement de haut niveau, préparation physique intensive et participation aux championnats régionaux et nationaux.</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> 4 entraînements / semaine + séances vidéo</li>
+                    <li><strong>Lieu :</strong> Stade Régional (Terrain Principal)</li>
+                    <li><strong>Objectifs :</strong> Compétition, vitesse d'exécution et maturité dans le jeu.</li>
+                </ul>
+            </div>
+
+            <!-- Programme U19 -->
+            <div id="u19" class="prog-detail-card u19">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-medal"></i> Programme U19 - Élite Espoirs</h3>
+                    <span class="badge-age">17 - 19 ans</span>
+                </div>
+                <p>Post-formation visant la transition vers l'équipe première et les clubs de divisions supérieures en Guinée et à l'étranger.</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> 4 à 5 séances hebdomadaires + suivi médical personnalisé</li>
+                    <li><strong>Lieu :</strong> Stade Régional de Labé</li>
+                    <li><strong>Objectifs :</strong> Orientation professionnelle, détections et haute performance.</li>
+                </ul>
+            </div>
+
+            <!-- Programme Seniors -->
+            <div id="seniors" class="prog-detail-card seniors">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-user-shield"></i> Programme Seniors - Équipe Fanion</h3>
+                    <span class="badge-age">19 ans et +</span>
+                </div>
+                <p>L'équipe fanion représentant les couleurs de l'Académie FADY Football dans les championnats régionaux et coupes nationales.</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> Entraînements quotidiens + matchs de championnat</li>
+                    <li><strong>Objectifs :</strong> Victoires en compétition, rayonnement du club et professionnalisme.</li>
+                </ul>
+            </div>
+
+            <!-- Programme Individuel -->
+            <div id="individuel" class="prog-detail-card individuel">
+                <div class="prog-header-title">
+                    <h3><i class="fas fa-user-check"></i> Programme Individuel sur Mesure</h3>
+                    <span class="badge-age">Tous âges</span>
+                </div>
+                <p>Séances de coaching individuel personnalisées pour corriger les points faibles spécifiques d'un joueur (pied faible, finition devant le but, préparation physique ciblée).</p>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Fréquence :</strong> Selon les disponibilités de l'athlète et des coachs</li>
+                    <li><strong>Objectifs :</strong> Progrès individuels rapides et réhabilitation post-blessure.</li>
+                </ul>
+            </div>
+
         </div>
     </section>
 
@@ -115,7 +309,6 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <!-- Brand Column -->
                 <div class="footer-brand">
                     <a href="../index.html" class="footer-logo">
                         <img src="../images/logo.png" alt="Académie FADY" class="logo-img">
@@ -126,46 +319,44 @@
                     </a>
                     <p>L'excellence dans la formation des jeunes footballeurs. Nous forgeons les champions de demain avec rigueur, passion et professionnalisme.</p>
                     <div class="footer-socials">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61575062458470" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb8msXY5vKAFggmlpn3N" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="footer-column">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="academie.html"><i class="fas fa-chevron-right"></i> Académie</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
                         <li><a href="programmes.html"><i class="fas fa-chevron-right"></i> Programmes</a></li>
-                        <li><a href="galerie.html"><i class="fas fa-chevron-right"></i> Galerie</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="actualites.html"><i class="fas fa-chevron-right"></i> Actualités</a></li>
                     </ul>
                 </div>
 
-                <!-- Programs -->
                 <div class="footer-column">
                     <h4>Nos Offres</h4>
                     <ul class="footer-links">
                         <li><a href="equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
                         <li><a href="entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Boutique</a></li>
                         <li><a href="inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
-                        <li><a href="connexion.html"><i class="fas fa-chevron-right"></i> Espace Membre</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <div class="footer-contact-info">
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Labé, Guinée<br>Quartier Fady, Stade Régional</span>
+                            <span>Labé, Guinée<br>Quartier Tata, Stade Régional</span>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-phone-alt"></i>
-                            <span>+224 663 08 24 08</span>
+                            <span>+224 620 00 00 00</span>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -176,7 +367,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+                <p>&copy; 2025 Académie FADY Football. Tous droits réservés.</p>
                 <div class="footer-legal">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Politique de Confidentialité</a>

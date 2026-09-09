@@ -3,12 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Équipes - Académie de Football Elite</title>
+    <title>Actualités & Événements - Académie FADY Football</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1a2d5e 0%, var(--primary-color) 100%);
+            color: var(--white);
+            padding: 3.5rem 1.25rem;
+            text-align: center;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .news-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        .news-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+        .news-body {
+            padding: 1.5rem;
+        }
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .news-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .calendar-table th, .calendar-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .calendar-table th {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        .badge-match {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Header Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
@@ -56,7 +127,7 @@
                         <li><a href="programmes.html#individuel"><i class="fas fa-user-check"></i> Programme individuel</a></li>
                     </ul>
                 </li>
-                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="actualites.html" class="active"><i class="fas fa-newspaper"></i> Actualités</a></li>
                 <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
                 <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
@@ -166,103 +237,92 @@
         </div>
     </div>
 
-    <!-- Équipes Section -->
-    <section id="equipes" class="equipes">
+    <!-- Header Banner -->
+    <header class="page-header">
         <div class="container">
-            <h2>Nos Équipes</h2>
-            <div class="equipes-grid">
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Jean+Dupont&background=f59e0b&color=fff" alt="Coach Jean Dupont" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U10 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Jean Dupont</p>
-                        <p><strong>Joueurs:</strong> 14</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
+            <h1>Dernières Actualités & Résultats</h1>
+            <p>Toute l'actualité de l'Académie FADY Football en direct de Labé</p>
+        </div>
+    </header>
+
+    <!-- Section: Dernières Nouvelles -->
+    <section id="dernieres-nouvelles" style="padding: 4rem 0;">
+        <div class="container">
+            <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem;">
+                <i class="fas fa-newspaper" style="color: var(--accent-color);"></i> Dernières Nouvelles
+            </h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="../images/logo.png" alt="Victoire U17" class="news-img" style="object-fit: contain; padding: 1rem; background: #1e3a8a;">
+                    <div class="news-body">
+                        <span class="news-date"><i class="far fa-calendar"></i> 08 SEPTEMBRE 2026</span>
+                        <h3 class="news-title">Grande Victoire 3-1 de l'Équipe U17 au Tournoi Régional !</h3>
+                        <p>Les U17 de l'académie ont rendu une copie parfaite ce week-end avec une très belle prestation collective et un doublé remarquable de notre attaquant vedette.</p>
                     </div>
                 </div>
 
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Balde+Ibrahima+Sory&background=f59e0b&color=fff" alt="Coach Baldé Ibrahima Sory" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U14 Élite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Baldé Ibrahima Sory</p>
-                        <p><strong>Joueurs:</strong> 16</p>
-                        <p><strong>Lieu:</strong> Terrain Nord</p>
+                <div class="news-card">
+                    <img src="../images/logo.png" alt="Détection" class="news-img" style="object-fit: contain; padding: 1rem; background: #dc2626;">
+                    <div class="news-body">
+                        <span class="news-date"><i class="far fa-calendar"></i> 02 SEPTEMBRE 2026</span>
+                        <h3 class="news-title">Ouverture des Inscriptions pour la Grande Détection 2026</h3>
+                        <p>L'Académie FADY Football ouvre ses portes aux jeunes talents nés entre 2008 et 2014 pour sa session annuelle d'évaluation.</p>
                     </div>
                 </div>
 
-                <div class="equipe-card">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Camara&background=f59e0b&color=fff" alt="Coach Camara" class="coach-photo">
-                    <div class="equipe-info">
-                        <h3>U18 Elite</h3>
-                        <p><strong>Entraîneur:</strong> Coach Camara</p>
-                        <p><strong>Joueurs:</strong> 18</p>
-                        <p><strong>Lieu:</strong> Terrain Principal</p>
+                <div class="news-card">
+                    <img src="../images/logo.png" alt="Infrastructures" class="news-img" style="object-fit: contain; padding: 1rem; background: #f59e0b;">
+                    <div class="news-body">
+                        <span class="news-date"><i class="far fa-calendar"></i> 25 AOÛT 2026</span>
+                        <h3 class="news-title">Inauguration de la Nouvelle Salle de Récupération Physiologique</h3>
+                        <p>Un grand pas en avant pour la santé de nos athlètes avec du matériel moderne de physiothérapie et de remise en forme.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Classements Section -->
-    <section id="classements" style="padding: 4rem 0; background: #f8fafc;">
+    <!-- Section: Calendrier des Matchs -->
+    <section id="calendrier" style="padding: 4rem 0; background: #f8fafc;">
         <div class="container">
-            <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
-                <i class="fas fa-trophy" style="color: var(--accent-color);"></i> Classements des Équipes de l'Académie
+            <h2 style="color: var(--primary-color); display: flex; align-items: center; gap: 0.75rem;">
+                <i class="far fa-calendar-alt" style="color: var(--secondary-color);"></i> Calendrier des Prochains Matchs
             </h2>
-            <div style="background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead>
-                        <tr style="background: var(--primary-color); color: var(--white);">
-                            <th style="padding: 0.85rem;">Pos</th>
-                            <th style="padding: 0.85rem;">Équipe</th>
-                            <th style="padding: 0.85rem;">Catégorie</th>
-                            <th style="padding: 0.85rem;">MJ</th>
-                            <th style="padding: 0.85rem;">V</th>
-                            <th style="padding: 0.85rem;">N</th>
-                            <th style="padding: 0.85rem;">D</th>
-                            <th style="padding: 0.85rem;">Diff</th>
-                            <th style="padding: 0.85rem;">Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #e2e8f0; font-weight: 700; background: #f1f5f9;">
-                            <td style="padding: 0.85rem; color: #10b981;">🥇 1er</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color);">Académie FADY U17</td>
-                            <td style="padding: 0.85rem;">U17 Régional</td>
-                            <td style="padding: 0.85rem;">8</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">0</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+18</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">22</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #3b82f6;">🥈 2ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY Seniors</td>
-                            <td style="padding: 0.85rem;">Seniors D1</td>
-                            <td style="padding: 0.85rem;">10</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">2</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+14</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">23</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e2e8f0;">
-                            <td style="padding: 0.85rem; color: #f59e0b;">🥉 3ème</td>
-                            <td style="padding: 0.85rem;">Académie FADY U15</td>
-                            <td style="padding: 0.85rem;">U15 Régional</td>
-                            <td style="padding: 0.85rem;">7</td>
-                            <td style="padding: 0.85rem;">5</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem;">1</td>
-                            <td style="padding: 0.85rem; color: #10b981;">+9</td>
-                            <td style="padding: 0.85rem; color: var(--primary-color); font-size: 1.1rem;">16</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Date & Heure</th>
+                        <th>Catégorie</th>
+                        <th>Affiche du Match</th>
+                        <th>Lieu</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Samedi 12 Sept. - 15h30</strong></td>
+                        <td><span class="badge-match">U17 ELITE</span></td>
+                        <td>Académie FADY vs. Espoir de Labé</td>
+                        <td>Stade Régional (Terrain Nord)</td>
+                        <td><span style="color: #10b981; font-weight: 700;">Programmé</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dimanche 13 Sept. - 16h00</strong></td>
+                        <td><span class="badge-match">SENIORS</span></td>
+                        <td>Académie FADY vs. FC Fouta</td>
+                        <td>Stade Régional (Terrain Sud)</td>
+                        <td><span style="color: #10b981; font-weight: 700;">Programmé</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mercredi 16 Sept. - 14h00</strong></td>
+                        <td><span class="badge-match">U15</span></td>
+                        <td>Académie FADY vs. Club des Jeunes</td>
+                        <td>Stade Régional</td>
+                        <td><span style="color: #10b981; font-weight: 700;">Programmé</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -270,7 +330,6 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <!-- Brand Column -->
                 <div class="footer-brand">
                     <a href="../index.html" class="footer-logo">
                         <img src="../images/logo.png" alt="Académie FADY" class="logo-img">
@@ -281,36 +340,34 @@
                     </a>
                     <p>L'excellence dans la formation des jeunes footballeurs. Nous forgeons les champions de demain avec rigueur, passion et professionnalisme.</p>
                     <div class="footer-socials">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61575062458470" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb8msXY5vKAFggmlpn3N" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div class="footer-column">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="academie.html"><i class="fas fa-chevron-right"></i> Académie</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
                         <li><a href="programmes.html"><i class="fas fa-chevron-right"></i> Programmes</a></li>
-                        <li><a href="galerie.html"><i class="fas fa-chevron-right"></i> Galerie</a></li>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="actualites.html"><i class="fas fa-chevron-right"></i> Actualités</a></li>
                     </ul>
                 </div>
 
-                <!-- Programs -->
                 <div class="footer-column">
                     <h4>Nos Offres</h4>
                     <ul class="footer-links">
                         <li><a href="equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
                         <li><a href="entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Boutique</a></li>
                         <li><a href="inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
-                        <li><a href="connexion.html"><i class="fas fa-chevron-right"></i> Espace Membre</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <div class="footer-contact-info">
@@ -331,7 +388,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Académie Elite Football. Tous droits réservés.</p>
+                <p>&copy; 2025 Académie FADY Football. Tous droits réservés.</p>
                 <div class="footer-legal">
                     <a href="#">Mentions Légales</a>
                     <a href="#">Politique de Confidentialité</a>

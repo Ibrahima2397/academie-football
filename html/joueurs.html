@@ -198,35 +198,91 @@
                     </div>
                 </a>
             </div>
+            
             <ul class="nav-menu" id="navMenu">
-                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
                 <li class="dropdown">
-                    <a href="#">Services</a>
+                    <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
-                        <li><a href="staff.html">Notre Staff</a></li>
-                        <li><a href="entraineurs.html">Les Entraîneurs</a></li>
-                        <li><a href="joueurs.html" class="active">Information des Joueurs</a></li>
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="academie.html#mission"><i class="fas fa-bullseye"></i> Notre mission</a></li>
+                        <li><a href="academie.html#infrastructures"><i class="fas fa-building"></i> Nos infrastructures</a></li>
+                        <li><a href="academie.html#partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a></li>
+                        <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="programmes.html">Programmes</a>
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
                     <ul class="dropdown-menu">
-                        <li><a href="equipes.html">Équipes</a></li>
-                        <li><a href="entrainements.html">Entraînements</a></li>
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                        <li><a href="services.html#stages"><i class="fas fa-trophy"></i> Stages & Tournois</a></li>
                     </ul>
                 </li>
-                <li><a href="galerie.html">Galerie</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="programmes.html#u13"><i class="fas fa-user"></i> Programme U13</a></li>
+                        <li><a href="programmes.html#u15"><i class="fas fa-user"></i> Programme U15</a></li>
+                        <li><a href="programmes.html#u17"><i class="fas fa-user"></i> Programme U17</a></li>
+                        <li><a href="programmes.html#u19"><i class="fas fa-user"></i> Programme U19</a></li>
+                        <li><a href="programmes.html#seniors"><i class="fas fa-user"></i> Programme Seniors</a></li>
+                        <li><a href="programmes.html#individuel"><i class="fas fa-user-check"></i> Programme individuel</a></li>
+                    </ul>
+                </li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
 
             <div class="nav-actions">
                 <div class="search-container">
-                    <input type="text" placeholder="Recherche...">
+                    <input type="text" placeholder="Rechercher...">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="auth-links">
-                    <a href="connexion.html" class="auth-btn login">Connexion</a>
-                    <a href="inscription.html" class="auth-btn signup">Inscription</a>
+
+                <div class="nav-tool-wrapper">
+                    <button class="notif-btn" id="notifBtn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-badge">3</span>
+                    </button>
+                    <div class="notif-panel" id="notifPanel">
+                        <div class="notif-header">
+                            <span>Alertes & Notifications</span>
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Match U17 ce samedi</strong>
+                            <span>Victoire 3-1 contre Labé FC au Stade Régional.</span>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Session de détection</strong>
+                            <span>Inscriptions ouvertes pour la promo 2026.</span>
+                        </div>
+                        <div class="notif-item">
+                            <strong>Nouveau partenaire</strong>
+                            <span>Bienvenue à notre nouvel équipementier !</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-tool-wrapper">
+                    <button class="lang-btn" id="langBtn" title="Langue">
+                        <i class="fas fa-globe"></i> FR <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button onclick="showAlert('Langue changée en Français', 'success')">🇫🇷 Français</button>
+                        <button onclick="showAlert('Language switched to English', 'success')">🇬🇧 English</button>
+                    </div>
+                </div>
+
+                <div class="auth-links" id="navbarAuthLinks">
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
                 </div>
             </div>
 
@@ -237,6 +293,56 @@
             </div>
         </div>
     </nav>
+
+    <!-- Quick Access Bar -->
+    <div class="quick-access-bar">
+        <div class="container">
+            <div class="quick-access-grid">
+                <a href="actualites.html#calendrier" class="quick-card">
+                    <div class="icon-box"><i class="far fa-calendar-alt"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Calendrier des matchs</strong>
+                        <span>Voir les prochains matchs</span>
+                    </div>
+                </a>
+                <a href="galerie_direct.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Résultats en direct</strong>
+                        <span>Scores en temps réel</span>
+                    </div>
+                </a>
+                <a href="equipes.html#classements" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-trophy"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Classements</strong>
+                        <span>Classements des équipes</span>
+                    </div>
+                </a>
+                <a href="joueurs.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-users"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Joueurs</strong>
+                        <span>Découvrir nos talents</span>
+                    </div>
+                </a>
+                <a href="academie.html#staff" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Staff technique</strong>
+                        <span>Nos entraîneurs</span>
+                    </div>
+                </a>
+                <a href="boutique.html" class="quick-card">
+                    <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
+                    <div class="quick-card-text">
+                        <strong>Boutique</strong>
+                        <span>Équipements et maillots</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <div class="joueurs-container">
