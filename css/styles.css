@@ -3343,5 +3343,146 @@ body {
     line-height: 1.45;
 }
 
+/* Mobile Money & Payment Method Selection Styles */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.payment-method-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+    user-select: none;
+}
+
+.payment-method-card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+.payment-method-card.selected {
+    border-color: #ff6600;
+    background: #fff7ed;
+    box-shadow: 0 4px 14px rgba(255, 102, 0, 0.15);
+}
+
+.payment-method-card.selected.mtn {
+    border-color: #ffcc00;
+    background: #fefce8;
+    box-shadow: 0 4px 14px rgba(255, 204, 0, 0.2);
+}
+
+.payment-method-card.selected.wave {
+    border-color: #00aaff;
+    background: #f0f9ff;
+    box-shadow: 0 4px 14px rgba(0, 170, 255, 0.2);
+}
+
+.payment-method-card.selected.card {
+    border-color: #1e3a8a;
+    background: #eff6ff;
+    box-shadow: 0 4px 14px rgba(30, 58, 138, 0.2);
+}
+
+.payment-icon {
+    font-size: 1.4rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.payment-icon.orange {
+    background: linear-gradient(135deg, #ff6600 0%, #d95300 100%);
+}
+
+.payment-icon.mtn {
+    background: linear-gradient(135deg, #ffcc00 0%, #e6b800 100%);
+    color: #000000;
+}
+
+.payment-icon.wave {
+    background: linear-gradient(135deg, #00aaff 0%, #0088cc 100%);
+}
+
+.payment-icon.card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+}
+
+.payment-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.payment-subtitle {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+.phone-input-group {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+.phone-input-group:focus-within {
+    border-color: #ff6600;
+    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+.phone-prefix {
+    background: #f1f5f9;
+    padding: 0.75rem 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    font-size: 0.95rem;
+    border-right: 1px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.phone-field {
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    color: #0f172a;
+}
+
+.currency-badge {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+
 
 

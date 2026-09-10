@@ -515,7 +515,7 @@ function initCategoryFilter() {
     if (active) showCategory(active.dataset.category);
 }
 
-// Fonction globale d'ouverture du modal d'achat
+// Fonction globale d'ouverture du modal d'achat avec paiement Mobile Money (Orange Money, MTN MoMo, Wave, CB)
 function openBuyModal(name, priceStr, desc) {
     let modal = document.getElementById('shopBuyModal');
     if (!modal) {
@@ -523,65 +523,184 @@ function openBuyModal(name, priceStr, desc) {
         modal.id = 'shopBuyModal';
         modal.className = 'shop-modal-overlay';
         modal.innerHTML = `
-            <div class="shop-modal-content">
+            <div class="shop-modal-content" style="max-width: 520px; border-radius: 20px;">
                 <button class="shop-modal-close" onclick="closeBuyModal()">&times;</button>
-                <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="width: 70px; height: 70px; background: #eff6ff; color: #1e3a8a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem;">
+                
+                <div style="text-align: center; margin-bottom: 1.25rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 0.75rem; box-shadow: 0 6px 16px rgba(30,58,138,0.25);">
                         <i class="fas fa-shopping-bag"></i>
                     </div>
-                    <h3 id="modalProdTitle" style="color: #0f172a; font-size: 1.4rem; margin-bottom: 0.5rem;"></h3>
-                    <p id="modalProdDesc" style="color: #64748b; font-size: 0.95rem;"></p>
+                    <h3 id="modalProdTitle" style="color: #0f172a; font-size: 1.35rem; font-weight: 800; margin-bottom: 0.25rem;"></h3>
+                    <p id="modalProdDesc" style="color: #64748b; font-size: 0.9rem; line-height: 1.4;"></p>
                 </div>
 
-                <div style="background: #f8fafc; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span style="color: #475569; font-weight: 600;">Prix unitaire:</span>
-                        <strong id="modalProdPrice" style="color: #1e3a8a; font-size: 1.2rem;"></strong>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <span style="color: #475569; font-weight: 600; font-size: 0.95rem;">Prix unitaire:</span>
+                        <strong id="modalProdPrice" style="color: #1e3a8a; font-size: 1.15rem;"></strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <label for="buyQty" style="color: #475569; font-weight: 600;">Quantité:</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <label for="buyQty" style="color: #475569; font-weight: 600; font-size: 0.95rem;">Quantité:</label>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <button onclick="changeModalQty(-1)" style="width: 32px; height: 32px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-weight: bold; cursor: pointer;">-</button>
-                            <input type="number" id="buyQty" value="1" min="1" max="99" style="width: 50px; text-align: center; font-weight: bold; border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px;" readonly>
-                            <button onclick="changeModalQty(1)" style="width: 32px; height: 32px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-weight: bold; cursor: pointer;">+</button>
+                            <button onclick="changeModalQty(-1)" style="width: 34px; height: 34px; border: 1px solid #cbd5e1; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; color: #1e3a8a;">-</button>
+                            <input type="number" id="buyQty" value="1" min="1" max="99" style="width: 55px; text-align: center; font-weight: 800; border: 1px solid #cbd5e1; border-radius: 8px; padding: 5px; font-size: 1rem; color: #0f172a;" readonly>
+                            <button onclick="changeModalQty(1)" style="width: 34px; height: 34px; border: 1px solid #cbd5e1; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; color: #1e3a8a;">+</button>
                         </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 0.75rem; margin-top: 0.75rem;">
-                        <span style="color: #0f172a; font-weight: 700;">Total à payer:</span>
-                        <strong id="modalProdTotal" style="color: #16a34a; font-size: 1.3rem;"></strong>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #cbd5e1; padding-top: 0.75rem; margin-top: 0.75rem;">
+                        <div>
+                            <span style="color: #0f172a; font-weight: 700; display: block;">Total à régler:</span>
+                            <span id="modalProdGnf" style="color: #64748b; font-size: 0.8rem; font-weight: 600;">(~ 0 GNF)</span>
+                        </div>
+                        <strong id="modalProdTotal" style="color: #16a34a; font-size: 1.35rem; font-weight: 800;"></strong>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 1rem;">
-                    <button onclick="closeBuyModal()" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; background: white; color: #475569; border-radius: 12px; font-weight: 600; cursor: pointer;">Annuler</button>
-                    <button onclick="confirmOrder()" style="flex: 2; padding: 0.8rem; border: none; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.3);"><i class="fas fa-check-circle"></i> Confirmer l'achat</button>
+                <!-- Mode de paiement -->
+                <div style="margin-bottom: 1.25rem;">
+                    <label style="display: block; font-weight: 700; font-size: 0.9rem; color: #0f172a; margin-bottom: 0.6rem;">
+                        <i class="fas fa-wallet" style="color: #f59e0b; margin-right: 0.4rem;"></i> Choisir le moyen de paiement:
+                    </label>
+                    <div class="payment-methods-grid" id="paymentMethodsGrid">
+                        <div class="payment-method-card selected" onclick="selectPaymentMethod('orange')" data-method="orange">
+                            <div class="payment-icon orange"><i class="fas fa-mobile-alt"></i></div>
+                            <span class="payment-name">Orange Money</span>
+                            <span class="payment-subtitle">*144# (Guinée)</span>
+                        </div>
+                        <div class="payment-method-card mtn" onclick="selectPaymentMethod('mtn')" data-method="mtn">
+                            <div class="payment-icon mtn"><i class="fas fa-phone-alt"></i></div>
+                            <span class="payment-name">MTN MoMo</span>
+                            <span class="payment-subtitle">*145# (Guinée)</span>
+                        </div>
+                        <div class="payment-method-card wave" onclick="selectPaymentMethod('wave')" data-method="wave">
+                            <div class="payment-icon wave"><i class="fas fa-water"></i></div>
+                            <span class="payment-name">Wave</span>
+                            <span class="payment-subtitle">Mobile App</span>
+                        </div>
+                        <div class="payment-method-card card" onclick="selectPaymentMethod('card')" data-method="card">
+                            <div class="payment-icon card"><i class="fas fa-credit-card"></i></div>
+                            <span class="payment-name">Carte Visa/MC</span>
+                            <span class="payment-subtitle">En ligne</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Champ Numéro Mobile / Compte -->
+                <div id="paymentPhoneContainer" style="margin-bottom: 1.25rem;">
+                    <label for="payPhoneNumber" style="display: block; font-weight: 700; font-size: 0.85rem; color: #334155; margin-bottom: 0.4rem;">
+                        <i class="fas fa-phone" style="color: #ff6600;" id="phoneLabelIcon"></i> <span id="phoneLabelText">Numéro Orange Money:</span>
+                    </label>
+                    <div class="phone-input-group">
+                        <div class="phone-prefix">
+                            <span>🇬🇳</span> +224
+                        </div>
+                        <input type="tel" id="payPhoneNumber" class="phone-field" placeholder="62X XX XX XX" maxlength="12">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                    <button onclick="closeBuyModal()" style="flex: 1; padding: 0.85rem; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s;">Annuler</button>
+                    <button id="submitPayBtn" onclick="confirmOrder()" style="flex: 2; padding: 0.85rem; border: none; background: linear-gradient(135deg, #ff6600 0%, #d95300 100%); color: white; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(255,102,0,0.35); font-size: 0.95rem;">
+                        <i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Orange Money
+                    </button>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
     }
 
-    // Set values
+    // Set product values
     document.getElementById('modalProdTitle').textContent = name;
     document.getElementById('modalProdDesc').textContent = desc || '';
     document.getElementById('modalProdPrice').textContent = priceStr;
     document.getElementById('buyQty').value = 1;
     
     // Parse numeric price for calculation
-    const numPrice = parseFloat(priceStr.replace(/[^0-9,.]/g, '').replace(',', '.')) || 35;
+    const numPrice = parseFloat(priceStr.replace(/[^0-9,.]/g, '').replace(',', '.')) || 35.00;
     window.currentUnitNumPrice = numPrice;
-    document.getElementById('modalProdTotal').textContent = numPrice + ' €';
+    window.selectedPayMethod = 'orange';
+
+    updateModalTotals(1);
 
     modal.classList.add('active');
 }
 
+function updateModalTotals(qty) {
+    const numPrice = window.currentUnitNumPrice || 35.00;
+    const totalEur = (numPrice * qty).toFixed(2);
+    const totalGnf = Math.round(numPrice * qty * 9500).toLocaleString('fr-FR');
+
+    const totalElem = document.getElementById('modalProdTotal');
+    const gnfElem = document.getElementById('modalProdGnf');
+    
+    if (totalElem) totalElem.textContent = totalEur + ' €';
+    if (gnfElem) gnfElem.textContent = `(~ ${totalGnf} GNF)`;
+}
+
 function changeModalQty(delta) {
     const qtyInput = document.getElementById('buyQty');
+    if (!qtyInput) return;
     let qty = parseInt(qtyInput.value) || 1;
     qty = Math.max(1, Math.min(99, qty + delta));
     qtyInput.value = qty;
-    const total = (window.currentUnitNumPrice * qty).toFixed(2);
-    document.getElementById('modalProdTotal').textContent = total + ' €';
+    updateModalTotals(qty);
+}
+
+function selectPaymentMethod(method) {
+    window.selectedPayMethod = method;
+    const cards = document.querySelectorAll('.payment-method-card');
+    cards.forEach(c => c.classList.remove('selected'));
+
+    const activeCard = document.querySelector(`.payment-method-card[data-method="${method}"]`);
+    if (activeCard) activeCard.classList.add('selected');
+
+    const phoneContainer = document.getElementById('paymentPhoneContainer');
+    const phoneInput = document.getElementById('payPhoneNumber');
+    const phoneLabelText = document.getElementById('phoneLabelText');
+    const phoneLabelIcon = document.getElementById('phoneLabelIcon');
+    const submitBtn = document.getElementById('submitPayBtn');
+
+    if (method === 'orange') {
+        phoneContainer.style.display = 'block';
+        phoneLabelText.textContent = 'Numéro Orange Money:';
+        phoneLabelIcon.style.color = '#ff6600';
+        if (phoneInput) phoneInput.placeholder = '62X XX XX XX';
+        if (submitBtn) {
+            submitBtn.style.background = 'linear-gradient(135deg, #ff6600 0%, #d95300 100%)';
+            submitBtn.style.boxShadow = '0 4px 14px rgba(255,102,0,0.35)';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Orange Money';
+        }
+    } else if (method === 'mtn') {
+        phoneContainer.style.display = 'block';
+        phoneLabelText.textContent = 'Numéro MTN Mobile Money:';
+        phoneLabelIcon.style.color = '#e6b800';
+        if (phoneInput) phoneInput.placeholder = '66X XX XX XX';
+        if (submitBtn) {
+            submitBtn.style.background = 'linear-gradient(135deg, #e6b800 0%, #b38f00 100%)';
+            submitBtn.style.boxShadow = '0 4px 14px rgba(230,184,0,0.35)';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec MTN MoMo';
+        }
+    } else if (method === 'wave') {
+        phoneContainer.style.display = 'block';
+        phoneLabelText.textContent = 'Numéro Wave Mobile:';
+        phoneLabelIcon.style.color = '#00aaff';
+        if (phoneInput) phoneInput.placeholder = '62X / 66X XX XX XX';
+        if (submitBtn) {
+            submitBtn.style.background = 'linear-gradient(135deg, #00aaff 0%, #0088cc 100%)';
+            submitBtn.style.boxShadow = '0 4px 14px rgba(0,170,255,0.35)';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Wave';
+        }
+    } else if (method === 'card') {
+        phoneContainer.style.display = 'block';
+        phoneLabelText.textContent = 'Numéro de Téléphone (Contact):';
+        phoneLabelIcon.style.color = '#1e3a8a';
+        if (phoneInput) phoneInput.placeholder = '6XX XX XX XX';
+        if (submitBtn) {
+            submitBtn.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)';
+            submitBtn.style.boxShadow = '0 4px 14px rgba(30,58,138,0.35)';
+            submitBtn.innerHTML = '<i class="fas fa-credit-card" style="margin-right: 0.4rem;"></i> Payer par Carte Bancaire';
+        }
+    }
 }
 
 function closeBuyModal() {
@@ -591,12 +710,34 @@ function closeBuyModal() {
 
 function confirmOrder() {
     const name = document.getElementById('modalProdTitle').textContent;
-    const total = document.getElementById('modalProdTotal').textContent;
+    const totalEur = document.getElementById('modalProdTotal').textContent;
+    const totalGnf = document.getElementById('modalProdGnf').textContent;
+    const method = window.selectedPayMethod || 'orange';
+    const phoneInput = document.getElementById('payPhoneNumber');
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+
+    if ((method === 'orange' || method === 'mtn' || method === 'wave') && (!phone || phone.length < 8)) {
+        if (typeof showAlert === 'function') {
+            showAlert('⚠️ Veuillez saisir un numéro de téléphone valide à 9 chiffres (+224).', 'danger');
+        } else {
+            alert('Veuillez saisir un numéro de téléphone valide (+224).');
+        }
+        return;
+    }
+
     closeBuyModal();
+
+    let methodTitle = 'Orange Money (*144#)';
+    if (method === 'mtn') methodTitle = 'MTN Mobile Money (*145#)';
+    if (method === 'wave') methodTitle = 'Wave Mobile';
+    if (method === 'card') methodTitle = 'Carte Bancaire';
+
+    const msg = `📲 Demande de paiement ${methodTitle} transmise ! Montant: ${totalEur} ${totalGnf}. ${phone ? 'Numéro: +224 ' + phone + '. Veuillez composer le code de validation sur votre téléphone.' : ''}`;
+
     if (typeof showAlert === 'function') {
-        showAlert(`🎉 Commande confirmée pour "${name}" ! Total: ${total}. Merci de votre achat à l'Académie FADY.`, 'success');
+        showAlert(`🎉 Commande enregistrée pour "${name}" ! ${msg}`, 'success');
     } else {
-        alert(`Commande confirmée pour "${name}" ! Total: ${total}. Merci de votre achat !`);
+        alert(`Commande enregistrée pour "${name}" ! ${msg}`);
     }
 }
 
