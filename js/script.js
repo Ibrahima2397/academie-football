@@ -488,31 +488,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initCategoryFilter() {
     const tabs = Array.from(document.querySelectorAll('.category-btn'));
-    const cards = Array.from(document.querySelectorAll('.player-card'));
+    const cards = Array.from(document.querySelectorAll('.product-card, .player-card'));
 
     function showCategory(cat) {
         tabs.forEach(t => t.classList.toggle('active', t.dataset.category === cat));
 
-        // animation simple: fade out current, then show matching
         cards.forEach(card => {
-            if (card.dataset.category === cat) {
-                card.style.display = '';
-                card.style.opacity = '0';
-                requestAnimationFrame(() => {
-                    card.style.transition = 'opacity 300ms ease-out, transform 300ms ease-out';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                });
+            if (cat === 'all' || card.dataset.category === cat) {
+                card.style.display = 'flex';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
             } else {
-                card.style.transition = 'opacity 200ms ease-in, transform 200ms ease-in';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(10px)';
-                setTimeout(() => { card.style.display = 'none'; }, 220);
+                card.style.display = 'none';
             }
         });
     }
 
-    // Attacher les handlers
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const cat = tab.dataset.category;
@@ -520,7 +511,92 @@ function initCategoryFilter() {
         });
     });
 
-    // Afficher la catégorie active initiale
     const active = tabs.find(t => t.classList.contains('active')) || tabs[0];
     if (active) showCategory(active.dataset.category);
 }
+
+// Fonction globale d'ouverture du modal d'achat
+function openBuyModal(name, priceStr, desc) {
+    let modal = document.getElementById('shopBuyModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'shopBuyModal';
+        modal.className = 'shop-modal-overlay';
+        modal.innerHTML = `
+            <div class="shop-modal-content">
+                <button class="shop-modal-close" onclick="closeBuyModal()">&times;</button>
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="width: 70px; height: 70px; background: #eff6ff; color: #1e3a8a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem;">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 id="modalProdTitle" style="color: #0f172a; font-size: 1.4rem; margin-bottom: 0.5rem;"></h3>
+                    <p id="modalProdDesc" style="color: #64748b; font-size: 0.95rem;"></p>
+                </div>
+
+                <div style="background: #f8fafc; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span style="color: #475569; font-weight: 600;">Prix unitaire:</span>
+                        <strong id="modalProdPrice" style="color: #1e3a8a; font-size: 1.2rem;"></strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <label for="buyQty" style="color: #475569; font-weight: 600;">Quantité:</label>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <button onclick="changeModalQty(-1)" style="width: 32px; height: 32px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-weight: bold; cursor: pointer;">-</button>
+                            <input type="number" id="buyQty" value="1" min="1" max="99" style="width: 50px; text-align: center; font-weight: bold; border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px;" readonly>
+                            <button onclick="changeModalQty(1)" style="width: 32px; height: 32px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; font-weight: bold; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 0.75rem; margin-top: 0.75rem;">
+                        <span style="color: #0f172a; font-weight: 700;">Total à payer:</span>
+                        <strong id="modalProdTotal" style="color: #16a34a; font-size: 1.3rem;"></strong>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="closeBuyModal()" style="flex: 1; padding: 0.8rem; border: 1px solid #cbd5e1; background: white; color: #475569; border-radius: 12px; font-weight: 600; cursor: pointer;">Annuler</button>
+                    <button onclick="confirmOrder()" style="flex: 2; padding: 0.8rem; border: none; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.3);"><i class="fas fa-check-circle"></i> Confirmer l'achat</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    // Set values
+    document.getElementById('modalProdTitle').textContent = name;
+    document.getElementById('modalProdDesc').textContent = desc || '';
+    document.getElementById('modalProdPrice').textContent = priceStr;
+    document.getElementById('buyQty').value = 1;
+    
+    // Parse numeric price for calculation
+    const numPrice = parseFloat(priceStr.replace(/[^0-9,.]/g, '').replace(',', '.')) || 35;
+    window.currentUnitNumPrice = numPrice;
+    document.getElementById('modalProdTotal').textContent = numPrice + ' €';
+
+    modal.classList.add('active');
+}
+
+function changeModalQty(delta) {
+    const qtyInput = document.getElementById('buyQty');
+    let qty = parseInt(qtyInput.value) || 1;
+    qty = Math.max(1, Math.min(99, qty + delta));
+    qtyInput.value = qty;
+    const total = (window.currentUnitNumPrice * qty).toFixed(2);
+    document.getElementById('modalProdTotal').textContent = total + ' €';
+}
+
+function closeBuyModal() {
+    const modal = document.getElementById('shopBuyModal');
+    if (modal) modal.classList.remove('active');
+}
+
+function confirmOrder() {
+    const name = document.getElementById('modalProdTitle').textContent;
+    const total = document.getElementById('modalProdTotal').textContent;
+    closeBuyModal();
+    if (typeof showAlert === 'function') {
+        showAlert(`🎉 Commande confirmée pour "${name}" ! Total: ${total}. Merci de votre achat à l'Académie FADY.`, 'success');
+    } else {
+        alert(`Commande confirmée pour "${name}" ! Total: ${total}. Merci de votre achat !`);
+    }
+}
+

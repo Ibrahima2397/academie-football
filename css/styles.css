@@ -2828,10 +2828,235 @@ body {
         gap: 1.5rem;
     }
 
-    .footer-legal {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1.5rem;
-    }
+
+/* ==========================================================================
+   BOUTIQUE & E-COMMERCE STYLES
+   ========================================================================== */
+.products {
+    padding: 3rem 0 5rem;
 }
+
+.category-tabs {
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    padding: 0.5rem 0 1.5rem;
+    margin-bottom: 2.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f1f5f9;
+}
+
+.category-btn {
+    padding: 0.75rem 1.4rem;
+    border: 2px solid #e2e8f0;
+    background: #ffffff;
+    color: #334155;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.category-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.category-btn.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1e3a8a 100%);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.25);
+}
+
+.product-list.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    border-color: #cbd5e1;
+}
+
+.product-card .img-wrapper {
+    width: 100%;
+    height: 210px;
+    position: relative;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-card .img-wrapper svg,
+.product-card .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .img-wrapper img,
+.product-card:hover .img-wrapper svg {
+    transform: scale(1.08);
+}
+
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--accent-color, #f59e0b);
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.product-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-body h4 {
+    font-size: 1.15rem;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.product-body p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1.25rem;
+    line-height: 1.45;
+    flex-grow: 1;
+}
+
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.product-price {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+.buy-btn {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.buy-btn:hover {
+    background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+    transform: scale(1.04);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.4);
+}
+
+/* Modal d'achat */
+.shop-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.shop-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.shop-modal-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shop-modal-overlay.active .shop-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.shop-modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: #f1f5f9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.shop-modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
 
