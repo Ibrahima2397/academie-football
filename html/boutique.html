@@ -323,40 +323,57 @@
     </div>
 
     <main class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <h2>Boutique</h2>
-                <p>Les articles disponibles issus du catalogue seront listés ci-dessous.</p>
+        <!-- Hero Banner E-Commerce Pro -->
+        <section class="shop-hero-banner">
+            <div class="shop-hero-badge"><i class="fas fa-shield-alt"></i> Boutique Officielle Académie FADY</div>
+            <h2>Équipements de Football Pro & Merchandising Club</h2>
+            <p>Découvrez notre gamme complète d'équipements homologués : maillots officiels 2026, crampons de précision, tenues de gardien et matériel d'entraînement certifié.</p>
+            
+            <div class="shop-trust-pills">
+                <div class="trust-pill"><i class="fas fa-truck-fast"></i> Expédition 24h / 48h (Guinée & International)</div>
+                <div class="trust-pill"><i class="fas fa-check-circle"></i> 100% Qualité Club Certifiée</div>
+                <div class="trust-pill"><i class="fas fa-undo"></i> Échange Facile sous 14 jours</div>
             </div>
         </section>
 
+        <!-- Main Products Section -->
         <section id="produits" class="products">
-            <div class="section-header">
-                <h3>Catalogue d'Équipements & Boutique Officielle</h3>
-                <p style="color: #64748b; font-size: 1.05rem; max-width: 700px; text-align: center; margin-top: 0.5rem;">
-                    Découvrez nos articles officiels de l'Académie FADY et nos équipements professionnels. Cliquez sur une catégorie ci-dessous pour filtrer les produits ou commander directement avec image et prix.
-                </p>
-                <div class="header-line" style="margin-top: 1rem;"></div>
+            
+            <!-- Controls Bar: Search & Sort -->
+            <div class="shop-controls-bar">
+                <div class="shop-search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="shopSearchInput" placeholder="Rechercher un maillot, des crampons, un ballon...">
+                </div>
+                
+                <div class="shop-sort-box">
+                    <select id="shopSortSelect">
+                        <option value="default">Trier par : Recommandés</option>
+                        <option value="price-asc">Prix : du + bas au + haut</option>
+                        <option value="price-desc">Prix : du + haut au + bas</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Category Filter Tabs -->
+            <!-- Category Filter Pills -->
             <div id="category-tabs" class="category-tabs">
                 <button class="category-btn active" data-category="all"><i class="fas fa-th-large"></i> Tous les articles</button>
-                <button class="category-btn" data-category="equipements-joueur"><i class="fas fa-tshirt"></i> Équipements Joueur</button>
+                <button class="category-btn" data-category="equipements-joueur"><i class="fas fa-tshirt"></i> Tenues &amp; Crampons</button>
                 <button class="category-btn" data-category="gardien"><i class="fas fa-mitten"></i> Gardien de But</button>
-                <button class="category-btn" data-category="ballons"><i class="fas fa-futbol"></i> Ballons de Football</button>
+                <button class="category-btn" data-category="ballons"><i class="fas fa-futbol"></i> Ballons Officiels</button>
                 <button class="category-btn" data-category="entrainement"><i class="fas fa-running"></i> Matériel d'Entraînement</button>
-                <button class="category-btn" data-category="terrain"><i class="fas fa-border-all"></i> Terrain &amp; Match</button>
+                <button class="category-btn" data-category="terrain"><i class="fas fa-border-all"></i> Équipements Terrain</button>
                 <button class="category-btn" data-category="accessoires"><i class="fas fa-first-aid"></i> Accessoires &amp; Soins</button>
             </div>
 
-            <!-- Product List Grid -->
+            <!-- Product Grid -->
             <div id="product-list" class="product-list grid">
 
                 <!-- 1. ÉQUIPEMENTS DU JOUEUR -->
                 <div class="product-card" data-category="equipements-joueur">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Bestseller</span>
+                        <span class="product-badge">BESTSELLER</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <circle cx="100" cy="70" r="50" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4"/>
@@ -369,18 +386,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">NIKE SOCCER / FADY</div>
                         <h4>Crampons Elite Pro FG/AG</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(42 avis)</span></div>
                         <p>Chaussures de football haute précision avec crampons moulés pour terrain naturel et synthétique.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">39</span><span class="size-tag">40</span><span class="size-tag">41</span><span class="size-tag">42</span><span class="size-tag">43</span><span class="size-tag">44</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock - Expédié sous 24h</div>
                         <div class="product-footer">
-                            <div class="product-price">120.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Crampons Elite Pro FG/AG', '120.00 €', 'Crampons moulés haute précision pour terrain naturel et synthétique.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <div class="product-price">120.00 € <span class="old-price">145.00 €</span></div>
+                            <button class="buy-btn" onclick="openBuyModal('Crampons Elite Pro FG/AG', '120.00 €', 'Crampons moulés haute précision pour terrain naturel et synthétique.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="equipements-joueur">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Officiel</span>
+                        <span class="product-badge">OFFICIEL 2026</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1e3a8a"/>
                             <path d="M60 40 L80 25 L120 25 L140 40 L125 45 L125 110 L75 110 L75 45 Z" fill="#2563eb" stroke="#f59e0b" stroke-width="2"/>
@@ -391,18 +415,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">ACADÉMIE FADY OFFICIAL</div>
                         <h4>Maillot Domicile Officiel FADY</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(58 avis)</span></div>
                         <p>Maillot officiel de l'Académie FADY, tissu respirant Dri-FIT haute performance avec blason brodé.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">XS</span><span class="size-tag">S</span><span class="size-tag">M</span><span class="size-tag">L</span><span class="size-tag">XL</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock - Personnalisation possible</div>
                         <div class="product-footer">
-                            <div class="product-price">45.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Maillot Domicile Officiel FADY', '45.00 €', 'Maillot officiel de l\'Académie FADY, tissu respirant Dri-FIT.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <div class="product-price">45.00 € <span class="old-price">55.00 €</span></div>
+                            <button class="buy-btn" onclick="openBuyModal('Maillot Domicile Officiel FADY', '45.00 €', 'Maillot officiel de l\'Académie FADY, tissu respirant Dri-FIT.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="equipements-joueur">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Set Match</span>
+                        <span class="product-badge">SET MATCH</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <path d="M65 40 L135 40 L130 90 L102 90 L100 65 L98 65 L96 90 L70 90 Z" fill="#1d4ed8"/>
@@ -412,18 +443,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">ACADÉMIE FADY PRO</div>
                         <h4>Short &amp; Chaussettes Match</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(19 avis)</span></div>
                         <p>Ensemble de short léger avec chaussettes de football hautes élastiques anti-glissements.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">S</span><span class="size-tag">M</span><span class="size-tag">L</span><span class="size-tag">XL</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">25.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Short & Chaussettes Match', '25.00 €', 'Ensemble short et chaussettes de match officiel FADY.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Short & Chaussettes Match', '25.00 €', 'Ensemble short et chaussettes de match officiel FADY.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="equipements-joueur">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Pro Protect</span>
+                        <span class="product-badge">PROTECT PRO</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1e293b"/>
                             <path d="M70 30 Q100 20 130 30 Q140 70 120 110 Q100 120 80 110 Q60 70 70 30 Z" fill="url(#carb)"/>
@@ -438,19 +476,26 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">FADY ARMOUR</div>
                         <h4>Protège-Tibias Carbone Ultra-Léger</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(31 avis)</span></div>
                         <p>Coque rigide en fibre de carbone injectée avec mousse d'absorption EVA alvéolée.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">S (Enfant)</span><span class="size-tag">M (Ado)</span><span class="size-tag">L (Adulte)</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">35.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Protège-Tibias Carbone Ultra-Léger', '35.00 €', 'Coque rigide en fibre de carbone injectée avec mousse EVA.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Protège-Tibias Carbone Ultra-Léger', '35.00 €', 'Coque rigide en fibre de carbone injectée avec mousse EVA.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2. GARDIEN DE BUT -->
                 <div class="product-card" data-category="gardien">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Top Grip</span>
+                        <span class="product-badge">ULTIMA GRIP</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#065f46"/>
                             <path d="M60 90 L60 50 L75 35 L90 50 L100 30 L110 50 L125 35 L140 50 L140 90 Q100 115 60 90 Z" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
@@ -459,18 +504,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">REUSCH / FADY PRO</div>
                         <h4>Gants Gardien Pro Grip Latex 4mm</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(24 avis)</span></div>
                         <p>Gants de gardien avec mousse Contact Latex 4mm pour une adhérence ultime par tous temps.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">T7</span><span class="size-tag">T8</span><span class="size-tag">T9</span><span class="size-tag">T10</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
-                            <div class="product-price">65.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Gants Gardien Pro Grip Latex 4mm', '65.00 €', 'Mousse Contact Latex 4mm pour adhérence maximale par tous temps.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <div class="product-price">65.00 € <span class="old-price">79.00 €</span></div>
+                            <button class="buy-btn" onclick="openBuyModal('Gants Gardien Pro Grip Latex 4mm', '65.00 €', 'Mousse Contact Latex 4mm pour adhérence maximale par tous temps.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="gardien">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Protection</span>
+                        <span class="product-badge">PROTECTION</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <path d="M50 45 L80 30 L120 30 L150 45 L135 55 L135 110 L65 110 L65 55 Z" fill="#047857"/>
@@ -480,19 +532,26 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">UHLSPORT / FADY</div>
                         <h4>Maillot Gardien Matelassé</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(16 avis)</span></div>
                         <p>Maillot spécifique gardien avec renforts en mousse haute densité aux coudes et épaules.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">S</span><span class="size-tag">M</span><span class="size-tag">L</span><span class="size-tag">XL</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">55.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Maillot Gardien Matelassé', '55.00 €', 'Renforts en mousse aux coudes et épaules pour amortir les plongeons.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Maillot Gardien Matelassé', '55.00 €', 'Renforts en mousse aux coudes et épaules pour amortir les plongeons.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. BALLONS DE FOOTBALL -->
                 <div class="product-card" data-category="ballons">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">FIFA Quality Pro</span>
+                        <span class="product-badge">FIFA QUALITY PRO</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1e3a8a"/>
                             <circle cx="100" cy="65" r="42" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
@@ -502,18 +561,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">ADIDAS / FIFA PRO</div>
                         <h4>Ballon Officiel Match FIFA Pro</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(65 avis)</span></div>
                         <p>Ballon thermosoudé officiel de compétition certifié FIFA Quality Pro, trajectoire parfaite.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Taille 5 (Officielle)</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock - Prêt à gonfler</div>
                         <div class="product-footer">
-                            <div class="product-price">110.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Ballon Officiel Match FIFA Pro', '110.00 €', 'Ballon thermosoudé certifié FIFA Quality Pro pour compétition.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <div class="product-price">110.00 € <span class="old-price">130.00 €</span></div>
+                            <button class="buy-btn" onclick="openBuyModal('Ballon Officiel Match FIFA Pro', '110.00 €', 'Ballon thermosoudé certifié FIFA Quality Pro pour compétition.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="ballons">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Club Pack</span>
+                        <span class="product-badge">CLUB PACK</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#334155"/>
                             <circle cx="100" cy="65" r="40" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
@@ -522,19 +588,26 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">PUMA FOOTBALL</div>
                         <h4>Ballon d'Entraînement Haute Résistance</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(38 avis)</span></div>
                         <p>Ballon cousu main avec revêtement TPU ultra-résistant pour séances quotidiennes de l'Académie.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Taille 4 (U11-U13)</span><span class="size-tag">Taille 5 (Senior)</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">28.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Ballon d\'Entraînement Haute Résistance', '28.00 €', 'Revêtement TPU ultra-résistant pour séances d\'entraînement.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Ballon d\'Entraînement Haute Résistance', '28.00 €', 'Revêtement TPU ultra-résistant pour séances d\'entraînement.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4. MATÉRIEL D'ENTRAÎNEMENT -->
                 <div class="product-card" data-category="entrainement">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Lot de 50</span>
+                        <span class="product-badge">LOT DE 50</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <polygon points="100,35 60,95 140,95" fill="#ef4444"/>
@@ -544,18 +617,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">FADY TRAINING</div>
                         <h4>Kit Plots &amp; Coupelles d'Agilité</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(47 avis)</span></div>
                         <p>Lot de 50 coupelles multicolores de démarquage souples incassables avec support de transport.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Multicolores (5 couleurs)</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">24.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Kit Plots & Coupelles d\'Agilité (Lot de 50)', '24.00 €', 'Lot de 50 coupelles multicolores souples avec support.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Kit Plots & Coupelles d\'Agilité (Lot de 50)', '24.00 €', 'Lot de 50 coupelles multicolores souples avec support.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="entrainement">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Vitesse</span>
+                        <span class="product-badge">VITESSE & AGILITÉ</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1e293b"/>
                             <line x1="50" y1="30" x2="50" y2="100" stroke="#f59e0b" stroke-width="4"/>
@@ -567,18 +647,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">SKLZ / FADY</div>
                         <h4>Échelle de Rythme 6 mètres</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(29 avis)</span></div>
                         <p>Échelle d'agilité pour le travail d'appuis, de coordination et de fréquence cardiaque avec sac.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Longueur 6 mètres</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">19.99 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Échelle de Rythme 6m', '19.99 €', 'Échelle d\'agilité 6 mètres pour entraînement des appuis et de la vitesse.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Échelle de Rythme 6m', '19.99 €', 'Échelle d\'agilité 6 mètres pour entraînement des appuis et de la vitesse.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="entrainement">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Pack 10</span>
+                        <span class="product-badge">PACK 10</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1d4ed8"/>
                             <path d="M70 40 L90 28 L110 28 L130 40 L120 100 L80 100 Z" fill="#eab308"/>
@@ -587,19 +674,26 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">FADY GEAR</div>
                         <h4>Pack 10 Chasubles Respirantes</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>(22 avis)</span></div>
                         <p>Chasubles en maille aérée légères pour différencier facilement les équipes lors des matchs d'entraînement.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Jaune / Bleu</span><span class="size-tag">Rouge / Vert</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">35.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Pack 10 Chasubles Respirantes', '35.00 €', 'Lot de 10 chasubles en maille respirante pour entraînement.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Pack 10 Chasubles Respirantes', '35.00 €', 'Lot de 10 chasubles en maille respirante pour entraînement.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 5. TERRAIN & MATCH -->
                 <div class="product-card" data-category="terrain">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Pro Terrain</span>
+                        <span class="product-badge">PRO TERRAIN</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#064e3b"/>
                             <rect x="40" y="30" width="120" height="60" fill="none" stroke="#ffffff" stroke-width="4"/>
@@ -609,18 +703,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">KEEPERSPORT</div>
                         <h4>Filets de But Réglementaire (Paire)</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(14 avis)</span></div>
                         <p>Paire de filets haute résistance maille 120mm pour buts seniors de compétition 7.32m x 2.44m.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">7.32m x 2.44m</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">135.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Filets de But Réglementaire (Paire)', '135.00 €', 'Filets haute résistance pour buts de compétition 7.32m.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Filets de But Réglementaire (Paire)', '135.00 €', 'Filets haute résistance pour buts de compétition 7.32m.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="terrain">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Rebound</span>
+                        <span class="product-badge">REBOUND PRO</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <rect x="50" y="30" width="100" height="65" rx="6" fill="#1e3a8a" stroke="#f59e0b" stroke-width="3"/>
@@ -630,19 +731,26 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">EXIT TOYS / FADY</div>
                         <h4>Rebondeur Tactique Double Face</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(18 avis)</span></div>
                         <p>Filet de renvoi réglable en inclinaison pour travailler le contrôle, la volée et les réflexes gardien.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Dimensions 1.5m x 1.5m</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
-                            <div class="product-price">89.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Rebondeur Tactique Double Face', '89.00 €', 'Filet de renvoi réglable pour travail technique et réflexes.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <div class="product-price">89.00 € <span class="old-price">105.00 €</span></div>
+                            <button class="buy-btn" onclick="openBuyModal('Rebondeur Tactique Double Face', '89.00 €', 'Filet de renvoi réglable pour travail technique et réflexes.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 6. ACCESSOIRES & SOINS -->
                 <div class="product-card" data-category="accessoires">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Sac Officiel</span>
+                        <span class="product-badge">CLUB EDITION</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#1e293b"/>
                             <rect x="65" y="35" width="70" height="70" rx="12" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
@@ -652,18 +760,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">ACADÉMIE FADY MERCH</div>
                         <h4>Sac à Dos Ergonomique Académie</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(51 avis)</span></div>
                         <p>Sac à dos renforcé avec compartiment spécial chaussures aéré et poche ballon séparée.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Volume 35 Litres</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">39.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Sac à Dos Ergonomique Académie', '39.00 €', 'Sac à dos avec compartiment chaussures aéré et poche ballon.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Sac à Dos Ergonomique Académie', '39.00 €', 'Sac à dos avec compartiment chaussures aéré et poche ballon.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="accessoires">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Coach Kit</span>
+                        <span class="product-badge">COACH KIT</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#0f172a"/>
                             <rect x="55" y="25" width="90" height="75" rx="4" fill="#ffffff" stroke="#f59e0b" stroke-width="3"/>
@@ -673,18 +788,25 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">TACTIC PRO</div>
                         <h4>Tableau Tactique Magnétique</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(34 avis)</span></div>
                         <p>Tableau effaçable à sec avec 27 pions magnétiques bicolores et feutre de coach inclus.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Taille 45cm x 30cm</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">45.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Tableau Tactique Magnétique', '45.00 €', 'Tableau effaçable avec pions magnétiques bicolores.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Tableau Tactique Magnétique', '45.00 €', 'Tableau effaçable avec pions magnétiques bicolores.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card" data-category="accessoires">
+                    <button class="wish-btn" onclick="toggleWishlist(this)" title="Ajouter aux favoris"><i class="far fa-heart"></i></button>
                     <div class="img-wrapper">
-                        <span class="product-badge">Soins Staff</span>
+                        <span class="product-badge">SOINS STAFF</span>
                         <svg viewBox="0 0 200 140" width="100%" height="100%">
                             <rect width="200" height="140" fill="#991b1b"/>
                             <rect x="60" y="35" width="80" height="65" rx="8" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
@@ -694,15 +816,47 @@
                         </svg>
                     </div>
                     <div class="product-body">
+                        <div class="brand-tag">SOIN MEDICAL / FADY</div>
                         <h4>Trousse de Premier Secours &amp; Spray Froid</h4>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>(27 avis)</span></div>
                         <p>Sacoche médicale complète terrain : compresses, bandes de contention, strapping, spray froid et ciseaux.</p>
+                        <div class="sizes-pills">
+                            <span class="size-tag">Kit 24 Pièces</span>
+                        </div>
+                        <div class="stock-tag"><span class="dot"></span> En stock</div>
                         <div class="product-footer">
                             <div class="product-price">49.00 €</div>
-                            <button class="buy-btn" onclick="openBuyModal('Trousse de Premier Secours & Spray Froid', '49.00 €', 'Sacoche médicale de terrain complète avec spray froid.')"><i class="fas fa-shopping-cart"></i> Acheter</button>
+                            <button class="buy-btn" onclick="openBuyModal('Trousse de Premier Secours & Spray Froid', '49.00 €', 'Sacoche médicale de terrain complète avec spray froid.')"><i class="fas fa-shopping-bag"></i> Commander</button>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Customer Trust & Guarantees Section -->
+        <section class="shop-features-section">
+            <div class="shop-features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h4>Livraison Rapide</h4>
+                    <p>Expédition sous 24h/48h vers Labé, Conakry et l'ensemble des régions.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Paiement Sécurisé</h4>
+                    <p>Règlement sécurisé par Orange Money, Mobile Money, Carte ou Espèces à la livraison.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <h4>Échange sous 14 Jours</h4>
+                    <p>Erreur de taille ? Échangez facilement vos articles sous 14 jours.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h4>Support Équipementier</h4>
+                    <p>Notre équipe est à votre disposition par téléphone ou WhatsApp pour vous conseiller.</p>
+                </div>
             </div>
         </section>
     </main>

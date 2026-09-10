@@ -600,3 +600,67 @@ function confirmOrder() {
     }
 }
 
+// Initialisation de la recherche et du tri sur la Boutique
+document.addEventListener('DOMContentLoaded', () => {
+    initShopControls();
+});
+
+function initShopControls() {
+    const searchInput = document.getElementById('shopSearchInput');
+    const sortSelect = document.getElementById('shopSortSelect');
+    const cards = Array.from(document.querySelectorAll('.product-card'));
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            cards.forEach(card => {
+                const title = (card.querySelector('h4')?.textContent || '').toLowerCase();
+                const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+                const brand = (card.querySelector('.brand-tag')?.textContent || '').toLowerCase();
+                
+                if (title.includes(query) || desc.includes(query) || brand.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            const grid = document.getElementById('product-list');
+            if (!grid) return;
+
+            const visibleCards = Array.from(grid.querySelectorAll('.product-card'));
+            visibleCards.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector('.product-price')?.textContent.replace(/[^0-9,.]/g, '').replace(',', '.')) || 0;
+                const priceB = parseFloat(b.querySelector('.product-price')?.textContent.replace(/[^0-9,.]/g, '').replace(',', '.')) || 0;
+                
+                if (val === 'price-asc') return priceA - priceB;
+                if (val === 'price-desc') return priceB - priceA;
+                return 0; // default order
+            });
+
+            visibleCards.forEach(card => grid.appendChild(card));
+        });
+    }
+}
+
+function toggleWishlist(btn) {
+    const icon = btn.querySelector('i');
+    if (icon.classList.contains('far')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        icon.style.color = '#ef4444';
+        if (typeof showAlert === 'function') showAlert('❤️ Article ajouté à vos favoris !', 'success');
+    } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        icon.style.color = '#64748b';
+        if (typeof showAlert === 'function') showAlert('Article retiré de vos favoris', 'info');
+    }
+}
+
+
