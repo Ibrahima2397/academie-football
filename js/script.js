@@ -805,3 +805,196 @@ function toggleWishlist(btn) {
 }
 
 
+// ===== CARROUSEL D'ACTUALITÉS - ROTATION AUTOMATIQUE (10 secondes) =====
+
+(function() {
+    'use strict';
+
+    const SLIDE_DURATION = 10000; // 10 secondes par actualité
+    const PROGRESS_INTERVAL = 50; // Mise à jour de la barre de progression toutes les 50ms
+
+    const track = document.getElementById('newsCarouselTrack');
+    if (!track) return; // Ne pas exécuter si on n'est pas sur la page d'accueil
+
+    const slides = track.querySelectorAll('.news-carousel-slide');
+    const dots = document.querySelectorAll('.news-dot');
+    const prevBtn = document.getElementById('newsPrevBtn');
+    const nextBtn = document.getElementById('newsNextBtn');
+    const progressFill = document.getElementById('newsProgressFill');
+
+    if (slides.length === 0) return;
+
+    let currentIndex = 0;
+    let autoPlayTimer = null;
+    let progressTimer = null;
+    let progressValue = 0;
+    let isPaused = false;
+
+    // Fonction pour aller à un slide spécifique
+    function goToSlide(index) {
+        // Normaliser l'index (boucle)
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+
+        // Retirer la classe active de tous les slides et dots
+        slides.forEach(function(slide) {
+            slide.classList.remove('active');
+        });
+        dots.forEach(function(dot) {
+            dot.classList.remove('active');
+        });
+
+        // Activer le nouveau slide et dot
+        slides[index].classList.add('active');
+        if (dots[index]) {
+            dots[index].classList.add('active');
+        }
+
+        currentIndex = index;
+
+        // Réinitialiser la barre de progression
+        resetProgress();
+    }
+
+    // Fonction pour aller au slide suivant
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    // Fonction pour aller au slide précédent
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    // Gestion de la barre de progression
+    function startProgress() {
+        progressValue = 0;
+        if (progressFill) progressFill.style.width = '0%';
+
+        progressTimer = setInterval(function() {
+            if (isPaused) return;
+            
+            progressValue += (PROGRESS_INTERVAL / SLIDE_DURATION) * 100;
+            
+            if (progressFill) {
+                progressFill.style.width = Math.min(progressValue, 100) + '%';
+            }
+
+            if (progressValue >= 100) {
+                clearInterval(progressTimer);
+            }
+        }, PROGRESS_INTERVAL);
+    }
+
+    function resetProgress() {
+        clearInterval(progressTimer);
+        progressValue = 0;
+        if (progressFill) progressFill.style.width = '0%';
+        startProgress();
+    }
+
+    // Démarrer la rotation automatique
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(function() {
+            if (!isPaused) {
+                nextSlide();
+            }
+        }, SLIDE_DURATION);
+        startProgress();
+    }
+
+    // Arrêter la rotation automatique
+    function stopAutoPlay() {
+        clearInterval(autoPlayTimer);
+        clearInterval(progressTimer);
+        autoPlayTimer = null;
+        progressTimer = null;
+    }
+
+    // Événements des boutons prev/next
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            prevSlide();
+            // Redémarrer le timer après interaction manuelle
+            startAutoPlay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            nextSlide();
+            // Redémarrer le timer après interaction manuelle
+            startAutoPlay();
+        });
+    }
+
+    // Événements des dots
+    dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+            var index = parseInt(this.getAttribute('data-index'));
+            goToSlide(index);
+            // Redémarrer le timer après interaction manuelle
+            startAutoPlay();
+        });
+    });
+
+    // Pause au survol du carrousel
+    var carouselWrapper = document.querySelector('.news-carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', function() {
+            isPaused = true;
+        });
+
+        carouselWrapper.addEventListener('mouseleave', function() {
+            isPaused = false;
+        });
+    }
+
+    // Support swipe tactile (mobile)
+    var touchStartX = 0;
+    var touchEndX = 0;
+
+    if (track) {
+        track.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            var diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe gauche → suivant
+                } else {
+                    prevSlide(); // Swipe droit → précédent
+                }
+                startAutoPlay();
+            }
+        }, { passive: true });
+    }
+
+    // Navigation clavier quand le carrousel est visible
+    document.addEventListener('keydown', function(e) {
+        var carouselSection = document.getElementById('actualites-accueil');
+        if (!carouselSection) return;
+        
+        var rect = carouselSection.getBoundingClientRect();
+        var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible) {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                startAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                startAutoPlay();
+            }
+        }
+    });
+
+    // Démarrer le carrousel
+    startAutoPlay();
+
+})();

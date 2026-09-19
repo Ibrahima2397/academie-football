@@ -198,6 +198,33 @@
                                 </div>
                             </a>
                         </li>
+                        <li>
+                            <a href="html/programmes.html#equipes">
+                                <i class="fas fa-users"></i>
+                                <div class="dropdown-item-text">
+                                    <strong>Nos Équipes</strong>
+                                    <span>Effectifs & entraîneurs</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="html/programmes.html#classements">
+                                <i class="fas fa-trophy"></i>
+                                <div class="dropdown-item-text">
+                                    <strong>Classements</strong>
+                                    <span>Saison 2025-2026</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="html/programmes.html#entrainements">
+                                <i class="fas fa-dumbbell"></i>
+                                <div class="dropdown-item-text">
+                                    <strong>Entraînements</strong>
+                                    <span>Calendrier hebdomadaire</span>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="html/actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
@@ -278,7 +305,7 @@
                         <span>Scores en temps réel</span>
                     </div>
                 </a>
-                <a href="html/equipes.html#classements" class="quick-card">
+                <a href="html/programmes.html#classements" class="quick-card">
                     <div class="icon-box"><i class="fas fa-trophy"></i></div>
                     <div class="quick-card-text">
                         <strong>Classements</strong>
@@ -351,6 +378,157 @@
                     <i class="fas fa-trophy" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
                     <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Compétitions & Détections</h3>
                     <p style="color: #64748b;">Matchs hebdomadaires, tournois majeurs et opportunités de recrutement professionnel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Dernières Actualités (Carrousel Auto-Rotatif) -->
+    <section id="actualites-accueil" class="news-carousel-section">
+        <div class="container">
+            <div class="section-header-news">
+                <h2>
+                    <i class="fas fa-newspaper"></i> Dernières Actualités
+                </h2>
+                <a href="html/actualites.html" class="voir-tout-btn">
+                    Voir toutes les actualités <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="news-carousel-wrapper">
+                <!-- Boutons de navigation -->
+                <button class="news-carousel-btn news-prev-btn" id="newsPrevBtn" title="Précédent">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="news-carousel-btn news-next-btn" id="newsNextBtn" title="Suivant">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Container du carrousel -->
+                <div class="news-carousel-track" id="newsCarouselTrack">
+                    <!-- Actualité 1 -->
+                    <div class="news-carousel-slide active">
+                        <div class="news-slide-inner">
+                            <div class="news-slide-image">
+                                <img src="images/logo.png" alt="Victoire U17" style="object-fit: contain; padding: 2rem; background: #1e3a8a;">
+                                <span class="news-slide-badge">
+                                    <i class="fas fa-trophy"></i> Match
+                                </span>
+                            </div>
+                            <div class="news-slide-content">
+                                <span class="news-slide-date">
+                                    <i class="far fa-calendar-alt"></i> 08 Septembre 2026
+                                </span>
+                                <h3>Grande Victoire 3-1 de l'Équipe U17 au Tournoi Régional !</h3>
+                                <p>Les U17 de l'académie ont rendu une copie parfaite ce week-end avec une très belle prestation collective et un doublé remarquable de notre attaquant vedette. Une victoire qui propulse l'équipe en tête du classement régional.</p>
+                                <a href="html/actualites.html" class="news-slide-link">
+                                    Lire la suite <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actualité 2 -->
+                    <div class="news-carousel-slide">
+                        <div class="news-slide-inner">
+                            <div class="news-slide-image">
+                                <img src="images/logo.png" alt="Détection 2026" style="object-fit: contain; padding: 2rem; background: #dc2626;">
+                                <span class="news-slide-badge">
+                                    <i class="fas fa-search"></i> Détection
+                                </span>
+                            </div>
+                            <div class="news-slide-content">
+                                <span class="news-slide-date">
+                                    <i class="far fa-calendar-alt"></i> 02 Septembre 2026
+                                </span>
+                                <h3>Ouverture des Inscriptions pour la Grande Détection 2026</h3>
+                                <p>L'Académie FADY Football ouvre ses portes aux jeunes talents nés entre 2008 et 2014 pour sa session annuelle d'évaluation. Ne manquez pas cette opportunité unique de rejoindre notre programme d'excellence !</p>
+                                <a href="html/actualites.html" class="news-slide-link">
+                                    Lire la suite <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actualité 3 -->
+                    <div class="news-carousel-slide">
+                        <div class="news-slide-inner">
+                            <div class="news-slide-image">
+                                <img src="images/logo.png" alt="Nouvelle salle" style="object-fit: contain; padding: 2rem; background: #f59e0b;">
+                                <span class="news-slide-badge">
+                                    <i class="fas fa-building"></i> Infrastructure
+                                </span>
+                            </div>
+                            <div class="news-slide-content">
+                                <span class="news-slide-date">
+                                    <i class="far fa-calendar-alt"></i> 25 Août 2026
+                                </span>
+                                <h3>Inauguration de la Nouvelle Salle de Récupération Physiologique</h3>
+                                <p>Un grand pas en avant pour la santé de nos athlètes avec du matériel moderne de physiothérapie et de remise en forme. Cette nouvelle infrastructure renforce notre engagement envers le bien-être des joueurs.</p>
+                                <a href="html/actualites.html" class="news-slide-link">
+                                    Lire la suite <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actualité 4 -->
+                    <div class="news-carousel-slide">
+                        <div class="news-slide-inner">
+                            <div class="news-slide-image">
+                                <img src="images/logo.png" alt="Partenariat" style="object-fit: contain; padding: 2rem; background: #059669;">
+                                <span class="news-slide-badge">
+                                    <i class="fas fa-handshake"></i> Partenariat
+                                </span>
+                            </div>
+                            <div class="news-slide-content">
+                                <span class="news-slide-date">
+                                    <i class="far fa-calendar-alt"></i> 18 Août 2026
+                                </span>
+                                <h3>Nouveau Partenariat avec un Équipementier de Renom</h3>
+                                <p>L'Académie FADY Football est fière d'annoncer un partenariat majeur avec un équipementier sportif de renommée internationale. Nos joueurs bénéficieront désormais d'un équipement de qualité professionnelle.</p>
+                                <a href="html/actualites.html" class="news-slide-link">
+                                    Lire la suite <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actualité 5 -->
+                    <div class="news-carousel-slide">
+                        <div class="news-slide-inner">
+                            <div class="news-slide-image">
+                                <img src="images/logo.png" alt="Rentrée" style="object-fit: contain; padding: 2rem; background: #7c3aed;">
+                                <span class="news-slide-badge">
+                                    <i class="fas fa-graduation-cap"></i> Formation
+                                </span>
+                            </div>
+                            <div class="news-slide-content">
+                                <span class="news-slide-date">
+                                    <i class="far fa-calendar-alt"></i> 10 Août 2026
+                                </span>
+                                <h3>Rentrée de la Saison 2026-2027 : Les Programmes sont Prêts !</h3>
+                                <p>La nouvelle saison s'annonce exceptionnelle avec des programmes enrichis pour toutes les catégories, de U13 aux Seniors. Nouveaux modules tactiques, préparation physique renforcée et suivi scolaire personnalisé.</p>
+                                <a href="html/actualites.html" class="news-slide-link">
+                                    Lire la suite <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Indicateurs (dots) -->
+                <div class="news-carousel-dots" id="newsCarouselDots">
+                    <button class="news-dot active" data-index="0"></button>
+                    <button class="news-dot" data-index="1"></button>
+                    <button class="news-dot" data-index="2"></button>
+                    <button class="news-dot" data-index="3"></button>
+                    <button class="news-dot" data-index="4"></button>
+                </div>
+
+                <!-- Barre de progression -->
+                <div class="news-progress-bar">
+                    <div class="news-progress-fill" id="newsProgressFill"></div>
                 </div>
             </div>
         </div>
@@ -603,8 +781,8 @@
                 <div class="footer-column">
                     <h4>Nos Offres</h4>
                     <ul class="footer-links">
-                        <li><a href="html/equipes.html"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
-                        <li><a href="html/entrainements.html"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
+                        <li><a href="html/programmes.html#equipes"><i class="fas fa-chevron-right"></i> Nos Équipes</a></li>
+                        <li><a href="html/programmes.html#entrainements"><i class="fas fa-chevron-right"></i> Entraînements</a></li>
                         <li><a href="html/boutique.html"><i class="fas fa-chevron-right"></i> Boutique</a></li>
                         <li><a href="html/inscription.html"><i class="fas fa-chevron-right"></i> Inscription</a></li>
                     </ul>
