@@ -116,85 +116,40 @@
         </div>
     </nav>
 
-    <!-- Quick Access Bar -->
-    <div class="quick-access-bar">
-        <div class="container">
-            <div class="quick-access-grid">
-                <a href="actualites.html#calendrier" class="quick-card">
-                    <div class="icon-box"><i class="far fa-calendar-alt"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Calendrier des matchs</strong>
-                        <span>Voir les prochains matchs</span>
-                    </div>
-                </a>
-                <a href="galerie_direct.html" class="quick-card">
-                    <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores en temps réel</span>
-                    </div>
-                </a>
-                <a href="programmes.html#classements" class="quick-card">
-                    <div class="icon-box"><i class="fas fa-trophy"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Classements</strong>
-                        <span>Classements des équipes</span>
-                    </div>
-                </a>
-                <a href="joueurs.html" class="quick-card">
-                    <div class="icon-box"><i class="fas fa-users"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Joueurs</strong>
-                        <span>Découvrir nos talents</span>
-                    </div>
-                </a>
-                <a href="academie.html#staff" class="quick-card">
-                    <div class="icon-box"><i class="fas fa-user-tie"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Staff technique</strong>
-                        <span>Nos entraîneurs</span>
-                    </div>
-                </a>
-                <a href="boutique.html" class="quick-card">
-                    <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
-                    <div class="quick-card-text">
-                        <strong>Boutique</strong>
-                        <span>Équipements et maillots</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <h2>Nous Contacter</h2>
+            <p class="contact-intro">Une question sur l'Académie ou nos programmes ? Notre équipe est là pour vous répondre.</p>
             <div class="contact-content">
                 <div class="contact-info">
+                    <div class="contact-info-heading">
+                        <h3>Parlons de votre projet</h3>
+                        <p>Choisissez le moyen qui vous convient ou envoyez-nous un message.</p>
+                    </div>
                     <div class="info-item">
-                        <div class="info-icon">📍</div>
+                        <div class="info-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
                         <div class="info-text">
                             <h4>Adresse</h4>
                             <p>Académie FADY<br>Ville de Labé, Guinée</p>
                         </div>
                     </div>
                     <div class="info-item">
-                        <div class="info-icon">📞</div>
+                        <div class="info-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
                         <div class="info-text">
                             <h4>Téléphone</h4>
-                            <p>+224 627 04 81 31</p>
+                            <p><a href="tel:+224627048131">+224 627 04 81 31</a></p>
                         </div>
                     </div>
                     <div class="info-item">
-                        <div class="info-icon">✉️</div>
+                        <div class="info-icon"><i class="fas fa-envelope" aria-hidden="true"></i></div>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <p>info@academiefootball.fr</p>
+                            <p><a href="mailto:info@academiefootball.fr">info@academiefootball.fr</a></p>
                         </div>
                     </div>
                     <div class="info-item">
-                        <div class="info-icon">🕐</div>
+                        <div class="info-icon"><i class="far fa-clock" aria-hidden="true"></i></div>
                         <div class="info-text">
                             <h4>Horaires</h4>
                             <p>Lun-Ven: 15h00 - 21h00<br>Sam: 09h00 - 17h00</p>
@@ -204,26 +159,31 @@
 
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <input type="text" placeholder="Votre nom" required>
+                        <label for="contactName">Votre nom</label>
+                        <input id="contactName" type="text" placeholder="Ex. Ibrahima Baldé" autocomplete="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Votre email" required>
+                        <label for="contactEmail">Votre email</label>
+                        <input id="contactEmail" type="email" placeholder="vous@exemple.com" autocomplete="email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Votre téléphone" required>
+                        <label for="contactPhone">Votre téléphone</label>
+                        <input id="contactPhone" type="tel" placeholder="+224 ..." autocomplete="tel" required>
                     </div>
                     <div class="form-group">
-                        <select required>
+                        <label for="contactCategory">Catégorie concernée</label>
+                        <select id="contactCategory" required>
                             <option value="">Sélectionnez une catégorie</option>
                             <option value="enfants">Enfants (U8-U12)</option>
                             <option value="jeunes">Jeunes (U13-U17)</option>
                             <option value="elite">Élite (U18+)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <textarea placeholder="Votre message" rows="5" required></textarea>
+                    <div class="form-group form-group-wide">
+                        <label for="contactMessage">Votre message</label>
+                        <textarea id="contactMessage" placeholder="Comment pouvons-nous vous aider ?" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Envoyer le message 🚀</button>
+                    <button type="submit" class="submit-btn form-group-wide"><i class="fas fa-paper-plane" aria-hidden="true"></i> Envoyer le message</button>
                 </form>
             </div>
         </div>
