@@ -3,6 +3,34 @@ const API_URL = 'http://localhost:3000/api';
 
 // Menu hamburger et navigation responsive
 document.addEventListener('DOMContentLoaded', () => {
+    const galleryFilters = document.querySelectorAll('[data-gallery-filter]');
+    const galleryItems = document.querySelectorAll('[data-gallery-type][data-gallery-category]');
+
+    if (galleryFilters.length && galleryItems.length) {
+        galleryFilters.forEach((filter) => {
+            filter.addEventListener('click', () => {
+                const selectedFilter = filter.dataset.galleryFilter;
+
+                galleryFilters.forEach((button) => {
+                    const isActive = button === filter;
+                    button.classList.toggle('active', isActive);
+                    button.setAttribute('aria-pressed', String(isActive));
+                });
+
+                galleryItems.forEach((item) => {
+                    const matchesFilter = selectedFilter === 'all'
+                        || item.dataset.galleryType === selectedFilter
+                        || item.dataset.galleryCategory === selectedFilter;
+                    item.hidden = !matchesFilter;
+                });
+
+                document.querySelectorAll('[data-gallery-group]').forEach((group) => {
+                    group.hidden = !group.querySelector('[data-gallery-type]:not([hidden])');
+                });
+            });
+        });
+    }
+
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
     const navLinks = navMenu?.querySelectorAll('a');
@@ -346,9 +374,6 @@ async function loadCategories() {
                     <h3>${cat.name}</h3>
                     <p>${cat.description}</p>
                     <ul>${details}</ul>
-                    <div class="programme-price" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
-                        Tarif : ${cat.price_per_month} € / mois
-                    </div>
                 `;
                 grid.appendChild(card);
             });
@@ -474,7 +499,7 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-document.querySelectorAll('.programme-card, .equipe-card, .tarif-card, .schedule-item').forEach(element => {
+document.querySelectorAll('.programme-card, .equipe-card, .schedule-item').forEach(element => {
     element.style.opacity = '0';
     observer.observe(element);
 });

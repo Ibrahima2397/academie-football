@@ -170,7 +170,7 @@
     <section class="hero-small">
         <div class="container">
             <h2>Notre Galerie</h2>
-            <p>Revivez les meilleurs moments de l'Académie en images et en vidéos</p>
+            <p>Revivez l'action et les meilleurs moments de l'Académie en images et en vidéos</p>
         </div>
     </section>
 
@@ -179,106 +179,112 @@
         <div class="container">
             <!-- Filtres -->
             <div class="galerie-filters">
-                <a href="galerie.html" class="filter-btn active">Tout</a>
-                <a href="galerie_photos.html" class="filter-btn">Photos</a>
-                <a href="galerie_videos.html" class="filter-btn">Vidéos</a>
+                <button type="button" class="filter-btn active" data-gallery-filter="all" aria-pressed="true">Tout</button>
+                <button type="button" class="filter-btn" data-gallery-filter="photo" aria-pressed="false">Photos</button>
+                <button type="button" class="filter-btn" data-gallery-filter="video" aria-pressed="false">Vidéos</button>
+                <button type="button" class="filter-btn" data-gallery-filter="match" aria-pressed="false">Matchs</button>
+                <button type="button" class="filter-btn" data-gallery-filter="training" aria-pressed="false">Entraînements</button>
                 <a href="galerie_direct.html" class="filter-btn live-btn"><span class="live-dot"></span> Direct</a>
             </div>
 
             <div class="galerie-container">
-                <div class="section-header">
-                    <h3>📸 Photos Récentes</h3>
-                    <div class="header-line"></div>
-                </div>
-                
-                <div class="galerie-grid">
-                    <div class="galerie-card">
-                        <div class="galerie-img">
-                            <img src="../images/entrainement.png" alt="Entraînement">
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Session d'entraînement - U14</p>
+                <section class="galerie-group" data-gallery-group>
+                    <div class="section-header">
+                        <h3>📸 Photos récentes</h3>
+                        <div class="header-line"></div>
+                    </div>
+
+                    <div class="galerie-grid">
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="training">
+                            <div class="galerie-img">
+                                <img src="../images/entrainement.png" alt="Entraînement">
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Session d'entraînement - U14</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="match">
+                            <div class="galerie-img">
+                                <img src="../images/match.png" alt="Match">
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Match de championnat - Élite</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="match">
+                            <div class="galerie-img placeholder">
+                                <span class="emoji">🏃</span>
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Action sur le terrain</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="training">
+                            <div class="galerie-img placeholder">
+                                <span class="emoji">🤝</span>
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Esprit d'équipe</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="match">
+                            <div class="galerie-img placeholder">
+                                <span class="emoji">🏆</span>
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Célébration de victoire</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="training">
+                            <div class="galerie-img placeholder">
+                                <span class="emoji">⚽</span>
+                                <div class="galerie-overlay">
+                                    <span class="zoom-icon">🔍</span>
+                                    <p>Technique individuelle</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <div class="galerie-card">
-                        <div class="galerie-img">
-                            <img src="../images/match.png" alt="Match">
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Match de championnat - Élite</p>
+                <section class="galerie-group" data-gallery-group>
+                    <div class="section-header">
+                        <h3>🎥 Vidéos & Highlights</h3>
+                        <div class="header-line"></div>
+                    </div>
+
+                    <div class="video-grid-modern">
+                        <div class="video-card" data-gallery-type="video" data-gallery-category="match">
+                            <div class="video-thumb">
+                                <div class="play-btn">▶</div>
+                            </div>
+                            <div class="video-info">
+                                <h4>Meilleurs moments du mois</h4>
+                                <p>Résumé des plus beaux buts et actions de toutes les catégories.</p>
+                            </div>
+                        </div>
+
+                        <div class="video-card" data-gallery-type="video" data-gallery-category="training">
+                            <div class="video-thumb">
+                                <div class="play-btn">▶</div>
+                            </div>
+                            <div class="video-info">
+                                <h4>Exercices de technique</h4>
+                                <p>Découvrez nos méthodes d'entraînement spécifiques.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">🏃</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Action sur le terrain</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">🤝</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Esprit d'équipe</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">🏆</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Célébration de victoire</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">⚽</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Technique individuelle</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-header">
-                    <h3>🎥 Vidéos & Highlights</h3>
-                    <div class="header-line"></div>
-                </div>
-
-                <div class="video-grid-modern">
-                    <div class="video-card">
-                        <div class="video-thumb">
-                            <div class="play-btn">▶</div>
-                        </div>
-                        <div class="video-info">
-                            <h4>Meilleurs moments du mois</h4>
-                            <p>Résumé des plus beaux buts et actions de toutes les catégories.</p>
-                        </div>
-                    </div>
-
-                    <div class="video-card">
-                        <div class="video-thumb">
-                            <div class="play-btn">▶</div>
-                        </div>
-                        <div class="video-info">
-                            <h4>Exercices de technique</h4>
-                            <p>Découvrez nos méthodes d'entraînement spécifiques.</p>
-                        </div>
-                    </div>
-                </div>
+                </section>
             </div>
         </div>
     </section>

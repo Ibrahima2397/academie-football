@@ -1170,131 +1170,6 @@ section h2 {
     color: var(--white);
 }
 
-/* Tarifs Section */
-.tarifs {
-    background: #f8fafc;
-    padding: clamp(2rem, 5vw, 5rem) 1.25rem;
-}
-
-.tarifs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-.tarif-card {
-    background: var(--white);
-    padding: clamp(1.5rem, 4vw, 3rem);
-    border-radius: 20px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    border: 1px solid #f1f5f9;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.tarif-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(30, 58, 138, 0.1);
-    border-color: var(--primary-color);
-}
-
-.tarif-card.popular {
-    border: 2px solid var(--primary-color);
-}
-
-.tarif-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: clamp(1.3rem, 3vw, 1.5rem);
-    font-weight: 700;
-}
-
-.tarif-card .prix {
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--secondary-color);
-    font-weight: 800;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.2rem;
-    flex-wrap: wrap;
-}
-
-.tarif-card .prix span {
-    font-size: 1rem;
-    color: #64748b;
-    font-weight: 500;
-}
-
-.tarif-card ul {
-    list-style: none;
-    text-align: left;
-    margin-bottom: 2.5rem;
-    flex-grow: 1;
-}
-
-.tarif-card li {
-    padding: 1rem 0;
-    color: #475569;
-    border-bottom: 1px solid #f1f5f9;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-size: 0.95rem;
-}
-
-.tarif-card li::before {
-    content: "✓";
-    color: #10b981;
-    font-weight: bold;
-    flex-shrink: 0;
-}
-
-.tarif-card li:last-child {
-    border-bottom: none;
-}
-
-.tarif-btn {
-    background: var(--primary-color);
-    color: var(--white);
-    text-decoration: none;
-    padding: clamp(0.75rem, 2vw, 1rem) 1.5rem;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-    border: none;
-    cursor: pointer;
-}
-
-.tarif-btn:hover {
-    background: var(--accent-color);
-    color: var(--primary-color);
-    transform: scale(1.05);
-}
-
-.tarif-gallery-link {
-    margin-top: 1rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: color 0.3s ease;
-}
-
-.tarif-gallery-link:hover {
-    color: var(--secondary-color);
-}
-
 /* Contact Section */
 .contact {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
@@ -1814,7 +1689,6 @@ section h2 {
     /* Grilles */
     .programmes-grid,
     .equipes-grid,
-    .tarifs-grid,
     .schedule {
         grid-template-columns: 1fr;
     }
@@ -1822,7 +1696,6 @@ section h2 {
     /* Cartes */
     .programme-card,
     .equipe-card,
-    .tarif-card,
     .schedule-item {
         padding: 1.25rem;
     }
@@ -1912,7 +1785,6 @@ section h2 {
     
     .programmes-grid,
     .equipes-grid,
-    .tarifs-grid,
     .schedule {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1970,8 +1842,7 @@ section h2 {
     }
     
     .programmes-grid,
-    .equipes-grid,
-    .tarifs-grid {
+    .equipes-grid {
         gap: 2.5rem;
     }
 }
@@ -1990,7 +1861,7 @@ section h2 {
 
 .programme-card,
 .equipe-card,
-.tarif-card {
+.schedule-item {
     animation: fadeIn 0.6s ease-out;
 }
 
@@ -2036,6 +1907,7 @@ section h2 {
 .filter-btn {
     padding: 0.8rem 1.5rem;
     border: none;
+    font: inherit;
     background: var(--white);
     color: var(--text-color);
     border-radius: 50px;
@@ -2061,6 +1933,12 @@ section h2 {
 .live-btn:hover, .live-btn.active {
     background: var(--secondary-color) !important;
     color: var(--white) !important;
+}
+
+.galerie-card[hidden],
+.video-card[hidden],
+.galerie-group[hidden] {
+    display: none;
 }
 
 .live-dot {

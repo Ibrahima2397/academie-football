@@ -31,7 +31,7 @@ L'objectif est de diviser l'actuel `index.html` (page unique) en plusieurs pages
 - Ajouter la classe "active" au lien "Entraînements".
 
 #### [NOUVEAU] [contact.html](file:///c:/Users/Ibrahima%20Sory%20Bald%C3%A9/Documents/Academie/html/contact.html)
-- Créer une nouvelle page pour les sections Tarifs et Contact.
+- Créer une nouvelle page pour la section Contact.
 - Inclure la barre de navigation et le pied de page.
 - Ajouter la classe "active" au lien "Contact".
 

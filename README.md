@@ -11,7 +11,6 @@ Un site web moderne et professionnel pour l'Académie Elite Football, conçu pou
   - Programmes de formation (Enfants, Jeunes, Élite)
   - Présentation des équipes
   - Calendrier des entraînements
-  - Tarifs et abonnements
   - Formulaire de contact
 - **Animations**: Effets visuels attrayants au scroll et au hover
 - **Formulaire de Contact**: Gestion complète avec validation
@@ -62,7 +61,7 @@ Vous pouvez facilement modifier:
 - **Couleurs**: Modifiez les variables CSS dans `:root`
 - **Contenu**: Éditez les textes et les informations de contact
 - **Images**: Ajoutez des images en remplaçant les emojis
-- **Tarifs**: Mettez à jour les prix et détails
+- **Catégories sportives**: Gérez les catégories depuis l'administration
 - **Horaires**: Modifiez le calendrier des entraînements
 
 ## 📧 Contact
