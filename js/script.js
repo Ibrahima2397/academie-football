@@ -584,7 +584,7 @@ function openBuyModal(name, priceStr, desc) {
                 <!-- Mode de paiement -->
                 <div style="margin-bottom: 1.25rem;">
                     <label style="display: block; font-weight: 700; font-size: 0.9rem; color: #0f172a; margin-bottom: 0.6rem;">
-                        <i class="fas fa-wallet" style="color: #f59e0b; margin-right: 0.4rem;"></i> Choisir le moyen de paiement:
+                        <i class="fas fa-wallet" style="color: #f59e0b; margin-right: 0.4rem;"></i> Moyen de paiement souhaité:
                     </label>
                     <div class="payment-methods-grid" id="paymentMethodsGrid">
                         <div class="payment-method-card selected" onclick="selectPaymentMethod('orange')" data-method="orange">
@@ -623,10 +623,34 @@ function openBuyModal(name, priceStr, desc) {
                     </div>
                 </div>
 
+                <fieldset class="shop-delivery-section">
+                    <legend><i class="fas fa-truck" aria-hidden="true"></i> Mode de réception</legend>
+                    <div class="shop-delivery-options" role="group" aria-label="Mode de réception de la commande">
+                        <button type="button" class="shop-delivery-option selected" data-delivery-mode="pickup" aria-pressed="true" onclick="selectDeliveryMode('pickup')">
+                            <i class="fas fa-store" aria-hidden="true"></i> Retrait
+                        </button>
+                        <button type="button" class="shop-delivery-option" data-delivery-mode="delivery" aria-pressed="false" onclick="selectDeliveryMode('delivery')">
+                            <i class="fas fa-truck" aria-hidden="true"></i> Livraison
+                        </button>
+                    </div>
+                    <div id="deliveryDetails" class="shop-delivery-details" hidden>
+                        <label for="deliveryAddress">Adresse ou quartier de livraison</label>
+                        <textarea id="deliveryAddress" rows="2" placeholder="Ex. quartier, rue, repère, ville"></textarea>
+                        <span class="delivery-or">ou partagez votre position GPS</span>
+                        <button type="button" id="shareLocationBtn" class="share-location-btn" onclick="shareDeliveryLocation()">
+                            <i class="fas fa-location-crosshairs" aria-hidden="true"></i> Utiliser ma position actuelle
+                        </button>
+                        <p id="deliveryLocationStatus" class="delivery-location-status" role="status" aria-live="polite"></p>
+                        <a id="deliveryMapLink" class="delivery-map-link" target="_blank" rel="noopener noreferrer" hidden>
+                            <i class="fas fa-map-marked-alt" aria-hidden="true"></i> Vérifier le point sur Google Maps
+                        </a>
+                    </div>
+                </fieldset>
+
                 <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
                     <button onclick="closeBuyModal()" style="flex: 1; padding: 0.85rem; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s;">Annuler</button>
                     <button id="submitPayBtn" onclick="confirmOrder()" style="flex: 2; padding: 0.85rem; border: none; background: linear-gradient(135deg, #ff6600 0%, #d95300 100%); color: white; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(255,102,0,0.35); font-size: 0.95rem;">
-                        <i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Orange Money
+                        <i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande
                     </button>
                 </div>
             </div>
@@ -643,7 +667,13 @@ function openBuyModal(name, priceStr, desc) {
     // Parse numeric price for calculation
     const numPrice = parseFloat(priceStr.replace(/[^0-9,.]/g, '').replace(',', '.')) || 35.00;
     window.currentUnitNumPrice = numPrice;
-    window.selectedPayMethod = 'orange';
+    selectPaymentMethod('orange');
+    selectDeliveryMode('pickup');
+    window.deliveryCoordinates = null;
+    document.getElementById('payPhoneNumber').value = '';
+    document.getElementById('deliveryAddress').value = '';
+    document.getElementById('deliveryLocationStatus').textContent = '';
+    document.getElementById('deliveryMapLink').hidden = true;
 
     updateModalTotals(1);
 
@@ -693,7 +723,7 @@ function selectPaymentMethod(method) {
         if (submitBtn) {
             submitBtn.style.background = 'linear-gradient(135deg, #ff6600 0%, #d95300 100%)';
             submitBtn.style.boxShadow = '0 4px 14px rgba(255,102,0,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Orange Money';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
         }
     } else if (method === 'mtn') {
         phoneContainer.style.display = 'block';
@@ -703,7 +733,7 @@ function selectPaymentMethod(method) {
         if (submitBtn) {
             submitBtn.style.background = 'linear-gradient(135deg, #e6b800 0%, #b38f00 100%)';
             submitBtn.style.boxShadow = '0 4px 14px rgba(230,184,0,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec MTN MoMo';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
         }
     } else if (method === 'wave') {
         phoneContainer.style.display = 'block';
@@ -713,7 +743,7 @@ function selectPaymentMethod(method) {
         if (submitBtn) {
             submitBtn.style.background = 'linear-gradient(135deg, #00aaff 0%, #0088cc 100%)';
             submitBtn.style.boxShadow = '0 4px 14px rgba(0,170,255,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Payer avec Wave';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
         }
     } else if (method === 'card') {
         phoneContainer.style.display = 'block';
@@ -723,7 +753,7 @@ function selectPaymentMethod(method) {
         if (submitBtn) {
             submitBtn.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)';
             submitBtn.style.boxShadow = '0 4px 14px rgba(30,58,138,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-credit-card" style="margin-right: 0.4rem;"></i> Payer par Carte Bancaire';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
         }
     }
 }
@@ -733,13 +763,60 @@ function closeBuyModal() {
     if (modal) modal.classList.remove('active');
 }
 
+function selectDeliveryMode(mode) {
+    window.selectedDeliveryMode = mode;
+    const deliveryDetails = document.getElementById('deliveryDetails');
+    const deliveryModeButtons = document.querySelectorAll('[data-delivery-mode]');
+
+    deliveryDetails.hidden = mode !== 'delivery';
+    deliveryModeButtons.forEach((button) => {
+        const isSelected = button.dataset.deliveryMode === mode;
+        button.classList.toggle('selected', isSelected);
+        button.setAttribute('aria-pressed', String(isSelected));
+    });
+}
+
+function shareDeliveryLocation() {
+    const status = document.getElementById('deliveryLocationStatus');
+    const mapLink = document.getElementById('deliveryMapLink');
+
+    if (!navigator.geolocation) {
+        status.textContent = 'La géolocalisation n’est pas disponible sur cet appareil. Saisissez votre adresse ou votre quartier.';
+        return;
+    }
+
+    status.textContent = 'Recherche de votre position…';
+    navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+            const latitude = coords.latitude.toFixed(6);
+            const longitude = coords.longitude.toFixed(6);
+            const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            window.deliveryCoordinates = { latitude, longitude, mapUrl };
+            mapLink.href = mapUrl;
+            mapLink.hidden = false;
+            status.textContent = `Position enregistrée : ${latitude}, ${longitude}. Elle sera incluse dans votre demande de livraison.`;
+        },
+        (error) => {
+            const message = error.code === error.PERMISSION_DENIED
+                ? 'Accès à la position refusé. Autorisez la localisation ou saisissez votre adresse.'
+                : 'Position indisponible. Réessayez ou saisissez votre adresse ou votre quartier.';
+            status.textContent = message;
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+}
+
 function confirmOrder() {
     const name = document.getElementById('modalProdTitle').textContent;
     const totalEur = document.getElementById('modalProdTotal').textContent;
     const totalGnf = document.getElementById('modalProdGnf').textContent;
+    const quantity = document.getElementById('buyQty').value;
     const method = window.selectedPayMethod || 'orange';
     const phoneInput = document.getElementById('payPhoneNumber');
     const phone = phoneInput ? phoneInput.value.trim() : '';
+    const isDelivery = window.selectedDeliveryMode === 'delivery';
+    const deliveryAddress = document.getElementById('deliveryAddress').value.trim();
+    const coordinates = window.deliveryCoordinates;
 
     if ((method === 'orange' || method === 'mtn' || method === 'wave') && (!phone || phone.length < 8)) {
         if (typeof showAlert === 'function') {
@@ -750,19 +827,42 @@ function confirmOrder() {
         return;
     }
 
-    closeBuyModal();
+    if (isDelivery && !deliveryAddress && !coordinates) {
+        document.getElementById('deliveryAddress').focus();
+        document.getElementById('deliveryLocationStatus').textContent = 'Pour organiser la livraison, saisissez une adresse ou partagez votre position GPS.';
+        return;
+    }
 
     let methodTitle = 'Orange Money (*144#)';
     if (method === 'mtn') methodTitle = 'MTN Mobile Money (*145#)';
     if (method === 'wave') methodTitle = 'Wave Mobile';
     if (method === 'card') methodTitle = 'Carte Bancaire';
 
-    const msg = `📲 Demande de paiement ${methodTitle} transmise ! Montant: ${totalEur} ${totalGnf}. ${phone ? 'Numéro: +224 ' + phone + '. Veuillez composer le code de validation sur votre téléphone.' : ''}`;
+    const mapUrl = coordinates?.mapUrl
+        || (deliveryAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(deliveryAddress)}` : '');
+    const deliveryMessage = isDelivery
+        ? `Livraison demandée\nAdresse/quartier : ${deliveryAddress || 'Non précisé'}\nPosition GPS : ${coordinates ? `${coordinates.latitude}, ${coordinates.longitude}` : 'Non partagée'}\nGoogle Maps : ${mapUrl}`
+        : 'Mode de réception : retrait à convenir';
+    const orderMessage = [
+        'Bonjour, je souhaite commander :',
+        `Article : ${name}`,
+        `Quantité : ${quantity}`,
+        `Total : ${totalEur} (${totalGnf})`,
+        `Paiement souhaité : ${methodTitle}`,
+        `Téléphone de paiement/contact : ${phone ? `+224 ${phone}` : 'À confirmer'}`,
+        deliveryMessage
+    ].join('\n');
+    const subject = `Commande boutique - ${name}`;
+    const mailto = `mailto:contact@academiefady.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(orderMessage)}`;
 
-    if (typeof showAlert === 'function') {
-        showAlert(`🎉 Commande enregistrée pour "${name}" ! ${msg}`, 'success');
-    } else {
-        alert(`Commande enregistrée pour "${name}" ! ${msg}`);
+    try {
+        window.open(mailto, '_blank', 'noopener');
+        if (typeof showAlert === 'function') {
+            showAlert('Votre demande est prête dans votre application e-mail. Envoyez le message pour transmettre la commande et les informations de livraison.', 'success');
+        }
+        closeBuyModal();
+    } catch (error) {
+        document.getElementById('deliveryLocationStatus').textContent = 'Impossible d’ouvrir votre application e-mail. Réessayez ou contactez-nous directement.';
     }
 }
 

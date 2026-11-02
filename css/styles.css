@@ -2463,10 +2463,15 @@ body {
 .footer {
     background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
     color: #f8fafc;
-    padding: 100px 0 40px;
+    padding: clamp(3.5rem, 7vw, 6rem) 0 2rem;
     position: relative;
     overflow: hidden;
     border-top: 4px solid var(--accent-color);
+}
+
+.footer .container {
+    display: block;
+    text-align: left;
 }
 
 .footer::before {
@@ -2481,9 +2486,9 @@ body {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-    gap: 4rem;
-    margin-bottom: 5rem;
+    grid-template-columns: minmax(240px, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+    margin-bottom: 3rem;
     position: relative;
     z-index: 2;
 }
@@ -2491,6 +2496,7 @@ body {
 .footer-brand {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .footer-brand .footer-logo {
@@ -2534,13 +2540,16 @@ body {
 .footer-brand p {
     color: #94a3b8;
     line-height: 1.8;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     font-size: 1rem;
+    max-width: 360px;
 }
 
 .footer-socials {
     display: flex;
-    gap: 1.2rem;
+    gap: 0.8rem;
+    margin-top: 0;
+    justify-content: flex-start;
 }
 
 .social-link {
@@ -2571,11 +2580,11 @@ body {
 
 .footer-column h4 {
     color: var(--white);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
     position: relative;
-    padding-bottom: 1rem;
+    padding-bottom: 0.85rem;
     letter-spacing: 0.5px;
 }
 
@@ -2584,8 +2593,8 @@ body {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 50px;
-    height: 4px;
+    width: 42px;
+    height: 3px;
     background: var(--accent-color);
     border-radius: 2px;
 }
@@ -2594,7 +2603,8 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 0.9rem;
+    padding: 0;
 }
 
 .footer-links a {
@@ -2603,9 +2613,9 @@ body {
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.65rem;
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 0.98rem;
 }
 
 .footer-links a i {
@@ -2627,7 +2637,7 @@ body {
 .footer-contact-info {
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 1.25rem;
 }
 
 .contact-item {
@@ -2650,11 +2660,11 @@ body {
 
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 3rem;
+    padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem 2rem;
 }
 
 .footer-bottom p {
@@ -2665,8 +2675,9 @@ body {
 
 .footer-legal {
     display: flex;
-    gap: 2.5rem;
+    gap: 1rem 1.75rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .footer-legal a {
@@ -2700,26 +2711,29 @@ body {
 @media (max-width: 1200px) {
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 4rem;
+        gap: 3rem;
     }
 }
 
 @media (max-width: 768px) {
     .footer {
-        padding: 80px 0 40px;
+        padding: 3.5rem 0 1.5rem;
     }
 
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 3.5rem;
+        gap: 2.5rem;
         text-align: center;
     }
 
     .footer-brand .footer-logo,
-    .footer-socials,
-    .footer-column h4::after,
-    .contact-item {
+    .footer-socials {
         justify-content: center;
+    }
+
+    .footer-brand p {
+        margin-right: auto;
+        margin-left: auto;
     }
 
     .footer-column h4::after {
@@ -2731,12 +2745,17 @@ body {
         justify-content: center;
     }
 
+    .footer-contact-info .contact-item {
+        justify-content: center;
+        text-align: left;
+    }
+
     .footer-bottom {
         flex-direction: column;
         text-align: center;
         gap: 1.5rem;
     }
-
+}
 
 /* ==========================================================================
    BOUTIQUE & E-COMMERCE STYLES
@@ -2933,6 +2952,8 @@ body {
     background: #ffffff;
     width: 100%;
     max-width: 520px;
+    max-height: min(90vh, 900px);
+    overflow-y: auto;
     border-radius: 24px;
     padding: 2rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -2943,6 +2964,114 @@ body {
 
 .shop-modal-overlay.active .shop-modal-content {
     transform: translateY(0) scale(1);
+}
+
+.shop-delivery-section {
+    min-width: 0;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.shop-delivery-section legend {
+    padding: 0 0.4rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.shop-delivery-section legend i {
+    margin-right: 0.4rem;
+    color: #f59e0b;
+}
+
+.shop-delivery-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+.shop-delivery-option,
+.share-location-btn {
+    min-height: 44px;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #334155;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.shop-delivery-option.selected {
+    border-color: #1e3a8a;
+    background: #eff6ff;
+    color: #1e3a8a;
+}
+
+.shop-delivery-details {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.shop-delivery-details[hidden],
+.delivery-map-link[hidden] {
+    display: none;
+}
+
+.shop-delivery-details label {
+    color: #334155;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.shop-delivery-details textarea {
+    width: 100%;
+    min-height: 74px;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font: inherit;
+    resize: vertical;
+}
+
+.shop-delivery-details textarea:focus {
+    outline: 2px solid rgba(30, 58, 138, 0.2);
+    border-color: #1e3a8a;
+}
+
+.delivery-or {
+    color: #64748b;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.share-location-btn {
+    border-color: #1e3a8a;
+    color: #1e3a8a;
+}
+
+.share-location-btn:hover,
+.shop-delivery-option:hover {
+    background: #eff6ff;
+}
+
+.delivery-location-status {
+    margin: 0;
+    color: #475569;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.delivery-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #1d4ed8;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .shop-modal-close {

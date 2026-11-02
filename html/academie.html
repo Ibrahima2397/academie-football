@@ -25,9 +25,6 @@
             padding: 4rem 0;
             border-bottom: 1px solid #e2e8f0;
         }
-        .content-section:nth-child(even) {
-            background-color: #f8fafc;
-        }
         .section-title {
             display: flex;
             align-items: center;
@@ -50,21 +47,108 @@
                 grid-template-columns: 1fr;
             }
         }
-        .facility-card, .partner-card, .staff-card {
+        .staff-card {
             background: var(--white);
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .facility-card:hover, .partner-card:hover, .staff-card:hover {
+        .staff-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
         }
-        .facilities-grid, .partners-grid, .staff-grid {
+        .staff-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
+        }
+        .about-copy p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #475569;
+        }
+        .about-copy p + p {
+            margin-top: 1rem;
+        }
+        .about-image {
+            width: min(100%, 320px);
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        .history-card {
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--accent-color);
+        }
+        .history-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .history-card p {
+            max-width: 950px;
+            line-height: 1.8;
+            color: #475569;
+        }
+        .staff-card {
+            text-align: center;
+        }
+        .staff-card img {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+        }
+        .staff-card h3 {
+            color: var(--primary-color);
+        }
+        .staff-role {
+            margin: 0.4rem 0;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        .staff-bio {
+            margin-top: 0.5rem;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .academy-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .academy-cta a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            min-height: 48px;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 999px;
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .academy-cta a:hover {
+            transform: translateY(-2px);
+            background: #172554;
+        }
+        .academy-cta a.secondary {
+            background: transparent;
+            color: var(--primary-color);
+        }
+        .academy-cta a.secondary:hover {
+            background: #eff6ff;
         }
     </style>
 </head>
@@ -89,9 +173,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
                         <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
-                        <li><a href="academie.html#mission"><i class="fas fa-bullseye"></i> Notre mission</a></li>
-                        <li><a href="academie.html#infrastructures"><i class="fas fa-building"></i> Nos infrastructures</a></li>
-                        <li><a href="academie.html#partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a></li>
                         <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
                     </ul>
                 </li>
@@ -109,12 +190,6 @@
                 <li class="dropdown">
                     <a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a>
                     <ul class="dropdown-menu">
-                        <li><a href="programmes.html#u13"><i class="fas fa-user"></i> Programme U13</a></li>
-                        <li><a href="programmes.html#u15"><i class="fas fa-user"></i> Programme U15</a></li>
-                        <li><a href="programmes.html#u17"><i class="fas fa-user"></i> Programme U17</a></li>
-                        <li><a href="programmes.html#u19"><i class="fas fa-user"></i> Programme U19</a></li>
-                        <li><a href="programmes.html#seniors"><i class="fas fa-user"></i> Programme Seniors</a></li>
-                        <li><a href="programmes.html#individuel"><i class="fas fa-user-check"></i> Programme individuel</a></li>
                     </ul>
                 </li>
                 <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
@@ -235,133 +310,65 @@
         </div>
     </header>
 
-    <!-- Section 1: À propos de nous -->
+    <!-- À propos de l'académie -->
     <section id="a-propos" class="content-section">
         <div class="container">
             <div class="grid-2">
-                <div>
+                <div class="about-copy">
                     <h2 class="section-title"><i class="fas fa-info-circle"></i> À propos de nous</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color);">
+                    <p>
                         L'<strong>Académie FADY Football</strong> est un centre d'excellence dédié à l'éclosion, au perfectionnement et à l'accompagnement global des jeunes footballeurs à Labé et en Guinée. Nous allions rigueur tactique, préparation physique de haut niveau et accompagnement éducatif rigoureux.
                     </p>
-                    <p style="margin-top: 1rem; color: #475569;">
+                    <p>
                         Notre vision est de donner à chaque jeune talent les outils pour atteindre le niveau professionnel tout en développant des valeurs humaines fortes de discipline, respect et solidarité.
                     </p>
                 </div>
                 <div>
-                    <img src="../images/logo.png" alt="Académie FADY Football" style="max-width: 320px; margin: 0 auto; border-radius: 20px; box-shadow: var(--shadow);">
+                    <img src="../images/logo.png" alt="Emblème de l'Académie FADY Football" class="about-image">
                 </div>
+            </div>
+            <div class="academy-cta">
+                <a href="programmes.html"><i class="fas fa-futbol" aria-hidden="true"></i> Découvrir nos programmes</a>
+                <a href="contact.html" class="secondary"><i class="fas fa-envelope" aria-hidden="true"></i> Nous contacter</a>
             </div>
         </div>
     </section>
 
-    <!-- Section 2: Notre Histoire -->
+    <!-- Histoire de l'académie -->
     <section id="histoire" class="content-section">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-book-open"></i> Notre Histoire</h2>
-            <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); border-left: 5px solid var(--accent-color);">
-                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Fondée en 2023 à Labé</h3>
-                <p style="line-height: 1.8;">
+            <div class="history-card">
+                <h3>Fondée en 2023 à Labé</h3>
+                <p>
                     Née de la passion d'éducateurs sportifs et d'anciens footballeurs passionnés, l'Académie FADY Football s'est imposée en quelques années comme une référence incontournable de la formation en Guinée. Partis de petits groupes de détection au Stade Régional de Labé, nous accueillons aujourd'hui plus de 150 jeunes répartis dans plusieurs catégories d'âge (U13, U15, U17, U19 et Seniors).
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Section 3: Notre Mission -->
-    <section id="mission" class="content-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-bullseye"></i> Notre Mission</h2>
-            <div class="facilities-grid">
-                <div class="facility-card">
-                    <i class="fas fa-futbol" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Formation Technique</h3>
-                    <p>Développer l'intelligence de jeu, la maîtrise technique individuelle et les schémas tactiques modernes.</p>
-                </div>
-                <div class="facility-card">
-                    <i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Réussite Scolaire</h3>
-                    <p>Garantir un suivi éducatif strict pour que chaque joueur mène de front passion sportive et diplômes.</p>
-                </div>
-                <div class="facility-card">
-                    <i class="fas fa-heartbeat" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Santé & Éthique</h3>
-                    <p>Inculquer une hygiène de vie athlétique, la nutrition sportive et les valeurs d'esprit d'équipe.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 4: Nos Infrastructures -->
-    <section id="infrastructures" class="content-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-building"></i> Nos Infrastructures</h2>
-            <div class="facilities-grid">
-                <div class="facility-card">
-                    <i class="fas fa-stadium" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-                    <h3>Terrains Entraînement</h3>
-                    <p>Terrains réglementaires gazonnés et synthétiques au Stade Régional de Labé (Terrain Nord & Sud).</p>
-                </div>
-                <div class="facility-card">
-                    <i class="fas fa-dumbbell" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
-                    <h3>Salle de Musculation</h3>
-                    <p>Espace moderne de préparation physique spécialisée pour le renforcement et la prévention des blessures.</p>
-                </div>
-                <div class="facility-card">
-                    <i class="fas fa-user-md" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <h3>Centre Médical & Récupération</h3>
-                    <p>Cabinet de kinésithérapie, soins physiologiques et protocoles de récupération d'après-match.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 5: Nos Partenaires -->
-    <section id="partenaires" class="content-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-handshake"></i> Nos Partenaires</h2>
-            <div class="partners-grid">
-                <div class="partner-card" style="text-align: center;">
-                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-                    <h3>Fédération Guinéenne de Football</h3>
-                    <p>Partenaire officiel pour l'homologation des diplômes et compétitions de jeunes.</p>
-                </div>
-                <div class="partner-card" style="text-align: center;">
-                    <i class="fas fa-tshirt" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <h3>Équipementiers Sportifs</h3>
-                    <p>Fournisseur officiel des tenues d'entraînement et de match de l'académie.</p>
-                </div>
-                <div class="partner-card" style="text-align: center;">
-                    <i class="fas fa-hospital" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
-                    <h3>Clinique Régionale de Labé</h3>
-                    <p>Suivi médical régulier et examens d'aptitude sportive pour nos athlètes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 6: Staff Technique -->
+    <!-- Staff technique -->
     <section id="staff" class="content-section">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-user-tie"></i> Staff Technique</h2>
             <div class="staff-grid">
-                <div class="staff-card" style="text-align: center;">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Mamadou&background=1e3a8a&color=fff&size=128" alt="Coach" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
-                    <h3 style="color: var(--primary-color);">Mamadou Diallo</h3>
-                    <p style="color: var(--accent-color); font-weight: bold;">Directeur Technique</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Licence CAF A, plus de 15 ans d'expérience dans le football professionnel.</p>
+                <div class="staff-card">
+                    <img src="https://ui-avatars.com/api/?name=Coach+Mamadou&background=1e3a8a&color=fff&size=128" alt="Portrait de Mamadou Diallo">
+                    <h3>Mamadou Diallo</h3>
+                    <p class="staff-role">Directeur Technique</p>
+                    <p class="staff-bio">Licence CAF A, plus de 15 ans d'expérience dans le football professionnel.</p>
                 </div>
-                <div class="staff-card" style="text-align: center;">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Ibrahima&background=dc2626&color=fff&size=128" alt="Coach" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
-                    <h3 style="color: var(--primary-color);">Ibrahima Bah</h3>
-                    <p style="color: var(--accent-color); font-weight: bold;">Entraîneur Principal U17 & U19</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Spécialiste de la préparation tactique et du développement individuel.</p>
+                <div class="staff-card">
+                    <img src="https://ui-avatars.com/api/?name=Coach+Ibrahima&background=dc2626&color=fff&size=128" alt="Portrait d'Ibrahima Bah">
+                    <h3>Ibrahima Bah</h3>
+                    <p class="staff-role">Entraîneur Principal U17 & U19</p>
+                    <p class="staff-bio">Spécialiste de la préparation tactique et du développement individuel.</p>
                 </div>
-                <div class="staff-card" style="text-align: center;">
-                    <img src="https://ui-avatars.com/api/?name=Dr+Ousmane&background=f59e0b&color=fff&size=128" alt="Médecin" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem;">
-                    <h3 style="color: var(--primary-color);">Dr. Ousmane Sow</h3>
-                    <p style="color: var(--accent-color); font-weight: bold;">Responsable Médical & Prépa Physique</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Médecin du sport, spécialisé dans le suivi physiologique des jeunes athlètes.</p>
+                <div class="staff-card">
+                    <img src="https://ui-avatars.com/api/?name=Dr+Ousmane&background=f59e0b&color=fff&size=128" alt="Portrait du Dr Ousmane Sow">
+                    <h3>Dr. Ousmane Sow</h3>
+                    <p class="staff-role">Responsable Médical & Prépa Physique</p>
+                    <p class="staff-bio">Médecin du sport, spécialisé dans le suivi physiologique des jeunes athlètes.</p>
                 </div>
             </div>
         </div>
