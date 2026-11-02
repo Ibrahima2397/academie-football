@@ -257,47 +257,52 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="accueil" class="hero">
+    <section id="accueil" class="hero hero--home">
         <div class="hero-content">
-            <h2>Bienvenue à l'Académie FADY Football</h2>
-            <p>Développer les talents de demain depuis 2023 à Labé, Guinée</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
-                <button class="cta-button" onclick="window.location.href='html/inscription.html'">
-                    <i class="fas fa-user-plus"></i> Rejoignez-nous
-                </button>
-                <button class="cta-button" style="background: transparent; border: 2px solid var(--white); color: var(--white);" onclick="window.location.href='html/academie.html'">
-                    <i class="fas fa-info-circle"></i> Découvrir l'Académie
-                </button>
+            <span class="hero-eyebrow"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Académie FADY Football · Labé, Guinée</span>
+            <h2>Le talent se révèle sur le terrain.</h2>
+            <p>Depuis 2023, nous accompagnons les jeunes joueurs dans leur progression sportive et personnelle.</p>
+            <div class="hero-actions">
+                <a class="cta-button" href="html/inscription.html">
+                    <i class="fas fa-user-plus" aria-hidden="true"></i> Rejoindre l’académie
+                </a>
+                <a class="cta-button cta-button--secondary" href="html/academie.html">
+                    Découvrir l’Académie <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Presentation Section -->
-    <section style="padding: 4rem 0; background: var(--white);">
+    <section class="home-presentation">
         <div class="container">
-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <h2 style="color: var(--primary-color); font-size: 2.2rem; margin-bottom: 1rem;">L'Excellence du Football à Labé</h2>
-                <p style="font-size: 1.1rem; color: #475569; line-height: 1.8;">
-                    L'Académie FADY Football forme la jeunesse guinéenne aux exigences du football moderne en combinant rigueur athlétique, éducation de qualité et valeurs morales.
+            <div class="home-presentation-intro">
+                <span class="home-section-eyebrow">Progresser sur et en dehors du terrain</span>
+                <h2>Un accompagnement pour chaque étape</h2>
+                <p>
+                    Formation sportive, suivi scolaire et expériences de compétition : découvrez les axes d’accompagnement de l’Académie FADY Football.
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-top: 4px solid var(--primary-color); text-align: center; box-shadow: var(--shadow);">
-                    <i class="fas fa-graduation-cap" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Formation Technique & Tactique</h3>
-                    <p style="color: #64748b;">Programmes de formation adaptés à chaque tranche d'âge de U13 jusqu'en Seniors.</p>
-                </div>
-                <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-top: 4px solid var(--secondary-color); text-align: center; box-shadow: var(--shadow);">
-                    <i class="fas fa-book-reader" style="font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Double Projet Sport & Études</h3>
-                    <p style="color: #64748b;">Suivi scolaire strict garantissant l'équilibre entre passion sportive et diplômes.</p>
-                </div>
-                <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-top: 4px solid var(--accent-color); text-align: center; box-shadow: var(--shadow);">
-                    <i class="fas fa-trophy" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Compétitions & Détections</h3>
-                    <p style="color: #64748b;">Matchs hebdomadaires, tournois majeurs et opportunités de recrutement professionnel.</p>
-                </div>
+            <div class="home-value-grid">
+                <a class="home-value-card" href="html/services.html#formation">
+                    <span class="home-value-icon"><i class="fas fa-futbol" aria-hidden="true"></i></span>
+                    <h3>Formation sportive</h3>
+                    <p>Un cursus pour développer les qualités techniques, tactiques, physiques et mentales des joueurs.</p>
+                    <span class="home-value-link">Découvrir la formation <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="home-value-card home-value-card--red" href="html/services.html#scolaire">
+                    <span class="home-value-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
+                    <h3>Accompagnement scolaire</h3>
+                    <p>Un volet éducatif qui aide les jeunes à concilier leur parcours scolaire et leur pratique du football.</p>
+                    <span class="home-value-link">Voir le suivi scolaire <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="home-value-card home-value-card--gold" href="html/services.html#detection">
+                    <span class="home-value-icon"><i class="fas fa-trophy" aria-hidden="true"></i></span>
+                    <h3>Détections & tournois</h3>
+                    <p>Des occasions de se mesurer à d’autres joueurs et de faire découvrir son potentiel.</p>
+                    <span class="home-value-link">En savoir plus <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
             </div>
         </div>
     </section>
@@ -448,167 +453,6 @@
                 <!-- Barre de progression -->
                 <div class="news-progress-bar">
                     <div class="news-progress-fill" id="newsProgressFill"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Spécifications & Organisation de la Barre (Conforme à la Maquette) -->
-    <section class="specs-overview-section">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 2.5rem;">
-                <h2 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-sitemap" style="color: var(--accent-color);"></i> Architecture & Organisation de la Navigation
-                </h2>
-                <p style="color: #64748b; font-size: 1rem;">Structure complète et fonctionnalités intégrées conformément aux spécifications de la maquette</p>
-            </div>
-
-            <div class="specs-grid">
-                <!-- 1. Organisation de la barre -->
-                <div class="spec-column-card">
-                    <h3><i class="fas fa-bars"></i> Organisation de la Barre</h3>
-                    <div class="spec-list">
-                        <a href="index.html" class="spec-item spec-link" title="Accéder à la page d'accueil">
-                            <i class="fas fa-home"></i>
-                            <div class="spec-item-content">
-                                <strong>Accueil</strong>
-                                <span>Page principale du site</span>
-                            </div>
-                        </a>
-                        <a href="html/academie.html" class="spec-item spec-link" title="Découvrir l'Académie">
-                            <i class="fas fa-university"></i>
-                            <div class="spec-item-content">
-                                <strong>Académie</strong>
-                                <span>Informations sur l'académie (Histoire, Mission, Infra, Staff)</span>
-                            </div>
-                        </a>
-                        <a href="html/services.html" class="spec-item spec-link" title="Voir tous les Services">
-                            <i class="fas fa-users-cog"></i>
-                            <div class="spec-item-content">
-                                <strong>Services</strong>
-                                <span>Services offerts (Formation, Recrutement, Scolaire, Physique)</span>
-                            </div>
-                        </a>
-                        <a href="html/programmes.html" class="spec-item spec-link" title="Consulter les Programmes">
-                            <i class="fas fa-clipboard-list"></i>
-                            <div class="spec-item-content">
-                                <strong>Programmes</strong>
-                                <span>Programmes de formation (U13, U15, U17, U19, Seniors, Individuel)</span>
-                            </div>
-                        </a>
-                        <a href="html/actualites.html" class="spec-item spec-link" title="Lire les Actualités">
-                            <i class="fas fa-newspaper"></i>
-                            <div class="spec-item-content">
-                                <strong>Actualités</strong>
-                                <span>Dernières nouvelles et événements</span>
-                            </div>
-                        </a>
-                        <a href="html/galerie.html" class="spec-item spec-link" title="Parcourir la Galerie">
-                            <i class="fas fa-images"></i>
-                            <div class="spec-item-content">
-                                <strong>Galerie</strong>
-                                <span>Photos et vidéos de l'académie</span>
-                            </div>
-                        </a>
-                        <a href="html/contact.html" class="spec-item spec-link" title="Accéder au Contact">
-                            <i class="fas fa-envelope"></i>
-                            <div class="spec-item-content">
-                                <strong>Contact</strong>
-                                <span>Nous contacter facilement</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2. Éléments à ajouter -->
-                <div class="spec-column-card">
-                    <h3><i class="fas fa-plus-circle"></i> Éléments Intégrés</h3>
-                    <div class="spec-list">
-                        <a href="#" onclick="document.querySelector('.search-container input').focus(); return false;" class="spec-item spec-link" title="Tester la recherche">
-                            <i class="fas fa-search"></i>
-                            <div class="spec-item-content">
-                                <strong>Barre de recherche</strong>
-                                <span>Permet de rechercher rapidement dans le site</span>
-                            </div>
-                        </a>
-                        <a href="html/connexion.html" class="spec-item spec-link" title="Accéder à la Connexion">
-                            <i class="fas fa-user"></i>
-                            <div class="spec-item-content">
-                                <strong>Connexion</strong>
-                                <span>Accès pour les membres existants</span>
-                            </div>
-                        </a>
-                        <a href="html/inscription.html" class="spec-item spec-link" title="Créer un compte">
-                            <i class="fas fa-user-plus"></i>
-                            <div class="spec-item-content">
-                                <strong>Inscription</strong>
-                                <span>Inscription pour nouveaux joueurs / parents</span>
-                            </div>
-                        </a>
-                        <a href="#" onclick="document.getElementById('notifBtn').click(); return false;" class="spec-item spec-link" title="Ouvrir les Notifications">
-                            <i class="fas fa-bell"></i>
-                            <div class="spec-item-content">
-                                <strong>Notifications</strong>
-                                <span>Alertes pour matchs, entraînements, détections, etc.</span>
-                            </div>
-                        </a>
-                        <a href="#" onclick="document.getElementById('langBtn').click(); return false;" class="spec-item spec-link" title="Changer de Langue">
-                            <i class="fas fa-globe"></i>
-                            <div class="spec-item-content">
-                                <strong>Langue</strong>
-                                <span>Français / English (Changement dynamique)</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 3. Autres Recommandations -->
-                <div class="spec-column-card">
-                    <h3><i class="fas fa-check-circle"></i> Recommandations Design</h3>
-                    <div class="spec-list">
-                        <a href="#accueil" class="spec-item spec-link check" title="Tester le Header Sticky">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Barre fixe en haut (sticky)</strong>
-                                <span>Accès permanent lors du défilement</span>
-                            </div>
-                        </a>
-                        <a href="html/academie.html#staff" class="spec-item spec-link check" title="Découvrir le staff technique">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Staff technique</strong>
-                                <span>Découvrir l'équipe qui accompagne les joueurs</span>
-                            </div>
-                        </a>
-                        <a href="html/services.html" class="spec-item spec-link check" title="Découvrir les services">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Menu déroulant clair</strong>
-                                <span>Menus fluides avec sous-titres et icônes</span>
-                            </div>
-                        </a>
-                        <a href="html/programmes.html" class="spec-item spec-link check" title="Voir les programmes">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Couleurs cohérentes</strong>
-                                <span>Identité visuelle Bleue & Or de l'académie</span>
-                            </div>
-                        </a>
-                        <a href="html/galerie.html" class="spec-item spec-link check" title="Explorer la galerie">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Transitions et animations douces</strong>
-                                <span>Effets au survol et chargements fluides</span>
-                            </div>
-                        </a>
-                        <a href="html/contact.html" class="spec-item spec-link check" title="Tester le contact">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="spec-item-content">
-                                <strong>Lisibilité et contraste</strong>
-                                <span>Ergonomie et lisibilité maximale</span>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
