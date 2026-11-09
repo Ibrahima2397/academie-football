@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title">
+  <title id="title">Portrait illustratif à remplacer par la photo du directeur des affaires intérieures</title>
+  <rect width="320" height="320" rx="160" fill="#6d28d9"/>
+  <circle cx="160" cy="118" r="58" fill="#a76b4c"/>
+  <path d="M100 113c2-45 26-72 61-72 39 0 60 29 60 75-16-18-37-27-60-27s-44 8-61 24Z" fill="#211915"/>
+  <path d="M50 320c7-77 49-119 110-119s103 42 110 119H50Z" fill="#1e3a8a"/>
+  <path d="m125 209 35 41 35-41 19 111h-108l19-111Z" fill="#fff"/>
+  <path d="m147 250 13 12 13-12-8 70h-10l-8-70Z" fill="#f59e0b"/>
+</svg>

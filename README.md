@@ -54,6 +54,31 @@ Le site est complètement responsive et fonctionne sur:
 4. **Navigation Active**: Surligne le lien actif au scroll
 5. **Animations au Scroll**: Les cartes s'animent en arrivant en vue
 
+## 🖼️ Galerie, publications et direct
+
+- Les onglets **Tout**, **Photos**, **Vidéos**, **Matchs**, **Entraînements** et **Direct** ouvrent chacun leur page dédiée.
+- Après connexion, un administrateur peut publier des images JPG, PNG ou WebP (12 Mo maximum) et des vidéos MP4 ou WebM (100 Mo maximum), puis les classer par type et catégorie. Il peut aussi supprimer une publication.
+- Pour lancer le direct sur le site, démarrez d’abord la diffusion sur YouTube ou Facebook, puis indiquez son titre et son lien dans la page **Direct**. Le bouton d’arrêt retire l’intégration du site ; il n’arrête pas la diffusion sur la plateforme.
+- Les fichiers sont stockés sur le serveur dans `uploads/gallery/` par défaut, et leurs informations dans `academie.db`. En hébergement, configurez un volume persistant pour ces deux emplacements.
+
+### Démarrer le serveur
+
+Le site et sa galerie dynamique doivent être servis par le backend Express (et non ouverts directement depuis GitHub Pages ou `file://`) :
+
+```powershell
+$env:ADMIN_BOOTSTRAP_PASSWORD = "choisir-un-secret-de-16-caracteres-minimum"
+npm install
+npm start
+```
+
+Connectez-vous avec `admin@academiefady.com` et le mot de passe défini dans `ADMIN_BOOTSTRAP_PASSWORD`. Ne publiez jamais ce secret dans le dépôt. Si le site et l’API sont hébergés sur des origines différentes, définissez `window.ACADEMIE_API_URL` avant le chargement de `js/script.js` et configurez CORS pour l’origine du site.
+
+Les connexions administrateur délivrent une session temporaire en mémoire (12 heures), révoquée à la déconnexion ou au redémarrage du serveur. L’inscription publique crée toujours un compte joueur ; elle ne permet pas de choisir le rôle administrateur.
+
+Pour placer la base et les médias sur un volume persistant différent, définissez `ACADEMIE_DB_PATH` et `GALLERY_UPLOAD_DIR` avant `npm start`.
+
+Le calendrier public présente toujours les jours du lundi au dimanche et conserve un aperçu des créneaux de la capture si le serveur est indisponible. Les administrateurs peuvent activer ou désactiver chaque jour dans **Mon espace → Administration du Club** ; l’ajout d’un créneau active aussi automatiquement le jour choisi. Les entraînements utilisent les terrains **Grand Stade Régional de Labé**, **Terrain de Tata** et **Terrain de Fadi**. Le lien Google Maps de chaque créneau ouvre l’itinéraire vers le terrain sélectionné, depuis la position de départ choisie dans Maps.
+
 ## 🔧 Personalisation
 
 Vous pouvez facilement modifier:

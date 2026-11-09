@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title">
+  <title id="title">Portrait illustratif à remplacer par la photo du vice-président</title>
+  <rect width="320" height="320" rx="160" fill="#b91c1c"/>
+  <circle cx="160" cy="118" r="58" fill="#e8b995"/>
+  <path d="M100 115c1-46 27-74 62-74 38 0 59 29 59 75-17-18-38-27-61-27-22 0-43 9-60 26Z" fill="#292524"/>
+  <path d="M50 320c7-77 49-119 110-119s103 42 110 119H50Z" fill="#1e3a8a"/>
+  <path d="m125 209 35 41 35-41 19 111h-108l19-111Z" fill="#fff"/>
+  <path d="m147 250 13 12 13-12-8 70h-10l-8-70Z" fill="#f59e0b"/>
+</svg>

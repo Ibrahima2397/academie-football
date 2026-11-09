@@ -1,35 +1,12 @@
 // Configuration de l'API
-const API_URL = 'http://localhost:3000/api';
+const API_URL = window.ACADEMIE_API_URL
+    || `${window.location.protocol === 'file:' ? 'http://localhost:3000' : window.location.origin}/api`;
+const GALLERY_TOKEN_KEY = 'galleryAdminToken';
 
 // Menu hamburger et navigation responsive
 document.addEventListener('DOMContentLoaded', () => {
-    const galleryFilters = document.querySelectorAll('[data-gallery-filter]');
-    const galleryItems = document.querySelectorAll('[data-gallery-type][data-gallery-category]');
-
-    if (galleryFilters.length && galleryItems.length) {
-        galleryFilters.forEach((filter) => {
-            filter.addEventListener('click', () => {
-                const selectedFilter = filter.dataset.galleryFilter;
-
-                galleryFilters.forEach((button) => {
-                    const isActive = button === filter;
-                    button.classList.toggle('active', isActive);
-                    button.setAttribute('aria-pressed', String(isActive));
-                });
-
-                galleryItems.forEach((item) => {
-                    const matchesFilter = selectedFilter === 'all'
-                        || item.dataset.galleryType === selectedFilter
-                        || item.dataset.galleryCategory === selectedFilter;
-                    item.hidden = !matchesFilter;
-                });
-
-                document.querySelectorAll('[data-gallery-group]').forEach((group) => {
-                    group.hidden = !group.querySelector('[data-gallery-type]:not([hidden])');
-                });
-            });
-        });
-    }
+    initGalleryMediaPage();
+    initLiveGalleryPage();
 
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
@@ -43,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-        
+
         // Fermer le menu quand on clique sur un lien (sauf sur le parent dropdown)
         navLinks?.forEach(link => {
             link.addEventListener('click', (e) => {
                 if (link.parentElement.classList.contains('dropdown')) {
                     // Si c'est le lien principal d'un dropdown sur mobile
-                    if (window.innerWidth <= 768) {
+                    if (window.innerWidth < 1024) {
                         e.preventDefault();
                         link.parentElement.classList.toggle('active');
                     }
@@ -71,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Ajuster la navigation au redimensionnement de la fenêtre
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth >= 1024) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 dropdowns?.forEach(dropdown => {
@@ -236,6 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', function() {
+                    const galleryToken = sessionStorage.getItem(GALLERY_TOKEN_KEY);
+                    if (galleryToken) {
+                        fetch(`${API_URL}/logout`, {
+                            method: 'POST',
+                            headers: { Authorization: `Bearer ${galleryToken}` }
+                        }).catch((error) => console.error('Échec de la fermeture de session:', error));
+                    }
+                    sessionStorage.removeItem(GALLERY_TOKEN_KEY);
                     localStorage.removeItem('user');
                     showAlert('Déconnexion réussie ! Redirection...', 'success');
                     setTimeout(() => {
@@ -291,51 +276,108 @@ async function loadTeams() {
 }
 
 async function loadTrainings() {
-    const scheduleDiv = document.querySelector('.schedule');
-    if (!scheduleDiv) return;
+    const status = document.querySelector('[data-training-status]');
+    const scheduleDiv = status?.previousElementSibling;
+    if (!status || !scheduleDiv?.classList.contains('schedule')) return;
+
+    const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+    const legacyLocations = {
+        'Terrain Sud': 'Terrain de Fadi',
+        'Terrain Nord': 'Terrain de Tata',
+        'Terrain Principal': 'Grand Stade Régional de Labé'
+    };
+    const fallbackTrainings = [
+        { day_of_week: 'Lundi', start_time: '10h00', end_time: '12h00', team_name: 'U17 Régional', location: 'Terrain de Fadi' },
+        { day_of_week: 'Lundi', start_time: '16h30', end_time: '18h30', team_name: 'Seniors D1', location: 'Terrain de Tata' },
+        { day_of_week: 'Lundi', start_time: '19h00', end_time: '20h30', team_name: 'U15 Régional', location: 'Grand Stade Régional de Labé' },
+        { day_of_week: 'Mercredi', start_time: '15h00', end_time: '16h00', team_name: 'U17 Régional', location: 'Terrain de Fadi' },
+        { day_of_week: 'Mercredi', start_time: '16h30', end_time: '17h30', team_name: 'Seniors D1', location: 'Terrain de Tata' },
+        { day_of_week: 'Mercredi', start_time: '18h00', end_time: '19h30', team_name: 'U15 Régional', location: 'Grand Stade Régional de Labé' },
+        { day_of_week: 'Vendredi', start_time: '17h00', end_time: '18h00', team_name: 'U17 Régional', location: 'Terrain de Fadi' },
+        { day_of_week: 'Vendredi', start_time: '18h30', end_time: '19h30', team_name: 'Seniors D1', location: 'Terrain de Tata' },
+        { day_of_week: 'Vendredi', start_time: '20h00', end_time: '21h30', team_name: 'U15 Régional', location: 'Grand Stade Régional de Labé' },
+        { day_of_week: 'Samedi', start_time: '09h00', end_time: '11h00', team_name: 'Matchs', location: 'Grand Stade Régional de Labé' },
+        { day_of_week: 'Samedi', start_time: '14h00', end_time: '16h00', team_name: 'Matchs', location: 'Grand Stade Régional de Labé' }
+    ];
+    const fallbackActiveDays = new Set(['Lundi', 'Mercredi', 'Vendredi', 'Samedi']);
+
+    const renderSchedule = (trainings, activeDays) => {
+        const grouped = new Map(days.map(day => [day, []]));
+        trainings.forEach(training => {
+            if (grouped.has(training.day_of_week)) grouped.get(training.day_of_week).push(training);
+        });
+
+        scheduleDiv.replaceChildren();
+        days.forEach(day => {
+            const isActive = activeDays.has(day) ? activeDays.get(day) : false;
+            const dayCard = document.createElement('article');
+            dayCard.className = `schedule-item${isActive ? '' : ' schedule-item-inactive'}`;
+
+            const heading = document.createElement('div');
+            heading.className = 'jour';
+            heading.textContent = day;
+            dayCard.appendChild(heading);
+
+            const details = document.createElement('div');
+            details.className = 'details';
+            const dayTrainings = isActive ? grouped.get(day) : [];
+            if (!dayTrainings.length) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.className = 'schedule-day-message';
+                emptyMessage.textContent = isActive ? 'Aucun créneau programmé.' : 'Pas d’entraînement prévu ce jour.';
+                details.appendChild(emptyMessage);
+            } else {
+                dayTrainings.forEach(training => {
+                    const row = document.createElement('p');
+                    const time = document.createElement('strong');
+                    time.textContent = `${training.start_time} - ${training.end_time} :`;
+                    const team = document.createElement('span');
+                    team.className = 'schedule-team-name';
+                    team.textContent = training.team_name || 'Entraînement';
+                    const rawLocation = training.location || '';
+                    const location = legacyLocations[rawLocation] || rawLocation;
+                    const destination = `${location.includes('Labé') ? location : `${location}, Labé`}, Guinée`;
+                    const directions = document.createElement('a');
+                    directions.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+                    directions.target = '_blank';
+                    directions.rel = 'noopener noreferrer';
+                    directions.className = 'terrain-link';
+                    directions.title = `Itinéraire vers ${location}`;
+                    const marker = document.createElement('i');
+                    marker.className = 'fas fa-map-marker-alt';
+                    marker.setAttribute('aria-hidden', 'true');
+                    directions.append(marker, document.createTextNode(' Itinéraire'));
+                    row.append(time, document.createTextNode(' '), team, directions);
+                    details.appendChild(row);
+                });
+            }
+            dayCard.appendChild(details);
+            scheduleDiv.appendChild(dayCard);
+        });
+    };
 
     try {
-        const res = await fetch(`${API_URL}/trainings`);
-        if (!res.ok) throw new Error();
-        const trainings = await res.json();
-
-        if (trainings.length > 0) {
-            const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-            const grouped = {};
-            days.forEach(d => grouped[d] = []);
-
-            trainings.forEach(tr => {
-                if (grouped[tr.day_of_week]) {
-                    grouped[tr.day_of_week].push(tr);
-                }
-            });
-
-            scheduleDiv.innerHTML = '';
-            days.forEach(day => {
-                const items = grouped[day];
-                if (items.length > 0) {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'schedule-item';
-                    
-                    let detailsHtml = '';
-                    items.forEach(tr => {
-                        const terrainLetter = tr.location.includes('Sud') ? 'S' : (tr.location.includes('Nord') ? 'N' : 'P');
-                        detailsHtml += `
-                            <p><strong>${tr.start_time} - ${tr.end_time}:</strong> ${tr.team_name} 
-                            <a href="https://maps.google.com/?q=${encodeURIComponent(tr.location)}+Labe+Guinee" target="_blank" class="terrain-link" title="${tr.location}"><i class="fas fa-map-marker-alt"></i> ${terrainLetter}</a></p>
-                        `;
-                    });
-
-                    itemDiv.innerHTML = `
-                        <div class="jour">${day}</div>
-                        <div class="details">${detailsHtml}</div>
-                    `;
-                    scheduleDiv.appendChild(itemDiv);
-                }
-            });
+        const [trainingsResponse, daysResponse] = await Promise.all([
+            fetch(`${API_URL}/trainings`),
+            fetch(`${API_URL}/training-days`)
+        ]);
+        if (!trainingsResponse.ok || !daysResponse.ok) {
+            throw new Error('Le calendrier des entraînements est indisponible.');
         }
-    } catch (err) {
-        console.log('Utilisation des données statiques pour les entraînements (serveur hors ligne).');
+        const [trainings, daySettings] = await Promise.all([
+            trainingsResponse.json(),
+            daysResponse.json()
+        ]);
+        const activeDays = new Map(daySettings.map(setting => [setting.day_of_week, Boolean(setting.is_active)]));
+        renderSchedule(trainings, activeDays);
+        if (status) status.hidden = true;
+    } catch (error) {
+        renderSchedule(fallbackTrainings, new Map(days.map(day => [day, fallbackActiveDays.has(day)])));
+        if (status) {
+            status.textContent = 'Aperçu du calendrier affiché. Connectez le serveur pour voir les horaires les plus récents.';
+            status.hidden = false;
+        }
+        console.error('Échec du chargement du calendrier des entraînements:', error);
     }
 }
 
@@ -354,7 +396,7 @@ async function loadCategories() {
                 const card = document.createElement('div');
                 card.className = 'programme-card';
                 
-                const avatarName = cat.id === 1 ? 'U12' : (cat.id === 2 ? 'U17' : 'ELITE');
+                const avatarName = cat.id === 1 ? 'U17' : (cat.id === 2 ? 'SENIORS' : 'U15');
                 const bg = cat.id === 1 ? 'f59e0b' : (cat.id === 2 ? '1e3a8a' : 'dc2626');
                 const color = cat.id === 2 ? 'f59e0b' : 'ffffff';
                 
@@ -472,8 +514,17 @@ if (loginForm && window.location.pathname.includes('connexion.html')) {
             if (response.ok) {
                 showAlert('Connexion réussie ! Bienvenue.', 'success');
                 localStorage.setItem('user', JSON.stringify(data.user));
+                if (data.token) sessionStorage.setItem(GALLERY_TOKEN_KEY, data.token);
+                const adminLoginRequested = new URLSearchParams(window.location.search).get('redirect') === 'admin';
+                if (adminLoginRequested && data.user.role !== 'admin') {
+                    showAlert('Ce compte ne possède pas le rôle administrateur.', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                    return;
+                }
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = adminLoginRequested ? 'dashboard.html?admin=1' : 'dashboard.html';
                 }, 1000);
             } else {
                 showAlert(data.message || 'Identifiants invalides.', 'error');
@@ -863,6 +914,289 @@ function confirmOrder() {
         closeBuyModal();
     } catch (error) {
         document.getElementById('deliveryLocationStatus').textContent = 'Impossible d’ouvrir votre application e-mail. Réessayez ou contactez-nous directement.';
+    }
+}
+
+async function initGalleryMediaPage() {
+    const galleryGrid = document.querySelector('[data-gallery-items]');
+    if (!galleryGrid) return;
+
+    const page = document.body.dataset.galleryPage || 'all';
+    const status = document.querySelector('[data-gallery-status]');
+    const adminPanel = document.getElementById('galleryAdminPanel');
+    const token = sessionStorage.getItem(GALLERY_TOKEN_KEY);
+    let isAdmin = false;
+
+    if (token) {
+        try {
+            const response = await fetch(`${API_URL}/admin/gallery/session`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            isAdmin = response.ok;
+            if (!response.ok && response.status === 401) {
+                sessionStorage.removeItem(GALLERY_TOKEN_KEY);
+            }
+        } catch (error) {
+            console.error('Impossible de vérifier les droits de gestion de la galerie:', error);
+        }
+    }
+
+    if (adminPanel && isAdmin) adminPanel.hidden = false;
+
+    const params = new URLSearchParams();
+    if (page === 'photo' || page === 'video') params.set('type', page);
+    if (page === 'match' || page === 'training') params.set('category', page);
+    const query = params.toString();
+
+    const renderMedia = (media) => {
+        galleryGrid.replaceChildren();
+        media.forEach((item) => {
+            galleryGrid.appendChild(createGalleryMediaCard(item, isAdmin));
+        });
+        if (status) {
+            status.textContent = media.length
+                ? ''
+                : 'Aucun média publié dans cette catégorie pour le moment.';
+            status.hidden = media.length > 0;
+        }
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/gallery/media${query ? `?${query}` : ''}`);
+        if (!response.ok) throw new Error('Le serveur n’a pas pu charger les médias.');
+        renderMedia(await response.json());
+    } catch (error) {
+        if (status) {
+            status.textContent = 'Les médias publiés ne sont pas disponibles pour le moment.';
+            status.hidden = false;
+        }
+        console.error('Échec du chargement des médias de la galerie:', error);
+    }
+
+    const uploadForm = document.getElementById('galleryUploadForm');
+    if (uploadForm && isAdmin) {
+        uploadForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const submitButton = uploadForm.querySelector('[type="submit"]');
+            const formStatus = document.getElementById('galleryUploadStatus');
+            submitButton.disabled = true;
+            formStatus.textContent = 'Publication en cours…';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/gallery/media`, {
+                    method: 'POST',
+                    headers: { Authorization: `Bearer ${token}` },
+                    body: new FormData(uploadForm)
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Impossible de publier les médias.');
+
+                uploadForm.reset();
+                formStatus.textContent = result.message;
+                const refreshed = await fetch(`${API_URL}/gallery/media${query ? `?${query}` : ''}`);
+                if (!refreshed.ok) throw new Error('Les médias ont été publiés, mais la galerie n’a pas pu être actualisée.');
+                renderMedia(await refreshed.json());
+            } catch (error) {
+                formStatus.textContent = error.message;
+                console.error('Échec de la publication des médias:', error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    }
+}
+
+function createGalleryMediaCard(media, isAdmin) {
+    const assetUrl = new URL(media.url, API_URL).href;
+    const categoryLabel = media.category === 'match' ? 'Match'
+        : media.category === 'training' ? 'Entraînement' : 'Autre';
+    const card = document.createElement(media.type === 'photo' ? 'div' : 'article');
+
+    if (media.type === 'photo') {
+        card.className = 'galerie-card';
+        const imageFrame = document.createElement('div');
+        imageFrame.className = 'galerie-img';
+        const image = document.createElement('img');
+        image.src = assetUrl;
+        image.alt = media.title;
+        image.loading = 'lazy';
+        const overlay = document.createElement('div');
+        overlay.className = 'galerie-overlay';
+        const caption = document.createElement('p');
+        caption.textContent = `${media.title} · ${categoryLabel}`;
+        overlay.appendChild(caption);
+        imageFrame.append(image, overlay);
+        const details = document.createElement('div');
+        details.className = 'gallery-photo-caption';
+        const title = document.createElement('h4');
+        title.textContent = media.title;
+        const category = document.createElement('p');
+        category.textContent = categoryLabel;
+        details.append(title, category);
+        card.append(imageFrame, details);
+    } else {
+        card.className = 'video-card gallery-uploaded-video';
+        const video = document.createElement('video');
+        video.src = assetUrl;
+        video.controls = true;
+        video.preload = 'metadata';
+        video.playsInline = true;
+        video.setAttribute('aria-label', media.title);
+        const info = document.createElement('div');
+        info.className = 'video-info';
+        const heading = document.createElement('h4');
+        heading.textContent = media.title;
+        const category = document.createElement('p');
+        category.textContent = categoryLabel;
+        info.append(heading, category);
+        card.append(video, info);
+    }
+
+    if (isAdmin) {
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'gallery-delete-media';
+        deleteButton.textContent = 'Supprimer';
+        deleteButton.addEventListener('click', async () => {
+            if (!window.confirm(`Supprimer « ${media.title} » de la galerie ?`)) return;
+            deleteButton.disabled = true;
+            try {
+                const response = await fetch(`${API_URL}/admin/gallery/media/${media.id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}` }
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Impossible de supprimer ce média.');
+                card.remove();
+            } catch (error) {
+                deleteButton.disabled = false;
+                window.alert(error.message);
+                console.error('Échec de la suppression du média:', error);
+            }
+        });
+        card.appendChild(deleteButton);
+    }
+
+    return card;
+}
+
+async function initLiveGalleryPage() {
+    const liveContainer = document.getElementById('liveStreamContainer');
+    if (!liveContainer) return;
+
+    const liveStatus = document.getElementById('liveStreamStatus');
+    const embedContainer = document.getElementById('liveEmbedContainer');
+    const liveTitle = document.getElementById('liveStreamTitle');
+    const liveIndicator = document.querySelector('[data-live-indicator]');
+    const adminPanel = document.getElementById('liveAdminPanel');
+    const token = sessionStorage.getItem(GALLERY_TOKEN_KEY);
+    const stopButton = document.getElementById('stopLiveStream');
+    let currentStream = null;
+
+    const renderLiveStream = (stream) => {
+        currentStream = stream;
+        embedContainer.replaceChildren();
+        embedContainer.hidden = !stream;
+        liveStatus.hidden = Boolean(stream);
+        liveTitle.textContent = stream ? stream.title : 'Aucun direct en cours';
+        if (liveIndicator) liveIndicator.hidden = !stream;
+        if (stopButton) stopButton.hidden = !stream;
+        if (!stream) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.src = stream.embed_url;
+        iframe.title = stream.title;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        embedContainer.appendChild(iframe);
+
+        const badge = document.createElement('span');
+        badge.className = 'live-stream-badge';
+        badge.textContent = 'EN DIRECT';
+        liveTitle.appendChild(badge);
+    };
+
+    const loadStream = async () => {
+        const response = await fetch(`${API_URL}/gallery/live`);
+        if (!response.ok) throw new Error('Impossible de charger le direct.');
+        renderLiveStream(await response.json());
+    };
+
+    try {
+        await loadStream();
+    } catch (error) {
+        liveStatus.textContent = 'Le statut du direct est indisponible pour le moment.';
+        console.error('Échec du chargement du direct:', error);
+    }
+
+    if (token) {
+        try {
+            const response = await fetch(`${API_URL}/admin/gallery/session`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (response.ok && adminPanel) adminPanel.hidden = false;
+            if (!response.ok && response.status === 401) sessionStorage.removeItem(GALLERY_TOKEN_KEY);
+        } catch (error) {
+            console.error('Impossible de vérifier les droits du direct:', error);
+        }
+    }
+
+    const liveForm = document.getElementById('liveStreamForm');
+    if (liveForm) {
+        liveForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const submitButton = liveForm.querySelector('[type="submit"]');
+            const formStatus = document.getElementById('liveAdminStatus');
+            submitButton.disabled = true;
+            formStatus.textContent = 'Activation du direct…';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/gallery/live`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: document.getElementById('liveTitleInput').value.trim(),
+                        url: document.getElementById('liveUrlInput').value.trim()
+                    })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Impossible d’activer le direct.');
+                formStatus.textContent = result.message;
+                await loadStream();
+            } catch (error) {
+                formStatus.textContent = error.message;
+                console.error('Échec de l’activation du direct:', error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    if (stopButton) {
+        stopButton.addEventListener('click', async () => {
+            if (!currentStream || !window.confirm('Arrêter la diffusion affichée sur le site ?')) return;
+            stopButton.disabled = true;
+            const formStatus = document.getElementById('liveAdminStatus');
+            try {
+                const response = await fetch(`${API_URL}/admin/gallery/live`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}` }
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Impossible d’arrêter le direct.');
+                formStatus.textContent = result.message;
+                await loadStream();
+            } catch (error) {
+                formStatus.textContent = error.message;
+                console.error('Échec de l’arrêt du direct:', error);
+            } finally {
+                stopButton.disabled = false;
+            }
+        });
     }
 }
 

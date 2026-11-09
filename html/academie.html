@@ -47,23 +47,6 @@
                 grid-template-columns: 1fr;
             }
         }
-        .staff-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .staff-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
-        }
-        .staff-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
         .about-copy p {
             font-size: 1.05rem;
             line-height: 1.8;
@@ -77,78 +60,6 @@
             margin: 0 auto;
             border-radius: 20px;
             box-shadow: var(--shadow);
-        }
-        .history-card {
-            padding: clamp(1.5rem, 4vw, 2.5rem);
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--accent-color);
-        }
-        .history-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .history-card p {
-            max-width: 950px;
-            line-height: 1.8;
-            color: #475569;
-        }
-        .staff-card {
-            text-align: center;
-        }
-        .staff-card img {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1rem;
-            border-radius: 50%;
-        }
-        .staff-card h3 {
-            color: var(--primary-color);
-        }
-        .staff-role {
-            margin: 0.4rem 0;
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-        .staff-bio {
-            margin-top: 0.5rem;
-            color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .academy-cta {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .academy-cta a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            min-height: 48px;
-            padding: 0.75rem 1.25rem;
-            border: 2px solid var(--primary-color);
-            border-radius: 999px;
-            background: var(--primary-color);
-            color: var(--white);
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
-        .academy-cta a:hover {
-            transform: translateY(-2px);
-            background: #172554;
-        }
-        .academy-cta a.secondary {
-            background: transparent;
-            color: var(--primary-color);
-        }
-        .academy-cta a.secondary:hover {
-            background: #eff6ff;
         }
     </style>
 </head>
@@ -172,8 +83,10 @@
                     <a href="academie.html" class="active"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
-                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
-                        <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -182,9 +95,7 @@
                         <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
                         <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
                         <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
-                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
                         <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
-                        <li><a href="services.html#stages"><i class="fas fa-trophy"></i> Stages & Tournois</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -284,7 +195,7 @@
                         <span>Découvrir nos talents</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>
@@ -327,50 +238,6 @@
                     <img src="../images/logo.png" alt="Emblème de l'Académie FADY Football" class="about-image">
                 </div>
             </div>
-            <div class="academy-cta">
-                <a href="programmes.html"><i class="fas fa-futbol" aria-hidden="true"></i> Découvrir nos programmes</a>
-                <a href="contact.html" class="secondary"><i class="fas fa-envelope" aria-hidden="true"></i> Nous contacter</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Histoire de l'académie -->
-    <section id="histoire" class="content-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-book-open"></i> Notre Histoire</h2>
-            <div class="history-card">
-                <h3>Fondée en 2023 à Labé</h3>
-                <p>
-                    Née de la passion d'éducateurs sportifs et d'anciens footballeurs passionnés, l'Académie FADY Football s'est imposée en quelques années comme une référence incontournable de la formation en Guinée. Partis de petits groupes de détection au Stade Régional de Labé, nous accueillons aujourd'hui plus de 150 jeunes répartis dans plusieurs catégories d'âge (U13, U15, U17, U19 et Seniors).
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Staff technique -->
-    <section id="staff" class="content-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-user-tie"></i> Staff Technique</h2>
-            <div class="staff-grid">
-                <div class="staff-card">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Mamadou&background=1e3a8a&color=fff&size=128" alt="Portrait de Mamadou Diallo">
-                    <h3>Mamadou Diallo</h3>
-                    <p class="staff-role">Directeur Technique</p>
-                    <p class="staff-bio">Licence CAF A, plus de 15 ans d'expérience dans le football professionnel.</p>
-                </div>
-                <div class="staff-card">
-                    <img src="https://ui-avatars.com/api/?name=Coach+Ibrahima&background=dc2626&color=fff&size=128" alt="Portrait d'Ibrahima Bah">
-                    <h3>Ibrahima Bah</h3>
-                    <p class="staff-role">Entraîneur Principal U17 & U19</p>
-                    <p class="staff-bio">Spécialiste de la préparation tactique et du développement individuel.</p>
-                </div>
-                <div class="staff-card">
-                    <img src="https://ui-avatars.com/api/?name=Dr+Ousmane&background=f59e0b&color=fff&size=128" alt="Portrait du Dr Ousmane Sow">
-                    <h3>Dr. Ousmane Sow</h3>
-                    <p class="staff-role">Responsable Médical & Prépa Physique</p>
-                    <p class="staff-bio">Médecin du sport, spécialisé dans le suivi physiologique des jeunes athlètes.</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -407,7 +274,7 @@
                         <span>Effectif complet</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>

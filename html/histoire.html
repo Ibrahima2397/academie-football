@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre histoire - Académie FADY Football</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .history-page-header {
+            padding: clamp(2.5rem, 6vw, 4rem) 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #1a2d5e);
+            color: var(--white);
+            text-align: center;
+        }
+        .history-page-header h1 {
+            margin-bottom: 0.5rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+        .history-page-header p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+        }
+        .history-section {
+            min-height: 55vh;
+            padding: clamp(2.5rem, 6vw, 4rem) 0;
+            background: #f8fafc;
+        }
+        .history-card {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 16px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+        .history-card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+        }
+        .history-card p {
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li class="dropdown">
+                    <a href="academie.html" class="active"><i class="fas fa-university"></i> Académie</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection &amp; Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                    </ul>
+                </li>
+                <li><a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a></li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="auth-links" id="navbarAuthLinks">
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="history-page-header">
+        <div class="container">
+            <h1>Notre Histoire</h1>
+            <p>Les origines et le parcours de l'Académie FADY Football à Labé.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="history-section" aria-labelledby="historyTitle">
+            <div class="container">
+                <h2 class="section-title" id="historyTitle"><i class="fas fa-book-open"></i> L'histoire de l'Académie</h2>
+                <article class="history-card">
+                    <h2>Fondée en 2023 à Labé</h2>
+                    <p>
+                        Née de la passion d'éducateurs sportifs et d'anciens footballeurs passionnés, l'Académie FADY Football s'est imposée en quelques années comme une référence incontournable de la formation en Guinée. Partis de petits groupes de détection au Stade Régional de Labé, nous accueillons aujourd'hui plus de 150 jeunes répartis dans plusieurs catégories d'âge (U13, U15, U17, U19 et Seniors).
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

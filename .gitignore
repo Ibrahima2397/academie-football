@@ -14,6 +14,8 @@ pids
 *.pid
 *.seed
 *.pid.lock
+academie.db
+/uploads/gallery/
 
 # Environment variables
 .env
@@ -42,6 +44,5 @@ build/
 *.mS
 *~
 
-# Package manager lock files (optional - keep or remove based on your preference)
-package-lock.json
+# Package manager lock files
 yarn.lock

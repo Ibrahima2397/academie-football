@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff technique - Académie FADY Football</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .staff-page-header {
+            padding: clamp(2.5rem, 6vw, 4rem) 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #1a2d5e);
+            color: var(--white);
+            text-align: center;
+        }
+        .staff-page-header h1 {
+            margin-bottom: 0.5rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+        .staff-page-header p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+        }
+        .staff-section {
+            min-height: 55vh;
+            padding: clamp(2.5rem, 6vw, 4rem) 0;
+            background: #f8fafc;
+        }
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 1.5rem;
+        }
+        .staff-card {
+            padding: 2rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .staff-card img {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.25rem;
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #e2e8f0;
+        }
+        .staff-card h2 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+        .staff-role {
+            margin: 0.45rem 0;
+            color: #b45309;
+            font-weight: 700;
+        }
+        .staff-bio {
+            margin-top: 0.65rem;
+            color: #475569;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li class="dropdown">
+                    <a href="academie.html" class="active"><i class="fas fa-university"></i> Académie</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection &amp; Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                    </ul>
+                </li>
+                <li><a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a></li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="auth-links" id="navbarAuthLinks">
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="staff-page-header">
+        <div class="container">
+            <h1>Staff technique</h1>
+            <p>Les personnes qui accompagnent les joueurs dans leur progression.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="staff-section" aria-labelledby="staffTitle">
+            <div class="container">
+                <h2 class="section-title" id="staffTitle"><i class="fas fa-user-tie"></i> Notre équipe technique</h2>
+                <div class="staff-grid">
+                    <article class="staff-card">
+                        <img src="https://ui-avatars.com/api/?name=Coach+Mamadou&background=1e3a8a&color=fff&size=128" alt="Portrait de Mamadou Diallo">
+                        <h2>Mamadou Diallo</h2>
+                        <p class="staff-role">Directeur Technique</p>
+                        <p class="staff-bio">Licence CAF A, plus de 15 ans d'expérience dans le football professionnel.</p>
+                    </article>
+                    <article class="staff-card">
+                        <img src="https://ui-avatars.com/api/?name=Coach+Ibrahima&background=dc2626&color=fff&size=128" alt="Portrait d'Ibrahima Bah">
+                        <h2>Ibrahima Bah</h2>
+                        <p class="staff-role">Entraîneur Principal U17 &amp; U19</p>
+                        <p class="staff-bio">Spécialiste de la préparation tactique et du développement individuel.</p>
+                    </article>
+                    <article class="staff-card">
+                        <img src="https://ui-avatars.com/api/?name=Dr+Ousmane&background=f59e0b&color=fff&size=128" alt="Portrait du Dr Ousmane Sow">
+                        <h2>Dr. Ousmane Sow</h2>
+                        <p class="staff-role">Responsable Médical &amp; Préparation Physique</p>
+                        <p class="staff-bio">Médecin du sport, spécialisé dans le suivi physiologique des jeunes athlètes.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

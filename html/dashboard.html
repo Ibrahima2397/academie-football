@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Membre - Académie de Football Elite</title>
+    <title>Espace membre - Académie FADY Football</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -19,27 +19,49 @@
                         <span class="logo-sub">FADY Football</span>
                     </div>
                 </a>
-                <a href="galerie.html" class="trophy-star" id="trophyStar" title="🏆 Trophées & Actualités Finale">
-                    <span class="star-icon">⭐</span>
-                    <span class="trophy-tooltip">🏆 Actualités Finale</span>
-                </a>
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
                 <li class="dropdown">
-                    <a href="programmes.html">Programmes</a>
+                    <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
-                        <li><a href="programmes.html#equipes">Équipes</a></li>
-                        <li><a href="programmes.html#entrainements">Entraînements</a></li>
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
                     </ul>
                 </li>
-                <li><a href="galerie.html">Galerie</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection &amp; Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="programmes.html#equipes"><i class="fas fa-users"></i> Nos équipes</a></li>
+                        <li><a href="programmes.html#classements"><i class="fas fa-trophy"></i> Classements</a></li>
+                        <li><a href="programmes.html#entrainements"><i class="fas fa-dumbbell"></i> Entraînements</a></li>
+                    </ul>
+                </li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
 
             <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher...">
+                    <i class="fas fa-search"></i>
+                </div>
                 <div class="auth-links" id="navbarAuthLinks">
-                    <!-- Rempli par le script -->
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
                 </div>
             </div>
 
@@ -74,6 +96,7 @@
                 <a href="#" class="nav-tab-link" data-target="admin-inscriptions" id="tabAdminInscriptions"><i class="fas fa-user-check"></i> Inscriptions</a>
                 <a href="#" class="nav-tab-link" data-target="admin-messages" id="tabAdminMessages"><i class="fas fa-envelope-open-text"></i> Messages</a>
                 <a href="#" class="nav-tab-link" data-target="admin-management" id="tabAdminManagement"><i class="fas fa-cogs"></i> Gestion Club</a>
+                <a href="#" class="nav-tab-link" data-target="admin-roadmap" id="tabAdminRoadmap"><i class="fas fa-code-branch"></i> Développements</a>
 
                 <hr class="sidebar-divider">
                 <a href="#" class="logout-link" id="sidebarLogout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
@@ -200,7 +223,7 @@
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="coachSpecialty">Spécialité <span class="required">*</span></label>
-                                <input type="text" id="coachSpecialty" placeholder="Ex. U14 / Technique tactique" required>
+                                <input type="text" id="coachSpecialty" placeholder="Ex. Seniors D1 / Technique tactique" required>
                             </div>
                             <div class="form-group">
                                 <label for="coachExperience">Années d'expérience <span class="required">*</span></label>
@@ -311,7 +334,7 @@
                         <form id="adminCreateTeamForm" class="dashboard-form">
                             <div class="form-group">
                                 <label for="teamName">Nom de l'équipe <span class="required">*</span></label>
-                                <input type="text" id="teamName" required placeholder="Ex. U14 Élite">
+                                <input type="text" id="teamName" required placeholder="Ex. U17 Régional">
                             </div>
                             <div class="form-group">
                                 <label for="teamCategory">Catégorie d'âge <span class="required">*</span></label>
@@ -363,13 +386,70 @@
                             </div>
                             <div class="form-group">
                                 <label for="trainingLocation">Lieu / Terrain <span class="required">*</span></label>
-                                <input type="text" id="trainingLocation" placeholder="Ex. Terrain Nord" required>
+                                <select id="trainingLocation" required>
+                                    <option value="Grand Stade Régional de Labé">Grand Stade Régional de Labé</option>
+                                    <option value="Terrain de Tata">Terrain de Tata</option>
+                                    <option value="Terrain de Fadi">Terrain de Fadi</option>
+                                </select>
                             </div>
                             <button type="submit" class="btn-primary" style="width: 100%;"><i class="fas fa-clock"></i> Ajouter le créneau</button>
                         </form>
                     </div>
                 </div>
+
+                <div class="dashboard-card training-days-card">
+                    <h3><i class="fas fa-calendar-week"></i> Jours d’entraînement</h3>
+                    <p>Activez les jours où l’Académie organise des entraînements. Les sept jours restent visibles dans le calendrier public.</p>
+                    <div class="training-day-settings" id="trainingDaySettings" aria-live="polite"></div>
+                    <p class="training-day-settings-status" id="trainingDaySettingsStatus" role="status"></p>
+                </div>
             </section>
+
+            <section class="dashboard-section hidden" id="admin-roadmap">
+                <div class="section-title">
+                    <h2><i class="fas fa-code-branch"></i> Prochaines fonctionnalités</h2>
+                    <p>Cette feuille de route présente trois chantiers à construire. Les outils de gestion correspondants ne sont pas encore disponibles.</p>
+                </div>
+                <div class="development-roadmap">
+                    <article class="roadmap-card">
+                        <div class="roadmap-card-heading">
+                            <h3><i class="fas fa-newspaper" aria-hidden="true"></i> Actualités et contenus</h3>
+                            <span class="roadmap-status">À développer</span>
+                        </div>
+                        <p>Permettre à l’équipe de publier et mettre à jour les actualités sans modifier les fichiers du site.</p>
+                        <ul>
+                            <li>Créer, modifier et archiver une actualité</li>
+                            <li>Ajouter une image, une catégorie et une date de publication</li>
+                            <li>Prévisualiser le contenu avant sa mise en ligne</li>
+                        </ul>
+                    </article>
+                    <article class="roadmap-card">
+                        <div class="roadmap-card-heading">
+                            <h3><i class="fas fa-store" aria-hidden="true"></i> Boutique et commandes</h3>
+                            <span class="roadmap-status">À développer</span>
+                        </div>
+                        <p>Donner à l’administrateur les outils pour gérer réellement le catalogue et les commandes.</p>
+                        <ul>
+                            <li>Gérer les produits, les prix et les stocks</li>
+                            <li>Consulter les commandes et leur mode de livraison</li>
+                            <li>Suivre le paiement et l’avancement des commandes</li>
+                        </ul>
+                    </article>
+                    <article class="roadmap-card">
+                        <div class="roadmap-card-heading">
+                            <h3><i class="fas fa-bell" aria-hidden="true"></i> Abonnements et notifications</h3>
+                            <span class="roadmap-status">À développer</span>
+                        </div>
+                        <p>Mettre en place des abonnements aux nouveautés avec le consentement et le désabonnement des utilisateurs.</p>
+                        <ul>
+                            <li>Enregistrer et gérer les abonnés</li>
+                            <li>Notifier les abonnés lors d’une nouvelle actualité</li>
+                            <li>Permettre le désabonnement à tout moment</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -381,8 +461,12 @@
         document.addEventListener('DOMContentLoaded', async function() {
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user) {
-                alert('Veuillez vous connecter pour accéder à cette page.');
-                window.location.href = 'connexion.html';
+                const adminLoginRequested = new URLSearchParams(window.location.search).get('admin') === '1';
+                window.location.replace(adminLoginRequested ? 'connexion.html?redirect=admin' : 'connexion.html');
+                return;
+            }
+            if (new URLSearchParams(window.location.search).get('admin') === '1' && user.role !== 'admin') {
+                window.location.replace('connexion.html?redirect=admin');
                 return;
             }
 
@@ -393,6 +477,60 @@
             
             // Masquer les onglets selon le rôle
             configureTabs(user.role);
+
+            const trainingDaySettings = document.getElementById('trainingDaySettings');
+            const trainingDaySettingsStatus = document.getElementById('trainingDaySettingsStatus');
+            if (user.role === 'admin' && trainingDaySettings && trainingDaySettingsStatus) {
+                try {
+                    const response = await fetch(`${API_URL}/training-days`);
+                    if (!response.ok) throw new Error('Impossible de charger les jours du calendrier.');
+                    const days = await response.json();
+
+                    days.forEach(day => {
+                        const label = document.createElement('label');
+                        label.className = 'training-day-setting';
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.checked = Boolean(day.is_active);
+                        checkbox.dataset.day = day.day_of_week;
+                        const name = document.createElement('span');
+                        name.textContent = day.day_of_week;
+                        label.append(checkbox, name);
+                        trainingDaySettings.appendChild(label);
+
+                        checkbox.addEventListener('change', async () => {
+                            const nextState = checkbox.checked;
+                            checkbox.disabled = true;
+                            trainingDaySettingsStatus.textContent = 'Enregistrement…';
+                            try {
+                                const update = await fetch(`${API_URL}/admin/training-days`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-User-Id': user.id
+                                    },
+                                    body: JSON.stringify({
+                                        day_of_week: day.day_of_week,
+                                        is_active: nextState
+                                    })
+                                });
+                                const result = await update.json();
+                                if (!update.ok) throw new Error(result.message || 'Impossible de modifier ce jour.');
+                                trainingDaySettingsStatus.textContent = result.message;
+                            } catch (error) {
+                                checkbox.checked = !nextState;
+                                trainingDaySettingsStatus.textContent = error.message;
+                                console.error('Échec de la mise à jour des jours d’entraînement:', error);
+                            } finally {
+                                checkbox.disabled = false;
+                            }
+                        });
+                    });
+                } catch (error) {
+                    trainingDaySettingsStatus.textContent = error.message;
+                    console.error('Échec du chargement des jours d’entraînement:', error);
+                }
+            }
 
             // Charger les catégories pour le formulaire joueur
             await loadCategoriesSelects();
@@ -552,6 +690,7 @@
                 document.getElementById('tabAdminInscriptions').style.display = 'block';
                 document.getElementById('tabAdminMessages').style.display = 'block';
                 document.getElementById('tabAdminManagement').style.display = 'block';
+                document.getElementById('tabAdminRoadmap').style.display = 'block';
                 
                 // Activer par défaut le premier onglet admin
                 document.getElementById('tabAdminInscriptions').classList.add('active');
@@ -706,7 +845,8 @@
                 if (res.ok) {
                     const trainings = await res.json();
                     // Filtrer ceux de l'équipe du joueur
-                    const filtered = trainings.filter(t => t.team_name && t.team_name === document.getElementById('userTeamName').textContent);
+                    const filtered = trainings.filter(t => Number(t.is_active) !== 0
+                        && t.team_name && t.team_name === document.getElementById('userTeamName').textContent);
                     
                     if (filtered.length > 0) {
                         body.innerHTML = '';
