@@ -77,6 +77,15 @@ Le serveur ne publie que les pages et ressources du site (`index.html`, `html/`,
 
 Après connexion, le serveur délivre à chaque utilisateur un jeton de session temporaire (12 heures), conservé dans l’onglet du navigateur et vérifié par l’API. Les routes de profil, d’entraîneur et d’administration exigent une session valide ; les droits administrateur sont contrôlés côté serveur. Les sessions sont révoquées à la déconnexion ou au redémarrage du serveur. L’inscription publique crée toujours un compte joueur ; elle ne permet pas de choisir le rôle administrateur.
 
+### Accès selon le rôle
+
+- **Visiteur** : consulte les contenus publics (dirigeants, galerie publiée, équipes, catégories et calendrier) et peut envoyer un message ou créer un compte joueur. Il ne peut pas consulter les profils, les rosters ou les fonctions d’administration.
+- **Membre** (`player` ou `parent`) : consulte et met à jour son propre profil. Il ne peut pas consulter le roster d’un entraîneur ni appeler les routes d’administration.
+- **Entraîneur** (`coach`) : consulte et met à jour son profil d’entraîneur et le roster associé à son compte. Les routes d’administration lui sont refusées.
+- **Administrateur** (`admin`) : gère les inscriptions, messages, équipes, entraînements et publications de la galerie. Les autorisations sont vérifiées par l’API à chaque requête, même si un utilisateur appelle directement une URL.
+
+En production, définissez `NODE_ENV=production` et fournissez `ADMIN_BOOTSTRAP_PASSWORD` (au moins 16 caractères). Le serveur refuse de démarrer en mode production sans ce secret, ne crée pas les comptes et données de démonstration des entraîneurs, et configure le compte `admin@academiefady.com` avec ce mot de passe. Au démarrage, tout mot de passe existant exactement égal à un ancien mot de passe de démonstration (`coach` ou `admin`) est remplacé par un secret aléatoire inconnu : ces anciens identifiants ne permettent donc plus de se connecter. Une réinitialisation sécurisée sera nécessaire pour rendre à nouveau accessible tout compte réel qui utilisait l’un de ces mots de passe. Gardez le secret d’amorçage dans la configuration privée de l’hébergeur, jamais dans le dépôt.
+
 Pour placer la base et les médias sur un volume persistant différent, définissez `ACADEMIE_DB_PATH` et `GALLERY_UPLOAD_DIR` avant `npm start`.
 
 Le calendrier public présente toujours les jours du lundi au dimanche et conserve un aperçu des créneaux de la capture si le serveur est indisponible. Les administrateurs peuvent activer ou désactiver chaque jour dans **Mon espace → Administration du Club** ; l’ajout d’un créneau active aussi automatiquement le jour choisi. Les entraînements utilisent les terrains **Grand Stade Régional de Labé**, **Terrain de Tata** et **Terrain de Fadi**. Le lien Google Maps de chaque créneau ouvre l’itinéraire vers le terrain sélectionné, depuis la position de départ choisie dans Maps.

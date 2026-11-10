@@ -14,9 +14,13 @@ const databasePath = process.env.ACADEMIE_DB_PATH || path.join(__dirname, 'acade
 const galleryUploadDirectory = process.env.GALLERY_UPLOAD_DIR || path.join(__dirname, 'uploads', 'gallery');
 const authSessions = new Map();
 const authSessionLifetime = 12 * 60 * 60 * 1000;
+let authenticationBootstrapReady = process.env.NODE_ENV !== 'production';
 
 if (process.env.ADMIN_BOOTSTRAP_PASSWORD && process.env.ADMIN_BOOTSTRAP_PASSWORD.length < 16) {
     throw new Error('ADMIN_BOOTSTRAP_PASSWORD doit contenir au moins 16 caractères.');
+}
+if (process.env.NODE_ENV === 'production' && !process.env.ADMIN_BOOTSTRAP_PASSWORD) {
+    throw new Error('ADMIN_BOOTSTRAP_PASSWORD est obligatoire en production.');
 }
 
 fs.mkdirSync(galleryUploadDirectory, { recursive: true });
@@ -226,15 +230,28 @@ const db = new sqlite3.Database(databasePath, (err) => {
 
             // Seeding - Données de démonstration et d'initialisation
             const salt = bcrypt.genSaltSync(10);
-            const hashedCoachPassword = bcrypt.hashSync('coach', salt);
-
             const bootstrapAdminPassword = process.env.ADMIN_BOOTSTRAP_PASSWORD;
+            const isProduction = process.env.NODE_ENV === 'production';
+            let pendingProductionBootstrapTasks = isProduction ? 2 : 0;
+            const completeProductionBootstrapTask = (error) => {
+                if (!isProduction) return;
+                if (error) {
+                    console.error('Échec de la sécurisation des comptes de production:', error.message);
+                    return;
+                }
+                pendingProductionBootstrapTasks -= 1;
+                if (pendingProductionBootstrapTasks === 0) authenticationBootstrapReady = true;
+            };
+
             if (bootstrapAdminPassword) {
                 const hashedAdminPassword = bcrypt.hashSync(bootstrapAdminPassword, salt);
-                db.run(`INSERT INTO users (id, fullname, email, password, role)
-                        VALUES (1, 'Administrateur FADY', 'admin@academiefady.com', ?, 'admin')
+                db.run(`INSERT INTO users (fullname, email, password, role)
+                        VALUES ('Administrateur FADY', 'admin@academiefady.com', ?, 'admin')
                         ON CONFLICT(email) DO UPDATE SET password = excluded.password, role = 'admin'`,
-                    [hashedAdminPassword]);
+                    [hashedAdminPassword], (error) => {
+                        if (error) console.error('Impossible de configurer le compte administrateur:', error.message);
+                        completeProductionBootstrapTask(error);
+                    });
             } else {
                 db.get('SELECT id, password FROM users WHERE email = ?', ['admin@academiefady.com'], (err, admin) => {
                     if (err) {
@@ -252,6 +269,45 @@ const db = new sqlite3.Database(databasePath, (err) => {
                     }
                 });
             }
+
+            if (isProduction) {
+                db.all('SELECT id, password FROM users', [], (error, accounts) => {
+                    if (error) {
+                        completeProductionBootstrapTask(error);
+                        return;
+                    }
+
+                    const accountsWithDemoPasswords = accounts.filter((account) =>
+                        bcrypt.compareSync('coach', account.password) || bcrypt.compareSync('admin', account.password)
+                    );
+                    if (accountsWithDemoPasswords.length === 0) {
+                        completeProductionBootstrapTask();
+                        return;
+                    }
+
+                    let remainingAccounts = accountsWithDemoPasswords.length;
+                    accountsWithDemoPasswords.forEach((account) => {
+                        bcrypt.hash(crypto.randomBytes(48).toString('hex'), 10, (hashError, passwordHash) => {
+                            if (hashError) {
+                                completeProductionBootstrapTask(hashError);
+                                return;
+                            }
+
+                            db.run('UPDATE users SET password = ? WHERE id = ?', [passwordHash, account.id], (updateError) => {
+                                if (updateError) {
+                                    completeProductionBootstrapTask(updateError);
+                                    return;
+                                }
+                                remainingAccounts -= 1;
+                                if (remainingAccounts === 0) completeProductionBootstrapTask();
+                            });
+                        });
+                    });
+                });
+            }
+
+            if (!isProduction) {
+                const hashedCoachPassword = bcrypt.hashSync('coach', salt);
 
             // 2. Coachs (users)
             db.run(`INSERT OR IGNORE INTO users (id, fullname, email, password, role) 
@@ -300,14 +356,6 @@ const db = new sqlite3.Database(databasePath, (err) => {
             db.run(`INSERT OR IGNORE INTO trainings (id, team_id, day_of_week, start_time, end_time, location) VALUES (10, 3, 'Samedi', '09h00', '11h00', 'Terrain Principal')`);
             db.run(`INSERT OR IGNORE INTO trainings (id, team_id, day_of_week, start_time, end_time, location) VALUES (11, 2, 'Samedi', '14h00', '16h00', 'Terrain Principal')`);
 
-            const trainingDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-            const activeTrainingDays = new Set(['Lundi', 'Mercredi', 'Vendredi', 'Samedi']);
-            const trainingDayStatement = db.prepare(
-                'INSERT OR IGNORE INTO training_day_settings (day_of_week, is_active) VALUES (?, ?)'
-            );
-            trainingDays.forEach((day) => trainingDayStatement.run(day, activeTrainingDays.has(day) ? 1 : 0));
-            trainingDayStatement.finalize();
-
             db.run(`UPDATE trainings SET location = CASE location
                 WHEN 'Terrain Sud' THEN 'Terrain de Fadi'
                 WHEN 'Terrain Nord' THEN 'Terrain de Tata'
@@ -321,6 +369,15 @@ const db = new sqlite3.Database(databasePath, (err) => {
                     WHERE id = 2 AND day_of_week = 'Lundi' AND start_time = '18h30' AND end_time = '19h30'`);
             db.run(`UPDATE trainings SET start_time = '19h00', end_time = '20h30'
                     WHERE id = 3 AND day_of_week = 'Lundi' AND start_time = '20h00' AND end_time = '21h30'`);
+            }
+
+            const trainingDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+            const activeTrainingDays = new Set(isProduction ? [] : ['Lundi', 'Mercredi', 'Vendredi', 'Samedi']);
+            const trainingDayStatement = db.prepare(
+                'INSERT OR IGNORE INTO training_day_settings (day_of_week, is_active) VALUES (?, ?)'
+            );
+            trainingDays.forEach((day) => trainingDayStatement.run(day, activeTrainingDays.has(day) ? 1 : 0));
+            trainingDayStatement.finalize();
         });
     }
 });
@@ -348,25 +405,36 @@ function requireAuthenticated(req, res, next) {
     });
 }
 
+function requireRoles(...roles) {
+    return (req, res, next) => {
+        requireAuthenticated(req, res, () => {
+            if (!roles.includes(req.user.role)) {
+                return res.status(403).json({ message: 'Votre rôle ne permet pas cette action.' });
+            }
+            next();
+        });
+    };
+}
+
 function isAdmin(req, res, next) {
-    requireAuthenticated(req, res, () => {
-        if (req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Accès interdit. Rôle administrateur requis.' });
-        }
+    requireRoles('admin')(req, res, () => {
         next();
     });
 }
 
 function requireGalleryAdmin(req, res, next) {
-    requireAuthenticated(req, res, () => {
-        if (req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Seul un administrateur peut gérer la galerie.' });
-        }
-
+    requireRoles('admin')(req, res, () => {
         req.galleryAdmin = req.user;
         req.gallerySessionToken = req.authSessionToken;
         next();
     });
+}
+
+function requireProductionAuthenticationBootstrap(req, res, next) {
+    if (!authenticationBootstrapReady) {
+        return res.status(503).json({ message: 'Le service de connexion termine son initialisation. Réessayez dans quelques instants.' });
+    }
+    next();
 }
 
 // Route d'inscription utilisateur
@@ -397,7 +465,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // Route de connexion
-app.post('/api/login', (req, res) => {
+app.post('/api/login', requireProductionAuthenticationBootstrap, (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -782,7 +850,7 @@ app.put('/api/admin/training-days', isAdmin, (req, res) => {
 });
 
 // 4. Obtenir le profil de l'utilisateur connecté (Joueur ou Coach)
-app.get('/api/profile', requireAuthenticated, (req, res) => {
+app.get('/api/profile', requireRoles('player', 'parent', 'coach', 'admin'), (req, res) => {
     const userId = req.user.id;
 
     if (req.user.role === 'coach') {
@@ -806,67 +874,59 @@ app.get('/api/profile', requireAuthenticated, (req, res) => {
 });
 
 // 5. Enregistrer ou mettre à jour le profil (Joueur ou Coach)
-app.post('/api/profile', requireAuthenticated, (req, res) => {
+app.post('/api/profile', requireRoles('player', 'parent', 'coach'), (req, res) => {
     const userId = req.user.id;
 
-    db.get('SELECT id, role FROM users WHERE id = ?', [userId], (err, user) => {
-        if (err || !user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
-        }
-
-        if (user.role === 'coach') {
-            const { bio, specialty, experience_years } = req.body;
-            db.get('SELECT id FROM coaches WHERE user_id = ?', [userId], (err, coachRow) => {
-                if (err) return res.status(500).json({ message: 'Erreur de recherche.' });
-                if (coachRow) {
-                    db.run('UPDATE coaches SET bio = ?, specialty = ?, experience_years = ? WHERE user_id = ?',
-                        [bio, specialty, experience_years, userId], (err) => {
-                            if (err) return res.status(500).json({ message: 'Erreur de mise à jour.' });
-                            res.json({ message: 'Profil entraîneur mis à jour !' });
+    if (req.user.role === 'coach') {
+        const { bio, specialty, experience_years } = req.body;
+        db.get('SELECT id FROM coaches WHERE user_id = ?', [userId], (err, coachRow) => {
+            if (err) return res.status(500).json({ message: 'Erreur de recherche.' });
+            if (coachRow) {
+                db.run('UPDATE coaches SET bio = ?, specialty = ?, experience_years = ? WHERE user_id = ?',
+                    [bio, specialty, experience_years, userId], (updateError) => {
+                        if (updateError) return res.status(500).json({ message: 'Erreur de mise à jour.' });
+                        res.json({ message: 'Profil entraîneur mis à jour !' });
+                    });
+            } else {
+                db.run('INSERT INTO coaches (user_id, bio, specialty, experience_years) VALUES (?, ?, ?, ?)',
+                    [userId, bio, specialty, experience_years], (insertError) => {
+                        if (insertError) return res.status(500).json({ message: 'Erreur de création.' });
+                        res.status(201).json({ message: 'Profil entraîneur créé !' });
+                    });
+            }
+        });
+    } else {
+        const { firstname, lastname, birth_date, position, category_id } = req.body;
+        db.get('SELECT id FROM players WHERE user_id = ?', [userId], (err, playerRow) => {
+            if (err) return res.status(500).json({ message: 'Erreur de recherche.' });
+            if (playerRow) {
+                const playerId = playerRow.id;
+                db.run('UPDATE players SET firstname = ?, lastname = ?, birth_date = ?, position = ?, category_id = ? WHERE user_id = ?',
+                    [firstname, lastname, birth_date, position, category_id, userId], (updateError) => {
+                        if (updateError) return res.status(500).json({ message: 'Erreur de mise à jour.' });
+                        db.run('UPDATE inscriptions SET category_id = ? WHERE player_id = ?', [category_id, playerId], (inscriptionError) => {
+                            if (inscriptionError) return res.status(500).json({ message: 'Erreur de mise à jour de l’inscription.' });
+                            res.json({ message: 'Profil joueur mis à jour !', playerId });
                         });
-                } else {
-                    db.run('INSERT INTO coaches (user_id, bio, specialty, experience_years) VALUES (?, ?, ?, ?)',
-                        [userId, bio, specialty, experience_years], (err) => {
-                            if (err) return res.status(500).json({ message: 'Erreur de création.' });
-                            res.status(201).json({ message: 'Profil entraîneur créé !' });
-                        });
-                }
-            });
-        } else {
-            const { firstname, lastname, birth_date, position, category_id } = req.body;
-            db.get('SELECT id FROM players WHERE user_id = ?', [userId], (err, playerRow) => {
-                if (err) return res.status(500).json({ message: 'Erreur de recherche.' });
-                if (playerRow) {
-                    const playerId = playerRow.id;
-                    db.run('UPDATE players SET firstname = ?, lastname = ?, birth_date = ?, position = ?, category_id = ? WHERE user_id = ?',
-                        [firstname, lastname, birth_date, position, category_id, userId], (err) => {
-                            if (err) return res.status(500).json({ message: 'Erreur de mise à jour.' });
-                            db.run('UPDATE inscriptions SET category_id = ? WHERE player_id = ?', [category_id, playerId], (err) => {
-                                res.json({ message: 'Profil joueur mis à jour !', playerId });
+                    });
+            } else {
+                db.run('INSERT INTO players (user_id, firstname, lastname, birth_date, position, category_id) VALUES (?, ?, ?, ?, ?, ?)',
+                    [userId, firstname, lastname, birth_date, position, category_id], function(insertError) {
+                        if (insertError) return res.status(500).json({ message: 'Erreur de création.' });
+                        const newPlayerId = this.lastID;
+                        db.run('INSERT INTO inscriptions (player_id, category_id, status) VALUES (?, ?, ?)',
+                            [newPlayerId, category_id, 'en_attente'], (inscriptionError) => {
+                                if (inscriptionError) return res.status(500).json({ message: 'Erreur d\'inscription.' });
+                                res.status(201).json({ message: 'Profil joueur et inscription créés !', playerId: newPlayerId });
                             });
-                        });
-                } else {
-                    db.run('INSERT INTO players (user_id, firstname, lastname, birth_date, position, category_id) VALUES (?, ?, ?, ?, ?, ?)',
-                        [userId, firstname, lastname, birth_date, position, category_id], function(err) {
-                            if (err) return res.status(500).json({ message: 'Erreur de création.' });
-                            const newPlayerId = this.lastID;
-                            db.run('INSERT INTO inscriptions (player_id, category_id, status) VALUES (?, ?, ?)',
-                                [newPlayerId, category_id, 'en_attente'], (err) => {
-                                    if (err) return res.status(500).json({ message: 'Erreur d\'inscription.' });
-                                    res.status(201).json({ message: 'Profil joueur et inscription créés !', playerId: newPlayerId });
-                                });
-                        });
-                }
-            });
-        }
-    });
+                    });
+            }
+        });
+    }
 });
 
 // 6. Obtenir le roster de l'entraîneur connecté
-app.get('/api/coach/roster', requireAuthenticated, (req, res) => {
-    if (req.user.role !== 'coach') {
-        return res.status(403).json({ message: 'Accès réservé aux entraîneurs.' });
-    }
+app.get('/api/coach/roster', requireRoles('coach'), (req, res) => {
     const userId = req.user.id;
 
     db.get('SELECT id FROM coaches WHERE user_id = ?', [userId], (err, coach) => {
