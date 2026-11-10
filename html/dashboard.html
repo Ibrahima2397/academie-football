@@ -459,8 +459,18 @@
     <!-- Script spécifique pour la dynamique du Dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) {
+            let user;
+            try {
+                const sessionResponse = await fetch(`${API_URL}/session`, {
+                    headers: authHeaders()
+                });
+                if (!sessionResponse.ok) throw new Error('La session a expiré ou est invalide.');
+                user = await sessionResponse.json();
+                localStorage.setItem('user', JSON.stringify(user));
+            } catch (error) {
+                console.error('Impossible de vérifier la session du tableau de bord:', error);
+                sessionStorage.removeItem(AUTH_TOKEN_KEY);
+                localStorage.removeItem('user');
                 const adminLoginRequested = new URLSearchParams(window.location.search).get('admin') === '1';
                 window.location.replace(adminLoginRequested ? 'connexion.html?redirect=admin' : 'connexion.html');
                 return;
@@ -507,7 +517,7 @@
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json',
-                                        'X-User-Id': user.id
+                                        ...authHeaders()
                                     },
                                     body: JSON.stringify({
                                         day_of_week: day.day_of_week,
@@ -559,8 +569,17 @@
             });
 
             // Gérer la déconnexion
-            document.getElementById('sidebarLogout').addEventListener('click', function(e) {
+            document.getElementById('sidebarLogout').addEventListener('click', async function(e) {
                 e.preventDefault();
+                try {
+                    await fetch(`${API_URL}/logout`, {
+                        method: 'POST',
+                        headers: authHeaders()
+                    });
+                } catch (error) {
+                    console.error('Échec de la fermeture de session:', error);
+                }
+                sessionStorage.removeItem(AUTH_TOKEN_KEY);
                 localStorage.removeItem('user');
                 window.location.href = '../index.html';
             });
@@ -579,7 +598,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-User-Id': user.id
+                            ...authHeaders()
                         },
                         body: JSON.stringify({ firstname, lastname, birth_date, position, category_id })
                     });
@@ -608,7 +627,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-User-Id': user.id
+                            ...authHeaders()
                         },
                         body: JSON.stringify({ specialty, experience_years, bio })
                     });
@@ -635,7 +654,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-User-Id': user.id
+                            ...authHeaders()
                         },
                         body: JSON.stringify({ name, category_id, coach_id })
                     });
@@ -665,7 +684,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-User-Id': user.id
+                            ...authHeaders()
                         },
                         body: JSON.stringify({ team_id, day_of_week, start_time, end_time, location })
                     });
@@ -736,7 +755,7 @@
         async function fetchAndRenderDashboardData(user) {
             try {
                 const res = await fetch(`${API_URL}/profile`, {
-                    headers: { 'X-User-Id': user.id }
+                    headers: authHeaders()
                 });
                 
                 if (!res.ok) return;
@@ -808,7 +827,7 @@
         async function loadCoachRoster(userId) {
             try {
                 const res = await fetch(`${API_URL}/coach/roster`, {
-                    headers: { 'X-User-Id': userId }
+                    headers: authHeaders()
                 });
                 if (res.ok) {
                     const players = await res.json();
@@ -875,7 +894,7 @@
                 const teams = teamsRes.ok ? await teamsRes.json() : [];
 
                 const res = await fetch(`${API_URL}/admin/players`, {
-                    headers: { 'X-User-Id': adminId }
+                    headers: authHeaders()
                 });
                 if (res.ok) {
                     const players = await res.json();
@@ -934,7 +953,7 @@
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-User-Id': user.id
+                        ...authHeaders()
                     },
                     body: JSON.stringify({ status: newStatus })
                 });
@@ -954,7 +973,7 @@
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-User-Id': user.id
+                        ...authHeaders()
                     },
                     body: JSON.stringify({ team_id: teamId })
                 });
@@ -970,7 +989,7 @@
         async function loadAdminMessages(adminId) {
             try {
                 const res = await fetch(`${API_URL}/admin/contacts`, {
-                    headers: { 'X-User-Id': adminId }
+                    headers: authHeaders()
                 });
                 if (res.ok) {
                     const messages = await res.json();
@@ -1014,7 +1033,7 @@
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-User-Id': user.id
+                        ...authHeaders()
                     },
                     body: JSON.stringify({ status: 'traite' })
                 });
@@ -1031,7 +1050,7 @@
             const user = JSON.parse(localStorage.getItem('user'));
             try {
                 const coachesRes = await fetch(`${API_URL}/admin/coaches`, {
-                    headers: { 'X-User-Id': user.id }
+                    headers: authHeaders()
                 });
                 if (coachesRes.ok) {
                     const coaches = await coachesRes.json();

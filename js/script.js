@@ -1,7 +1,12 @@
 // Configuration de l'API
 const API_URL = window.ACADEMIE_API_URL
     || `${window.location.protocol === 'file:' ? 'http://localhost:3000' : window.location.origin}/api`;
-const GALLERY_TOKEN_KEY = 'galleryAdminToken';
+const AUTH_TOKEN_KEY = 'authToken';
+
+function authHeaders() {
+    const token = sessionStorage.getItem(AUTH_TOKEN_KEY);
+    return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 // Menu hamburger et navigation responsive
 document.addEventListener('DOMContentLoaded', () => {
@@ -213,14 +218,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', function() {
-                    const galleryToken = sessionStorage.getItem(GALLERY_TOKEN_KEY);
-                    if (galleryToken) {
+                    const authToken = sessionStorage.getItem(AUTH_TOKEN_KEY);
+                    if (authToken) {
                         fetch(`${API_URL}/logout`, {
                             method: 'POST',
-                            headers: { Authorization: `Bearer ${galleryToken}` }
+                            headers: authHeaders()
                         }).catch((error) => console.error('Échec de la fermeture de session:', error));
                     }
-                    sessionStorage.removeItem(GALLERY_TOKEN_KEY);
+                    sessionStorage.removeItem(AUTH_TOKEN_KEY);
                     localStorage.removeItem('user');
                     showAlert('Déconnexion réussie ! Redirection...', 'success');
                     setTimeout(() => {
@@ -514,7 +519,7 @@ if (loginForm && window.location.pathname.includes('connexion.html')) {
             if (response.ok) {
                 showAlert('Connexion réussie ! Bienvenue.', 'success');
                 localStorage.setItem('user', JSON.stringify(data.user));
-                if (data.token) sessionStorage.setItem(GALLERY_TOKEN_KEY, data.token);
+                sessionStorage.setItem(AUTH_TOKEN_KEY, data.token);
                 const adminLoginRequested = new URLSearchParams(window.location.search).get('redirect') === 'admin';
                 if (adminLoginRequested && data.user.role !== 'admin') {
                     showAlert('Ce compte ne possède pas le rôle administrateur.', 'error');
@@ -924,17 +929,17 @@ async function initGalleryMediaPage() {
     const page = document.body.dataset.galleryPage || 'all';
     const status = document.querySelector('[data-gallery-status]');
     const adminPanel = document.getElementById('galleryAdminPanel');
-    const token = sessionStorage.getItem(GALLERY_TOKEN_KEY);
+    const token = sessionStorage.getItem(AUTH_TOKEN_KEY);
     let isAdmin = false;
 
     if (token) {
         try {
             const response = await fetch(`${API_URL}/admin/gallery/session`, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: authHeaders()
             });
             isAdmin = response.ok;
             if (!response.ok && response.status === 401) {
-                sessionStorage.removeItem(GALLERY_TOKEN_KEY);
+                sessionStorage.removeItem(AUTH_TOKEN_KEY);
             }
         } catch (error) {
             console.error('Impossible de vérifier les droits de gestion de la galerie:', error);
@@ -985,7 +990,7 @@ async function initGalleryMediaPage() {
             try {
                 const response = await fetch(`${API_URL}/admin/gallery/media`, {
                     method: 'POST',
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: authHeaders(),
                     body: new FormData(uploadForm)
                 });
                 const result = await response.json();
@@ -1063,7 +1068,7 @@ function createGalleryMediaCard(media, isAdmin) {
             try {
                 const response = await fetch(`${API_URL}/admin/gallery/media/${media.id}`, {
                     method: 'DELETE',
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}` }
+                    headers: authHeaders()
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.message || 'Impossible de supprimer ce média.');
@@ -1089,7 +1094,7 @@ async function initLiveGalleryPage() {
     const liveTitle = document.getElementById('liveStreamTitle');
     const liveIndicator = document.querySelector('[data-live-indicator]');
     const adminPanel = document.getElementById('liveAdminPanel');
-    const token = sessionStorage.getItem(GALLERY_TOKEN_KEY);
+    const token = sessionStorage.getItem(AUTH_TOKEN_KEY);
     const stopButton = document.getElementById('stopLiveStream');
     let currentStream = null;
 
@@ -1133,10 +1138,10 @@ async function initLiveGalleryPage() {
     if (token) {
         try {
             const response = await fetch(`${API_URL}/admin/gallery/session`, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: authHeaders()
             });
             if (response.ok && adminPanel) adminPanel.hidden = false;
-            if (!response.ok && response.status === 401) sessionStorage.removeItem(GALLERY_TOKEN_KEY);
+            if (!response.ok && response.status === 401) sessionStorage.removeItem(AUTH_TOKEN_KEY);
         } catch (error) {
             console.error('Impossible de vérifier les droits du direct:', error);
         }
@@ -1154,10 +1159,7 @@ async function initLiveGalleryPage() {
             try {
                 const response = await fetch(`${API_URL}/admin/gallery/live`, {
                     method: 'PUT',
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}`,
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { ...authHeaders(), 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         title: document.getElementById('liveTitleInput').value.trim(),
                         url: document.getElementById('liveUrlInput').value.trim()
@@ -1184,7 +1186,7 @@ async function initLiveGalleryPage() {
             try {
                 const response = await fetch(`${API_URL}/admin/gallery/live`, {
                     method: 'DELETE',
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem(GALLERY_TOKEN_KEY)}` }
+                    headers: authHeaders()
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.message || 'Impossible d’arrêter le direct.');

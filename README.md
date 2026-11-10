@@ -73,7 +73,9 @@ npm start
 
 Connectez-vous avec `admin@academiefady.com` et le mot de passe défini dans `ADMIN_BOOTSTRAP_PASSWORD`. Ne publiez jamais ce secret dans le dépôt. Si le site et l’API sont hébergés sur des origines différentes, définissez `window.ACADEMIE_API_URL` avant le chargement de `js/script.js` et configurez CORS pour l’origine du site.
 
-Les connexions administrateur délivrent une session temporaire en mémoire (12 heures), révoquée à la déconnexion ou au redémarrage du serveur. L’inscription publique crée toujours un compte joueur ; elle ne permet pas de choisir le rôle administrateur.
+Le serveur ne publie que les pages et ressources du site (`index.html`, `html/`, `css/`, `js/`, `images/`) ainsi que les médias de galerie prévus à cet effet ; il ne rend pas le reste du dossier du projet accessible par HTTP.
+
+Après connexion, le serveur délivre à chaque utilisateur un jeton de session temporaire (12 heures), conservé dans l’onglet du navigateur et vérifié par l’API. Les routes de profil, d’entraîneur et d’administration exigent une session valide ; les droits administrateur sont contrôlés côté serveur. Les sessions sont révoquées à la déconnexion ou au redémarrage du serveur. L’inscription publique crée toujours un compte joueur ; elle ne permet pas de choisir le rôle administrateur.
 
 Pour placer la base et les médias sur un volume persistant différent, définissez `ACADEMIE_DB_PATH` et `GALLERY_UPLOAD_DIR` avant `npm start`.
 

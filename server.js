@@ -12,8 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const databasePath = process.env.ACADEMIE_DB_PATH || path.join(__dirname, 'academie.db');
 const galleryUploadDirectory = process.env.GALLERY_UPLOAD_DIR || path.join(__dirname, 'uploads', 'gallery');
-const gallerySessions = new Map();
-const gallerySessionLifetime = 12 * 60 * 60 * 1000;
+const authSessions = new Map();
+const authSessionLifetime = 12 * 60 * 60 * 1000;
 
 if (process.env.ADMIN_BOOTSTRAP_PASSWORD && process.env.ADMIN_BOOTSTRAP_PASSWORD.length < 16) {
     throw new Error('ADMIN_BOOTSTRAP_PASSWORD doit contenir au moins 16 caractères.');
@@ -31,7 +31,15 @@ app.use('/uploads/gallery', express.static(galleryUploadDirectory, {
         res.setHeader('Cache-Control', 'public, max-age=3600');
     }
 }));
-app.use(express.static(path.join(__dirname, '.')));
+app.use('/css', express.static(path.join(__dirname, 'css'), { index: false }));
+app.use('/js', express.static(path.join(__dirname, 'js'), { index: false }));
+app.use('/images', express.static(path.join(__dirname, 'images'), { index: false }));
+app.use('/html', express.static(path.join(__dirname, 'html'), { index: false }));
+app.get(['/', '/index.html'], (req, res, next) => {
+    res.sendFile(path.join(__dirname, 'index.html'), (err) => {
+        if (err) next(err);
+    });
+});
 
 // Connexion à la base de données SQLite
 const db = new sqlite3.Database(databasePath, (err) => {
@@ -317,14 +325,32 @@ const db = new sqlite3.Database(databasePath, (err) => {
     }
 });
 
-// Middleware d'authentification Admin
-function isAdmin(req, res, next) {
-    const userId = req.headers['x-user-id'];
-    if (!userId) {
-        return res.status(401).json({ message: 'Non autorisé. Identifiant manquant.' });
+function requireAuthenticated(req, res, next) {
+    const authorization = req.get('Authorization') || '';
+    const token = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
+    const session = authSessions.get(token);
+
+    if (!session || session.expiresAt <= Date.now()) {
+        if (token) authSessions.delete(token);
+        return res.status(401).json({ message: 'Session expirée ou invalide. Reconnectez-vous.' });
     }
-    db.get('SELECT role FROM users WHERE id = ?', [userId], (err, user) => {
-        if (err || !user || user.role !== 'admin') {
+
+    db.get('SELECT id, fullname, email, role FROM users WHERE id = ?', [session.userId], (err, user) => {
+        if (err) return res.status(500).json({ message: 'Impossible de vérifier la session.' });
+        if (!user) {
+            authSessions.delete(token);
+            return res.status(401).json({ message: 'Session invalide. Reconnectez-vous.' });
+        }
+
+        req.user = user;
+        req.authSessionToken = token;
+        next();
+    });
+}
+
+function isAdmin(req, res, next) {
+    requireAuthenticated(req, res, () => {
+        if (req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Accès interdit. Rôle administrateur requis.' });
         }
         next();
@@ -332,24 +358,13 @@ function isAdmin(req, res, next) {
 }
 
 function requireGalleryAdmin(req, res, next) {
-    const authorization = req.get('Authorization') || '';
-    const token = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
-    const session = gallerySessions.get(token);
-
-    if (!session || session.expiresAt <= Date.now()) {
-        if (token) gallerySessions.delete(token);
-        return res.status(401).json({ message: 'Session administrateur expirée ou invalide. Reconnectez-vous.' });
-    }
-
-    db.get('SELECT id, role FROM users WHERE id = ?', [session.userId], (err, user) => {
-        if (err) return res.status(500).json({ message: 'Impossible de vérifier les autorisations.' });
-        if (!user || user.role !== 'admin') {
-            gallerySessions.delete(token);
+    requireAuthenticated(req, res, () => {
+        if (req.user.role !== 'admin') {
             return res.status(403).json({ message: 'Seul un administrateur peut gérer la galerie.' });
         }
 
-        req.galleryAdmin = user;
-        req.gallerySessionToken = token;
+        req.galleryAdmin = req.user;
+        req.gallerySessionToken = req.authSessionToken;
         next();
     });
 }
@@ -404,9 +419,9 @@ app.post('/api/login', (req, res) => {
         }
 
         const token = crypto.randomBytes(32).toString('hex');
-        gallerySessions.set(token, {
+        authSessions.set(token, {
             userId: user.id,
-            expiresAt: Date.now() + gallerySessionLifetime
+            expiresAt: Date.now() + authSessionLifetime
         });
 
         res.json({ 
@@ -420,8 +435,12 @@ app.post('/api/login', (req, res) => {
 app.post('/api/logout', (req, res) => {
     const authorization = req.get('Authorization') || '';
     const token = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
-    if (token) gallerySessions.delete(token);
+    if (token) authSessions.delete(token);
     res.json({ message: 'Déconnexion réussie.' });
+});
+
+app.get('/api/session', requireAuthenticated, (req, res) => {
+    res.json(req.user);
 });
 
 app.get('/api/directors', (req, res) => {
@@ -763,44 +782,32 @@ app.put('/api/admin/training-days', isAdmin, (req, res) => {
 });
 
 // 4. Obtenir le profil de l'utilisateur connecté (Joueur ou Coach)
-app.get('/api/profile', (req, res) => {
-    const userId = req.headers['x-user-id'];
-    if (!userId) {
-        return res.status(401).json({ message: 'Non autorisé. Identifiant manquant.' });
+app.get('/api/profile', requireAuthenticated, (req, res) => {
+    const userId = req.user.id;
+
+    if (req.user.role === 'coach') {
+        db.get('SELECT * FROM coaches WHERE user_id = ?', [userId], (err, coach) => {
+            if (err) return res.status(500).json({ message: 'Erreur serveur.' });
+            res.json({ user: req.user, coach: coach || null });
+        });
+    } else {
+        db.get(`
+            SELECT p.*, i.status AS inscription_status, i.id AS inscription_id, c.name AS category_name, t.name AS team_name
+            FROM players p
+            LEFT JOIN inscriptions i ON p.id = i.player_id
+            LEFT JOIN categories c ON p.category_id = c.id
+            LEFT JOIN teams t ON p.team_id = t.id
+            WHERE p.user_id = ?
+        `, [userId], (err, player) => {
+            if (err) return res.status(500).json({ message: 'Erreur serveur.' });
+            res.json({ user: req.user, player: player || null });
+        });
     }
-
-    db.get('SELECT id, fullname, email, role FROM users WHERE id = ?', [userId], (err, user) => {
-        if (err || !user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
-        }
-
-        if (user.role === 'coach') {
-            db.get('SELECT * FROM coaches WHERE user_id = ?', [userId], (err, coach) => {
-                if (err) return res.status(500).json({ message: 'Erreur serveur.' });
-                res.json({ user, coach: coach || null });
-            });
-        } else {
-            db.get(`
-                SELECT p.*, i.status AS inscription_status, i.id AS inscription_id, c.name AS category_name, t.name AS team_name
-                FROM players p
-                LEFT JOIN inscriptions i ON p.id = i.player_id
-                LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN teams t ON p.team_id = t.id
-                WHERE p.user_id = ?
-            `, [userId], (err, player) => {
-                if (err) return res.status(500).json({ message: 'Erreur serveur.' });
-                res.json({ user, player: player || null });
-            });
-        }
-    });
 });
 
 // 5. Enregistrer ou mettre à jour le profil (Joueur ou Coach)
-app.post('/api/profile', (req, res) => {
-    const userId = req.headers['x-user-id'];
-    if (!userId) {
-        return res.status(401).json({ message: 'Non autorisé.' });
-    }
+app.post('/api/profile', requireAuthenticated, (req, res) => {
+    const userId = req.user.id;
 
     db.get('SELECT id, role FROM users WHERE id = ?', [userId], (err, user) => {
         if (err || !user) {
@@ -856,9 +863,11 @@ app.post('/api/profile', (req, res) => {
 });
 
 // 6. Obtenir le roster de l'entraîneur connecté
-app.get('/api/coach/roster', (req, res) => {
-    const userId = req.headers['x-user-id'];
-    if (!userId) return res.status(401).json({ message: 'Non autorisé.' });
+app.get('/api/coach/roster', requireAuthenticated, (req, res) => {
+    if (req.user.role !== 'coach') {
+        return res.status(403).json({ message: 'Accès réservé aux entraîneurs.' });
+    }
+    const userId = req.user.id;
 
     db.get('SELECT id FROM coaches WHERE user_id = ?', [userId], (err, coach) => {
         if (err || !coach) return res.status(404).json({ message: 'Entraîneur non trouvé.' });
