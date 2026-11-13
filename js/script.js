@@ -596,7 +596,7 @@ function initCategoryFilter() {
     if (active) showCategory(active.dataset.category);
 }
 
-// Fonction globale d'ouverture du modal d'achat avec paiement Mobile Money (Orange Money, MTN MoMo, Wave, CB)
+// Le catalogue prépare une demande de renseignements par e-mail; il ne traite pas de commandes ni de paiements.
 function openBuyModal(name, priceStr, desc) {
     let modal = document.getElementById('shopBuyModal');
     if (!modal) {
@@ -630,58 +630,19 @@ function openBuyModal(name, priceStr, desc) {
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #cbd5e1; padding-top: 0.75rem; margin-top: 0.75rem;">
                         <div>
-                            <span style="color: #0f172a; font-weight: 700; display: block;">Total à régler:</span>
-                            <span id="modalProdGnf" style="color: #64748b; font-size: 0.8rem; font-weight: 600;">(~ 0 GNF)</span>
+                            <span style="color: #0f172a; font-weight: 700; display: block;">Estimation indicative, non facturée:</span>
                         </div>
                         <strong id="modalProdTotal" style="color: #16a34a; font-size: 1.35rem; font-weight: 800;"></strong>
                     </div>
                 </div>
 
-                <!-- Mode de paiement -->
-                <div style="margin-bottom: 1.25rem;">
-                    <label style="display: block; font-weight: 700; font-size: 0.9rem; color: #0f172a; margin-bottom: 0.6rem;">
-                        <i class="fas fa-wallet" style="color: #f59e0b; margin-right: 0.4rem;"></i> Moyen de paiement souhaité:
-                    </label>
-                    <div class="payment-methods-grid" id="paymentMethodsGrid">
-                        <div class="payment-method-card selected" onclick="selectPaymentMethod('orange')" data-method="orange">
-                            <div class="payment-icon orange"><i class="fas fa-mobile-alt"></i></div>
-                            <span class="payment-name">Orange Money</span>
-                            <span class="payment-subtitle">*144# (Guinée)</span>
-                        </div>
-                        <div class="payment-method-card mtn" onclick="selectPaymentMethod('mtn')" data-method="mtn">
-                            <div class="payment-icon mtn"><i class="fas fa-phone-alt"></i></div>
-                            <span class="payment-name">MTN MoMo</span>
-                            <span class="payment-subtitle">*145# (Guinée)</span>
-                        </div>
-                        <div class="payment-method-card wave" onclick="selectPaymentMethod('wave')" data-method="wave">
-                            <div class="payment-icon wave"><i class="fas fa-water"></i></div>
-                            <span class="payment-name">Wave</span>
-                            <span class="payment-subtitle">Mobile App</span>
-                        </div>
-                        <div class="payment-method-card card" onclick="selectPaymentMethod('card')" data-method="card">
-                            <div class="payment-icon card"><i class="fas fa-credit-card"></i></div>
-                            <span class="payment-name">Carte Visa/MC</span>
-                            <span class="payment-subtitle">En ligne</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Champ Numéro Mobile / Compte -->
-                <div id="paymentPhoneContainer" style="margin-bottom: 1.25rem;">
-                    <label for="payPhoneNumber" style="display: block; font-weight: 700; font-size: 0.85rem; color: #334155; margin-bottom: 0.4rem;">
-                        <i class="fas fa-phone" style="color: #ff6600;" id="phoneLabelIcon"></i> <span id="phoneLabelText">Numéro Orange Money:</span>
-                    </label>
-                    <div class="phone-input-group">
-                        <div class="phone-prefix">
-                            <span>🇬🇳</span> +224
-                        </div>
-                        <input type="tel" id="payPhoneNumber" class="phone-field" placeholder="62X XX XX XX" maxlength="12">
-                    </div>
+                <div class="shop-form-help" role="note" style="margin-bottom: 1.25rem;">
+                    Cette estimation ne constitue pas un prix confirmé. Aucun paiement ni commande n’est effectué sur ce site; les modalités seront à convenir par e-mail.
                 </div>
 
                 <fieldset class="shop-delivery-section">
-                    <legend><i class="fas fa-truck" aria-hidden="true"></i> Mode de réception</legend>
-                    <div class="shop-delivery-options" role="group" aria-label="Mode de réception de la commande">
+                    <legend><i class="fas fa-truck" aria-hidden="true"></i> Préférence à discuter</legend>
+                    <div class="shop-delivery-options" role="group" aria-label="Préférence de réception à discuter">
                         <button type="button" class="shop-delivery-option selected" data-delivery-mode="pickup" aria-pressed="true" onclick="selectDeliveryMode('pickup')">
                             <i class="fas fa-store" aria-hidden="true"></i> Retrait
                         </button>
@@ -705,8 +666,8 @@ function openBuyModal(name, priceStr, desc) {
 
                 <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
                     <button onclick="closeBuyModal()" style="flex: 1; padding: 0.85rem; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s;">Annuler</button>
-                    <button id="submitPayBtn" onclick="confirmOrder()" style="flex: 2; padding: 0.85rem; border: none; background: linear-gradient(135deg, #ff6600 0%, #d95300 100%); color: white; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(255,102,0,0.35); font-size: 0.95rem;">
-                        <i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande
+                    <button id="submitRequestBtn" onclick="prepareContactRequest()" style="flex: 2; padding: 0.85rem; border: none; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); color: white; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.95rem;">
+                        <i class="fas fa-envelope" style="margin-right: 0.4rem;"></i> Préparer une demande e-mail
                     </button>
                 </div>
             </div>
@@ -723,10 +684,8 @@ function openBuyModal(name, priceStr, desc) {
     // Parse numeric price for calculation
     const numPrice = parseFloat(priceStr.replace(/[^0-9,.]/g, '').replace(',', '.')) || 35.00;
     window.currentUnitNumPrice = numPrice;
-    selectPaymentMethod('orange');
     selectDeliveryMode('pickup');
     window.deliveryCoordinates = null;
-    document.getElementById('payPhoneNumber').value = '';
     document.getElementById('deliveryAddress').value = '';
     document.getElementById('deliveryLocationStatus').textContent = '';
     document.getElementById('deliveryMapLink').hidden = true;
@@ -739,13 +698,10 @@ function openBuyModal(name, priceStr, desc) {
 function updateModalTotals(qty) {
     const numPrice = window.currentUnitNumPrice || 35.00;
     const totalEur = (numPrice * qty).toFixed(2);
-    const totalGnf = Math.round(numPrice * qty * 9500).toLocaleString('fr-FR');
 
     const totalElem = document.getElementById('modalProdTotal');
-    const gnfElem = document.getElementById('modalProdGnf');
     
     if (totalElem) totalElem.textContent = totalEur + ' €';
-    if (gnfElem) gnfElem.textContent = `(~ ${totalGnf} GNF)`;
 }
 
 function changeModalQty(delta) {
@@ -755,63 +711,6 @@ function changeModalQty(delta) {
     qty = Math.max(1, Math.min(99, qty + delta));
     qtyInput.value = qty;
     updateModalTotals(qty);
-}
-
-function selectPaymentMethod(method) {
-    window.selectedPayMethod = method;
-    const cards = document.querySelectorAll('.payment-method-card');
-    cards.forEach(c => c.classList.remove('selected'));
-
-    const activeCard = document.querySelector(`.payment-method-card[data-method="${method}"]`);
-    if (activeCard) activeCard.classList.add('selected');
-
-    const phoneContainer = document.getElementById('paymentPhoneContainer');
-    const phoneInput = document.getElementById('payPhoneNumber');
-    const phoneLabelText = document.getElementById('phoneLabelText');
-    const phoneLabelIcon = document.getElementById('phoneLabelIcon');
-    const submitBtn = document.getElementById('submitPayBtn');
-
-    if (method === 'orange') {
-        phoneContainer.style.display = 'block';
-        phoneLabelText.textContent = 'Numéro Orange Money:';
-        phoneLabelIcon.style.color = '#ff6600';
-        if (phoneInput) phoneInput.placeholder = '62X XX XX XX';
-        if (submitBtn) {
-            submitBtn.style.background = 'linear-gradient(135deg, #ff6600 0%, #d95300 100%)';
-            submitBtn.style.boxShadow = '0 4px 14px rgba(255,102,0,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
-        }
-    } else if (method === 'mtn') {
-        phoneContainer.style.display = 'block';
-        phoneLabelText.textContent = 'Numéro MTN Mobile Money:';
-        phoneLabelIcon.style.color = '#e6b800';
-        if (phoneInput) phoneInput.placeholder = '66X XX XX XX';
-        if (submitBtn) {
-            submitBtn.style.background = 'linear-gradient(135deg, #e6b800 0%, #b38f00 100%)';
-            submitBtn.style.boxShadow = '0 4px 14px rgba(230,184,0,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
-        }
-    } else if (method === 'wave') {
-        phoneContainer.style.display = 'block';
-        phoneLabelText.textContent = 'Numéro Wave Mobile:';
-        phoneLabelIcon.style.color = '#00aaff';
-        if (phoneInput) phoneInput.placeholder = '62X / 66X XX XX XX';
-        if (submitBtn) {
-            submitBtn.style.background = 'linear-gradient(135deg, #00aaff 0%, #0088cc 100%)';
-            submitBtn.style.boxShadow = '0 4px 14px rgba(0,170,255,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
-        }
-    } else if (method === 'card') {
-        phoneContainer.style.display = 'block';
-        phoneLabelText.textContent = 'Numéro de Téléphone (Contact):';
-        phoneLabelIcon.style.color = '#1e3a8a';
-        if (phoneInput) phoneInput.placeholder = '6XX XX XX XX';
-        if (submitBtn) {
-            submitBtn.style.background = 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)';
-            submitBtn.style.boxShadow = '0 4px 14px rgba(30,58,138,0.35)';
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer la commande';
-        }
-    }
 }
 
 function closeBuyModal() {
@@ -862,26 +761,13 @@ function shareDeliveryLocation() {
     );
 }
 
-function confirmOrder() {
+function prepareContactRequest() {
     const name = document.getElementById('modalProdTitle').textContent;
     const totalEur = document.getElementById('modalProdTotal').textContent;
-    const totalGnf = document.getElementById('modalProdGnf').textContent;
     const quantity = document.getElementById('buyQty').value;
-    const method = window.selectedPayMethod || 'orange';
-    const phoneInput = document.getElementById('payPhoneNumber');
-    const phone = phoneInput ? phoneInput.value.trim() : '';
     const isDelivery = window.selectedDeliveryMode === 'delivery';
     const deliveryAddress = document.getElementById('deliveryAddress').value.trim();
     const coordinates = window.deliveryCoordinates;
-
-    if ((method === 'orange' || method === 'mtn' || method === 'wave') && (!phone || phone.length < 8)) {
-        if (typeof showAlert === 'function') {
-            showAlert('⚠️ Veuillez saisir un numéro de téléphone valide à 9 chiffres (+224).', 'danger');
-        } else {
-            alert('Veuillez saisir un numéro de téléphone valide (+224).');
-        }
-        return;
-    }
 
     if (isDelivery && !deliveryAddress && !coordinates) {
         document.getElementById('deliveryAddress').focus();
@@ -889,32 +775,25 @@ function confirmOrder() {
         return;
     }
 
-    let methodTitle = 'Orange Money (*144#)';
-    if (method === 'mtn') methodTitle = 'MTN Mobile Money (*145#)';
-    if (method === 'wave') methodTitle = 'Wave Mobile';
-    if (method === 'card') methodTitle = 'Carte Bancaire';
-
     const mapUrl = coordinates?.mapUrl
         || (deliveryAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(deliveryAddress)}` : '');
     const deliveryMessage = isDelivery
-        ? `Livraison demandée\nAdresse/quartier : ${deliveryAddress || 'Non précisé'}\nPosition GPS : ${coordinates ? `${coordinates.latitude}, ${coordinates.longitude}` : 'Non partagée'}\nGoogle Maps : ${mapUrl}`
-        : 'Mode de réception : retrait à convenir';
+        ? `Préférence de livraison à discuter\nAdresse/quartier : ${deliveryAddress || 'Non précisé'}\nPosition GPS : ${coordinates ? `${coordinates.latitude}, ${coordinates.longitude}` : 'Non partagée'}\nGoogle Maps : ${mapUrl}`
+        : 'Préférence de retrait à discuter';
     const orderMessage = [
-        'Bonjour, je souhaite commander :',
+        'Bonjour, je souhaite obtenir des renseignements sur cet article :',
         `Article : ${name}`,
         `Quantité : ${quantity}`,
-        `Total : ${totalEur} (${totalGnf})`,
-        `Paiement souhaité : ${methodTitle}`,
-        `Téléphone de paiement/contact : ${phone ? `+224 ${phone}` : 'À confirmer'}`,
+        `Prix indicatif affiché : ${totalEur}, à confirmer`,
         deliveryMessage
     ].join('\n');
-    const subject = `Commande boutique - ${name}`;
+    const subject = `Demande de renseignements - ${name}`;
     const mailto = `mailto:contact@academiefady.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(orderMessage)}`;
 
     try {
         window.open(mailto, '_blank', 'noopener');
         if (typeof showAlert === 'function') {
-            showAlert('Votre demande est prête dans votre application e-mail. Envoyez le message pour transmettre la commande et les informations de livraison.', 'success');
+            showAlert('Votre demande est prête dans votre application e-mail. Aucune commande ni aucun paiement n’a été enregistré sur le site.', 'success');
         }
         closeBuyModal();
     } catch (error) {

@@ -121,8 +121,8 @@
                 <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores en temps réel</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Consulter le flux vidéo</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -250,7 +250,11 @@
                             Fichiers à publier
                             <input name="media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" multiple required>
                         </label>
-                        <p class="gallery-form-help">Images JPG, PNG ou WebP (12 Mo max. chacune) ; vidéos MP4 ou WebM (100 Mo max. chacune).</p>
+                        <label class="gallery-consent-confirmation">
+                            <input name="consent_confirmed" type="checkbox" value="true" required>
+                            J’ai vérifié que les autorisations nécessaires à la publication de ces médias sont obtenues, y compris le consentement parental pour les mineurs.
+                        </label>
+                        <p class="gallery-form-help">Images JPG, PNG ou WebP (12 Mo max. chacune) ; vidéos MP4 ou WebM (100 Mo max. chacune). Les médias ne seront visibles qu’après cette confirmation.</p>
                         <button class="submit-btn" type="submit"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publier les médias</button>
                         <p class="gallery-status" id="galleryUploadStatus" role="status" aria-live="polite"></p>
                     </form>
@@ -269,11 +273,11 @@
                         <span>Consulter les dates</span>
                     </div>
                 </a>
-                <a href="actualites.html#direct" class="quick-card">
+                <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-play-circle"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores & lives</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Flux vidéo, si disponible</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -287,7 +291,7 @@
                     <div class="icon-box"><i class="fas fa-users"></i></div>
                     <div class="quick-card-text">
                         <strong>Joueurs</strong>
-                        <span>Effectif complet</span>
+                        <span>Profils non publiés</span>
                     </div>
                 </a>
                 <a href="staff.html" class="quick-card">

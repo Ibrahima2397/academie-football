@@ -15,6 +15,7 @@ const galleryUploadDirectory = process.env.GALLERY_UPLOAD_DIR || path.join(__dir
 const authSessions = new Map();
 const authSessionLifetime = 12 * 60 * 60 * 1000;
 let authenticationBootstrapReady = process.env.NODE_ENV !== 'production';
+let galleryApprovalSchemaReady = false;
 
 if (process.env.ADMIN_BOOTSTRAP_PASSWORD && process.env.ADMIN_BOOTSTRAP_PASSWORD.length < 16) {
     throw new Error('ADMIN_BOOTSTRAP_PASSWORD doit contenir au moins 16 caractères.');
@@ -28,13 +29,6 @@ fs.mkdirSync(galleryUploadDirectory, { recursive: true });
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/uploads/gallery', express.static(galleryUploadDirectory, {
-    index: false,
-    setHeaders(res) {
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-        res.setHeader('Cache-Control', 'public, max-age=3600');
-    }
-}));
 app.use('/css', express.static(path.join(__dirname, 'css'), { index: false }));
 app.use('/js', express.static(path.join(__dirname, 'js'), { index: false }));
 app.use('/images', express.static(path.join(__dirname, 'images'), { index: false }));
@@ -189,10 +183,35 @@ const db = new sqlite3.Database(databasePath, (err) => {
                 file_name TEXT NOT NULL UNIQUE,
                 mime_type TEXT NOT NULL,
                 file_size INTEGER NOT NULL,
+                is_approved INTEGER NOT NULL DEFAULT 0 CHECK(is_approved IN (0, 1)),
                 created_by INTEGER NOT NULL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (created_by) REFERENCES users (id)
-            )`);
+            )`, (createError) => {
+                if (createError) {
+                    console.error('Impossible de préparer la validation des médias de la galerie:', createError.message);
+                    return;
+                }
+
+                db.all('PRAGMA table_info(gallery_media)', [], (pragmaError, columns) => {
+                    if (pragmaError) {
+                        console.error('Impossible de vérifier le schéma de la galerie:', pragmaError.message);
+                        return;
+                    }
+                    if (columns.some((column) => column.name === 'is_approved')) {
+                        galleryApprovalSchemaReady = true;
+                        return;
+                    }
+
+                    db.run('ALTER TABLE gallery_media ADD COLUMN is_approved INTEGER NOT NULL DEFAULT 0 CHECK(is_approved IN (0, 1))', (migrationError) => {
+                        if (migrationError) {
+                            console.error('Impossible de migrer la validation des médias de la galerie:', migrationError.message);
+                            return;
+                        }
+                        galleryApprovalSchemaReady = true;
+                    });
+                });
+            });
 
             db.run(`CREATE TABLE IF NOT EXISTS academy_directors (
                 id INTEGER PRIMARY KEY,
@@ -437,6 +456,13 @@ function requireProductionAuthenticationBootstrap(req, res, next) {
     next();
 }
 
+function requireGalleryApprovalSchema(req, res, next) {
+    if (!galleryApprovalSchemaReady) {
+        return res.status(503).json({ message: 'La galerie termine son initialisation. Réessayez dans quelques instants.' });
+    }
+    next();
+}
+
 // Route d'inscription utilisateur
 app.post('/api/register', async (req, res) => {
     const { fullname, email, password } = req.body;
@@ -567,7 +593,7 @@ function handleGalleryUpload(req, res, next) {
     });
 }
 
-app.get('/api/gallery/media', (req, res) => {
+app.get('/api/gallery/media', requireGalleryApprovalSchema, (req, res) => {
     const { type, category } = req.query;
     if (type && !['photo', 'video'].includes(type)) {
         return res.status(400).json({ message: 'Type de média invalide.' });
@@ -576,7 +602,7 @@ app.get('/api/gallery/media', (req, res) => {
         return res.status(400).json({ message: 'Catégorie de média invalide.' });
     }
 
-    const conditions = [];
+    const conditions = ['is_approved = 1'];
     const parameters = [];
     if (type) {
         conditions.push('type = ?');
@@ -586,7 +612,7 @@ app.get('/api/gallery/media', (req, res) => {
         conditions.push('category = ?');
         parameters.push(category);
     }
-    const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+    const where = `WHERE ${conditions.join(' AND ')}`;
 
     db.all(`SELECT id, title, type, category, file_name, mime_type, created_at
             FROM gallery_media ${where} ORDER BY created_at DESC, id DESC`, parameters, (err, media) => {
@@ -595,6 +621,25 @@ app.get('/api/gallery/media', (req, res) => {
             ...item,
             url: `/uploads/gallery/${encodeURIComponent(item.file_name)}`
         })));
+    });
+});
+
+app.get('/uploads/gallery/:filename', requireGalleryApprovalSchema, (req, res, next) => {
+    const { filename } = req.params;
+    if (path.basename(filename) !== filename) {
+        return res.status(404).end();
+    }
+
+    db.get('SELECT file_name, mime_type FROM gallery_media WHERE file_name = ? AND is_approved = 1', [filename], (err, media) => {
+        if (err) return res.status(500).json({ message: 'Impossible de vérifier l’autorisation du média.' });
+        if (!media) return res.status(404).end();
+
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.type(media.mime_type);
+        res.sendFile(path.join(galleryUploadDirectory, media.file_name), (sendError) => {
+            if (sendError) next(sendError);
+        });
     });
 });
 
@@ -610,16 +655,21 @@ app.get('/api/admin/gallery/session', requireGalleryAdmin, (req, res) => {
     res.json({ user: { id: req.galleryAdmin.id, role: req.galleryAdmin.role } });
 });
 
-app.post('/api/admin/gallery/media', requireGalleryAdmin, handleGalleryUpload, async (req, res) => {
+app.post('/api/admin/gallery/media', requireGalleryAdmin, requireGalleryApprovalSchema, handleGalleryUpload, async (req, res) => {
     const title = String(req.body.title || '').trim();
     const type = req.body.type;
     const category = req.body.category;
     const files = req.files || [];
 
-    if (!title || title.length > 120 || !['photo', 'video'].includes(type)
+    if (!title || title.length > 120 || req.body.consent_confirmed !== 'true'
+        || !['photo', 'video'].includes(type)
         || !['match', 'training', 'other'].includes(category) || files.length === 0) {
         removeGalleryFiles(files);
-        return res.status(400).json({ message: 'Indiquez un titre, un type, une catégorie et au moins un fichier.' });
+        return res.status(400).json({
+            message: req.body.consent_confirmed !== 'true'
+                ? 'Confirmez que les autorisations de publication nécessaires ont été vérifiées.'
+                : 'Indiquez un titre, un type, une catégorie et au moins un fichier.'
+        });
     }
 
     const expectedMimePrefix = type === 'photo' ? 'image/' : 'video/';
@@ -643,8 +693,8 @@ app.post('/api/admin/gallery/media', requireGalleryAdmin, handleGalleryUpload, a
             const itemTitle = files.length > 1 ? `${title} (${index + 1})` : title;
             const mediaId = await new Promise((resolve, reject) => {
                 db.run(`INSERT INTO gallery_media
-                        (title, type, category, file_name, mime_type, file_size, created_by)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                        (title, type, category, file_name, mime_type, file_size, is_approved, created_by)
+                        VALUES (?, ?, ?, ?, ?, ?, 1, ?)`,
                     [itemTitle, type, category, file.filename, file.mimetype, file.size, req.galleryAdmin.id],
                     function(err) {
                         if (err) return reject(err);

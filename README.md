@@ -57,7 +57,8 @@ Le site est complètement responsive et fonctionne sur:
 ## 🖼️ Galerie, publications et direct
 
 - Les onglets **Tout**, **Photos**, **Vidéos**, **Matchs**, **Entraînements** et **Direct** ouvrent chacun leur page dédiée.
-- Après connexion, un administrateur peut publier des images JPG, PNG ou WebP (12 Mo maximum) et des vidéos MP4 ou WebM (100 Mo maximum), puis les classer par type et catégorie. Il peut aussi supprimer une publication.
+- Après connexion, un administrateur peut publier des images JPG, PNG ou WebP (12 Mo maximum) et des vidéos MP4 ou WebM (100 Mo maximum), puis les classer par type et catégorie. Le formulaire exige la confirmation que les autorisations nécessaires, notamment parentales pour les mineurs, ont été vérifiées. Les médias publiés sont visibles publiquement et peuvent être supprimés par un administrateur.
+- Les fichiers de la galerie ne sont pas servis directement depuis le dossier de stockage : l’API et les URL de fichiers ne livrent que les médias marqués comme approuvés. Lors de la migration, les médias déjà enregistrés restent masqués par défaut; vérifiez leurs autorisations avant de les republier.
 - Pour lancer le direct sur le site, démarrez d’abord la diffusion sur YouTube ou Facebook, puis indiquez son titre et son lien dans la page **Direct**. Le bouton d’arrêt retire l’intégration du site ; il n’arrête pas la diffusion sur la plateforme.
 - Les fichiers sont stockés sur le serveur dans `uploads/gallery/` par défaut, et leurs informations dans `academie.db`. En hébergement, configurez un volume persistant pour ces deux emplacements.
 
@@ -79,10 +80,16 @@ Après connexion, le serveur délivre à chaque utilisateur un jeton de session 
 
 ### Accès selon le rôle
 
-- **Visiteur** : consulte les contenus publics (dirigeants, galerie publiée, équipes, catégories et calendrier) et peut envoyer un message ou créer un compte joueur. Il ne peut pas consulter les profils, les rosters ou les fonctions d’administration.
+- **Visiteur** : consulte les contenus publics (dirigeants, galerie publiée, équipes, catégories et informations éditoriales) et peut envoyer un message ou créer un compte joueur. Il ne peut pas consulter les profils, les rosters ou les fonctions d’administration.
 - **Membre** (`player` ou `parent`) : consulte et met à jour son propre profil. Il ne peut pas consulter le roster d’un entraîneur ni appeler les routes d’administration.
 - **Entraîneur** (`coach`) : consulte et met à jour son profil d’entraîneur et le roster associé à son compte. Les routes d’administration lui sont refusées.
 - **Administrateur** (`admin`) : gère les inscriptions, messages, équipes, entraînements et publications de la galerie. Les autorisations sont vérifiées par l’API à chaque requête, même si un utilisateur appelle directement une URL.
+
+### Publication et fonctionnalités affichées
+
+- Les profils individuels des joueurs ne sont pas affichés publiquement. Toute future publication d’informations ou d’images de joueurs, en particulier de mineurs, nécessite d’abord la vérification des autorisations applicables.
+- Les actualités et le calendrier sont des contenus éditoriaux statiques. Ils ne sont ni publiés depuis l’administration ni diffusés en temps réel; contactez l’académie pour confirmer une information ou une date.
+- La boutique est un catalogue indicatif. Les articles, marques, descriptions, prix et disponibilités doivent être confirmés auprès de l’académie. Le bouton prépare un e-mail; le site n’enregistre aucune commande et ne traite aucun paiement.
 
 En production, définissez `NODE_ENV=production` et fournissez `ADMIN_BOOTSTRAP_PASSWORD` (au moins 16 caractères). Le serveur refuse de démarrer en mode production sans ce secret, ne crée pas les comptes et données de démonstration des entraîneurs, et configure le compte `admin@academiefady.com` avec ce mot de passe. Au démarrage, tout mot de passe existant exactement égal à un ancien mot de passe de démonstration (`coach` ou `admin`) est remplacé par un secret aléatoire inconnu : ces anciens identifiants ne permettent donc plus de se connecter. Une réinitialisation sécurisée sera nécessaire pour rendre à nouveau accessible tout compte réel qui utilisait l’un de ces mots de passe. Gardez le secret d’amorçage dans la configuration privée de l’hébergeur, jamais dans le dépôt.
 
