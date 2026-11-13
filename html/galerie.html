@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body data-gallery-page="all">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -27,8 +27,10 @@
                     <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
-                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
-                        <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -37,9 +39,7 @@
                         <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
                         <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
                         <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
-                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
                         <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
-                        <li><a href="services.html#stages"><i class="fas fa-trophy"></i> Stages & Tournois</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -121,8 +121,8 @@
                 <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores en temps réel</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Consulter le flux vidéo</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -139,7 +139,7 @@
                         <span>Découvrir nos talents</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>
@@ -170,11 +170,11 @@
         <div class="container">
             <!-- Filtres -->
             <div class="galerie-filters">
-                <button type="button" class="filter-btn active" data-gallery-filter="all" aria-pressed="true">Tout</button>
-                <button type="button" class="filter-btn" data-gallery-filter="photo" aria-pressed="false">Photos</button>
-                <button type="button" class="filter-btn" data-gallery-filter="video" aria-pressed="false">Vidéos</button>
-                <button type="button" class="filter-btn" data-gallery-filter="match" aria-pressed="false">Matchs</button>
-                <button type="button" class="filter-btn" data-gallery-filter="training" aria-pressed="false">Entraînements</button>
+                <a href="galerie.html" class="filter-btn active" aria-current="page">Tout</a>
+                <a href="galerie_photos.html" class="filter-btn">Photos</a>
+                <a href="galerie_videos.html" class="filter-btn">Vidéos</a>
+                <a href="galerie_matchs.html" class="filter-btn">Matchs</a>
+                <a href="galerie_entrainements.html" class="filter-btn">Séances</a>
                 <a href="galerie_direct.html" class="filter-btn live-btn"><span class="live-dot"></span> Direct</a>
             </div>
 
@@ -206,75 +206,58 @@
                             </div>
                         </div>
 
-                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="match">
-                            <div class="galerie-img placeholder">
-                                <span class="emoji">🏃</span>
-                                <div class="galerie-overlay">
-                                    <span class="zoom-icon">🔍</span>
-                                    <p>Action sur le terrain</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="training">
-                            <div class="galerie-img placeholder">
-                                <span class="emoji">🤝</span>
-                                <div class="galerie-overlay">
-                                    <span class="zoom-icon">🔍</span>
-                                    <p>Esprit d'équipe</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="match">
-                            <div class="galerie-img placeholder">
-                                <span class="emoji">🏆</span>
-                                <div class="galerie-overlay">
-                                    <span class="zoom-icon">🔍</span>
-                                    <p>Célébration de victoire</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="galerie-card" data-gallery-type="photo" data-gallery-category="training">
-                            <div class="galerie-img placeholder">
-                                <span class="emoji">⚽</span>
-                                <div class="galerie-overlay">
-                                    <span class="zoom-icon">🔍</span>
-                                    <p>Technique individuelle</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
 
-                <section class="galerie-group" data-gallery-group>
+                <section class="galerie-group" id="uploadedGallerySection">
                     <div class="section-header">
-                        <h3>🎥 Vidéos & Highlights</h3>
+                        <h3>Publications de l’Académie</h3>
                         <div class="header-line"></div>
                     </div>
+                    <div class="galerie-grid" data-gallery-items></div>
+                    <p class="gallery-status" data-gallery-status role="status" hidden></p>
+                </section>
 
-                    <div class="video-grid-modern">
-                        <div class="video-card" data-gallery-type="video" data-gallery-category="match">
-                            <div class="video-thumb">
-                                <div class="play-btn">▶</div>
-                            </div>
-                            <div class="video-info">
-                                <h4>Meilleurs moments du mois</h4>
-                                <p>Résumé des plus beaux buts et actions de toutes les catégories.</p>
-                            </div>
-                        </div>
-
-                        <div class="video-card" data-gallery-type="video" data-gallery-category="training">
-                            <div class="video-thumb">
-                                <div class="play-btn">▶</div>
-                            </div>
-                            <div class="video-info">
-                                <h4>Exercices de technique</h4>
-                                <p>Découvrez nos méthodes d'entraînement spécifiques.</p>
-                            </div>
-                        </div>
+                <section class="gallery-admin-panel" id="galleryAdminPanel" hidden>
+                    <div>
+                        <span class="gallery-admin-eyebrow">Espace administrateur</span>
+                        <h3>Publier dans la galerie</h3>
+                        <p>Les médias publiés ici seront classés automatiquement dans Tout, Photos, Vidéos, Matchs ou Séances.</p>
                     </div>
+                    <form id="galleryUploadForm" class="gallery-admin-form">
+                        <label>
+                            Titre de la publication
+                            <input name="title" type="text" maxlength="120" required>
+                        </label>
+                        <div class="gallery-admin-fields">
+                            <label>
+                                Type
+                                <select name="type" required>
+                                    <option value="photo">Photos</option>
+                                    <option value="video">Vidéos</option>
+                                </select>
+                            </label>
+                            <label>
+                                Catégorie
+                                <select name="category" required>
+                                    <option value="match">Match</option>
+                                    <option value="training">Entraînement</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </label>
+                        </div>
+                        <label>
+                            Fichiers à publier
+                            <input name="media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" multiple required>
+                        </label>
+                        <label class="gallery-consent-confirmation">
+                            <input name="consent_confirmed" type="checkbox" value="true" required>
+                            J’ai vérifié que les autorisations nécessaires à la publication de ces médias sont obtenues, y compris le consentement parental pour les mineurs.
+                        </label>
+                        <p class="gallery-form-help">Images JPG, PNG ou WebP (12 Mo max. chacune) ; vidéos MP4 ou WebM (100 Mo max. chacune). Les médias ne seront visibles qu’après cette confirmation.</p>
+                        <button class="submit-btn" type="submit"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publier les médias</button>
+                        <p class="gallery-status" id="galleryUploadStatus" role="status" aria-live="polite"></p>
+                    </form>
                 </section>
             </div>
         </div>
@@ -290,11 +273,11 @@
                         <span>Consulter les dates</span>
                     </div>
                 </a>
-                <a href="actualites.html#direct" class="quick-card">
+                <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-play-circle"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores & lives</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Flux vidéo, si disponible</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -308,10 +291,10 @@
                     <div class="icon-box"><i class="fas fa-users"></i></div>
                     <div class="quick-card-text">
                         <strong>Joueurs</strong>
-                        <span>Effectif complet</span>
+                        <span>Profils non publiés</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>

@@ -27,8 +27,10 @@
                     <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
-                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
-                        <li><a href="academie.html#staff"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -37,9 +39,7 @@
                         <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
                         <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
                         <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
-                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
                         <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
-                        <li><a href="services.html#stages"><i class="fas fa-trophy"></i> Stages & Tournois</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -121,8 +121,8 @@
                 <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-stopwatch"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores en temps réel</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Consulter le flux vidéo</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -139,7 +139,7 @@
                         <span>Découvrir nos talents</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>
@@ -168,44 +168,43 @@
     <!-- Galerie Section -->
     <section class="galerie-section">
         <div class="container">
-            <!-- Filtres -->
-            <div class="galerie-filters">
-                <a href="galerie.html" class="filter-btn">Tout</a>
-                <a href="galerie_photos.html" class="filter-btn">Photos</a>
-                <a href="galerie_videos.html" class="filter-btn">Vidéos</a>
-                <a href="galerie_direct.html" class="filter-btn live-btn active"><span class="live-dot"></span> Direct</a>
-            </div>
-
             <div class="galerie-container">
-                <div class="section-header">
-                    <h3>🔴 Diffusion en cours</h3>
+                <div class="section-header live-stream-heading">
+                    <h3><span class="live-dot" data-live-indicator hidden></span> <span id="liveStreamTitle">Aucun direct en cours</span></h3>
                     <div class="header-line" style="background: var(--secondary-color);"></div>
                 </div>
 
-                <!-- Live Stream Placeholder -->
-                <div class="live-stream-container" style="max-width: 900px; margin: 0 auto; background: #000; border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 16/9; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-                    <div style="position: absolute; top: 20px; left: 20px; background: rgba(220, 38, 38, 0.8); color: white; padding: 5px 15px; border-radius: 5px; font-weight: bold; z-index: 10;">LIVE</div>
-                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 15px; border-radius: 5px; font-size: 0.9rem; z-index: 10;"><i class="fas fa-eye"></i> 124 spectateurs</div>
-                    
-                    <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px;">
-                        <i class="fas fa-broadcast-tower" style="font-size: 4rem; margin-bottom: 20px; color: #ef4444;"></i>
-                        <h4>En attente du signal...</h4>
-                        <p>Le direct commencera dès le début du prochain match ou entraînement.</p>
-                        <button class="cta-button" style="margin-top: 20px; background: #ef4444;">Être notifié</button>
+                <div class="live-stream-container" id="liveStreamContainer">
+                    <div class="live-stream-empty" id="liveStreamStatus" role="status">
+                        <i class="fas fa-broadcast-tower" aria-hidden="true"></i>
+                        <h4>Aucun match n’est diffusé pour le moment</h4>
+                        <p>Le direct apparaîtra ici lorsque l’administrateur aura lancé une diffusion YouTube ou Facebook.</p>
                     </div>
+                    <div class="live-embed-container" id="liveEmbedContainer" hidden></div>
                 </div>
 
-                <div class="section-header" style="margin-top: 5rem;">
-                    <h3>📸 Publier un moment</h3>
-                    <div class="header-line"></div>
-                </div>
-
-                <div class="publish-section" style="max-width: 600px; margin: 0 auto; text-align: center; background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                    <i class="fas fa-camera-retro" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                    <h4>Vous êtes au stade ?</h4>
-                    <p>Partagez vos photos et vidéos en direct avec la communauté de l'Académie.</p>
-                    <button class="submit-btn" style="width: 100%; margin-top: 2rem;"><i class="fas fa-cloud-upload-alt"></i> Publier maintenant</button>
-                </div>
+                <section class="gallery-admin-panel live-admin-panel" id="liveAdminPanel" hidden>
+                    <div>
+                        <span class="gallery-admin-eyebrow">Espace administrateur</span>
+                        <h3>Gérer le direct du match</h3>
+                        <p>Lancez d’abord votre diffusion dans YouTube ou Facebook, puis collez son lien public ici pour l’afficher sur le site.</p>
+                    </div>
+                    <form id="liveStreamForm" class="gallery-admin-form">
+                        <label>
+                            Nom du match
+                            <input id="liveTitleInput" type="text" maxlength="120" placeholder="Ex. Académie FADY - Match amical" required>
+                        </label>
+                        <label>
+                            Lien de la diffusion YouTube ou Facebook
+                            <input id="liveUrlInput" type="url" placeholder="https://www.youtube.com/live/..." required>
+                        </label>
+                        <div class="live-admin-actions">
+                            <button class="submit-btn" type="submit"><i class="fas fa-broadcast-tower" aria-hidden="true"></i> Publier le direct</button>
+                            <button class="gallery-stop-live" id="stopLiveStream" type="button" hidden>Arrêter le direct sur le site</button>
+                        </div>
+                        <p class="gallery-status" id="liveAdminStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
             </div>
         </div>
     </section>
@@ -220,11 +219,11 @@
                         <span>Consulter les dates</span>
                     </div>
                 </a>
-                <a href="actualites.html#direct" class="quick-card">
+                <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-play-circle"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores & lives</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Flux vidéo, si disponible</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -238,10 +237,10 @@
                     <div class="icon-box"><i class="fas fa-users"></i></div>
                     <div class="quick-card-text">
                         <strong>Joueurs</strong>
-                        <span>Effectif complet</span>
+                        <span>Profils non publiés</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>

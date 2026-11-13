@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entraînements - Académie de Football Elite</title>
+    <title>Séances - Académie de Football Elite</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body data-gallery-page="training">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -26,7 +26,9 @@
                     <a href="academie.html"><i class="fas fa-university"></i> Académie</a>
                     <ul class="dropdown-menu">
                         <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
-                        <li><a href="academie.html#histoire"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -34,7 +36,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
                         <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection & Recrutement</a></li>
-                        <li><a href="services.html#scolaire"><i class="fas fa-book-reader"></i> Accompagnement scolaire</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -90,7 +91,7 @@
     <!-- Hero Section Galerie -->
     <section class="hero-small">
         <div class="container">
-            <h2>Nos Entraînements</h2>
+            <h2>Nos Séances</h2>
             <p>Le travail quotidien qui forge les champions</p>
         </div>
     </section>
@@ -104,7 +105,8 @@
                 <a href="galerie_photos.html" class="filter-btn">Photos</a>
                 <a href="galerie_videos.html" class="filter-btn">Vidéos</a>
                 <a href="galerie_matchs.html" class="filter-btn">Matchs</a>
-                <a href="galerie_entrainements.html" class="filter-btn active">Entraînements</a>
+                <a href="galerie_entrainements.html" class="filter-btn active" aria-current="page">Séances</a>
+                <a href="galerie_direct.html" class="filter-btn live-btn"><span class="live-dot"></span> Direct</a>
             </div>
 
             <div class="galerie-container">
@@ -124,43 +126,15 @@
                         </div>
                     </div>
 
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">⚽</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Technique individuelle</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="galerie-card">
-                        <div class="galerie-img placeholder">
-                            <span class="emoji">🏃</span>
-                            <div class="galerie-overlay">
-                                <span class="zoom-icon">🔍</span>
-                                <p>Action sur le terrain</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="section-header">
-                    <h3>🎥 Exercices & Méthodes</h3>
+                    <h3>Médias d’entraînement publiés</h3>
                     <div class="header-line"></div>
                 </div>
 
-                <div class="video-grid-modern">
-                    <div class="video-card">
-                        <div class="video-thumb">
-                            <div class="play-btn">▶</div>
-                        </div>
-                        <div class="video-info">
-                            <h4>Exercices de technique</h4>
-                            <p>Découvrez nos méthodes d'entraînement spécifiques.</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="galerie-grid" data-gallery-items></div>
+                <p class="gallery-status" data-gallery-status role="status" hidden></p>
             </div>
         </div>
     </section>
@@ -175,11 +149,11 @@
                         <span>Consulter les dates</span>
                     </div>
                 </a>
-                <a href="actualites.html#direct" class="quick-card">
+                <a href="galerie_direct.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-play-circle"></i></div>
                     <div class="quick-card-text">
-                        <strong>Résultats en direct</strong>
-                        <span>Scores & lives</span>
+                        <strong>Diffusion en direct</strong>
+                        <span>Flux vidéo, si disponible</span>
                     </div>
                 </a>
                 <a href="programmes.html#classements" class="quick-card">
@@ -193,10 +167,10 @@
                     <div class="icon-box"><i class="fas fa-users"></i></div>
                     <div class="quick-card-text">
                         <strong>Joueurs</strong>
-                        <span>Effectif complet</span>
+                        <span>Profils non publiés</span>
                     </div>
                 </a>
-                <a href="academie.html#staff" class="quick-card">
+                <a href="staff.html" class="quick-card">
                     <div class="icon-box"><i class="fas fa-user-tie"></i></div>
                     <div class="quick-card-text">
                         <strong>Staff technique</strong>

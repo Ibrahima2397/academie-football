@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos dirigeants - Académie FADY Football</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .directors-page-header {
+            padding: clamp(2.5rem, 6vw, 4rem) 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #1a2d5e);
+            color: var(--white);
+            text-align: center;
+        }
+        .directors-page-header h1 {
+            margin-bottom: 0.5rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+        .directors-page-header p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+        }
+        .directors-section {
+            min-height: 55vh;
+            padding: clamp(2rem, 5vw, 3.5rem) 0;
+            background: #f1f3f5;
+        }
+        .directors-section-title {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .directors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+            gap: 1rem;
+        }
+        .director-card {
+            min-width: 0;
+            padding: 1.5rem 1.25rem;
+            border: 1px solid rgba(226, 232, 240, 0.75);
+            border-radius: 18px;
+            background: var(--white);
+            text-align: center;
+        }
+        .director-card img {
+            width: 112px;
+            height: 112px;
+            margin: 0 auto 0.9rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .director-card h3 {
+            margin-bottom: 0.25rem;
+            color: #172033;
+            font-size: 1.05rem;
+        }
+        .director-card .director-role {
+            color: #64748b;
+            line-height: 1.5;
+        }
+        .director-card .director-bio {
+            margin-top: 0.55rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+        .directors-status {
+            margin: 1rem 0;
+            color: #64748b;
+        }
+        .directors-note {
+            margin-top: 1.25rem;
+            color: #64748b;
+            font-size: 0.88rem;
+            text-align: center;
+        }
+        @media (max-width: 560px) {
+            .directors-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.7rem;
+            }
+            .director-card {
+                padding: 1rem 0.65rem;
+            }
+            .director-card img {
+                width: 88px;
+                height: 88px;
+            }
+            .director-card .director-role {
+                font-size: 0.83rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.png" alt="Académie FADY Football" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-main">Académie</span>
+                        <span class="logo-sub">FADY Football</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li class="dropdown">
+                    <a href="academie.html" class="active"><i class="fas fa-university"></i> Académie</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="academie.html#a-propos"><i class="fas fa-info-circle"></i> À propos de nous</a></li>
+                        <li><a href="histoire.html"><i class="fas fa-book-open"></i> Notre histoire</a></li>
+                        <li><a href="staff.html"><i class="fas fa-user-tie"></i> Staff technique</a></li>
+                        <li><a href="dirigeants.html"><i class="fas fa-users-cog"></i> Nos dirigeants</a></li>
+                        <li><a href="dashboard.html?admin=1"><i class="fas fa-lock"></i> Administration</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="services.html"><i class="fas fa-users-cog"></i> Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#formation"><i class="fas fa-graduation-cap"></i> Formation des joueurs</a></li>
+                        <li><a href="services.html#detection"><i class="fas fa-search-plus"></i> Détection &amp; Recrutement</a></li>
+                        <li><a href="services.html#suivi"><i class="fas fa-chart-line"></i> Suivi des joueurs</a></li>
+                        <li><a href="services.html#physique"><i class="fas fa-dumbbell"></i> Préparation physique</a></li>
+                    </ul>
+                </li>
+                <li><a href="programmes.html"><i class="fas fa-clipboard-list"></i> Programmes</a></li>
+                <li><a href="actualites.html"><i class="fas fa-newspaper"></i> Actualités</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="auth-links" id="navbarAuthLinks">
+                    <a href="connexion.html" class="auth-btn login"><i class="fas fa-user"></i> Connexion</a>
+                    <a href="inscription.html" class="auth-btn signup"><i class="fas fa-user-plus"></i> Inscription</a>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="directors-page-header">
+        <div class="container">
+            <h1>Nos dirigeants</h1>
+            <p>Les responsables qui accompagnent l'organisation et le développement de l'Académie.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="directors-section" aria-labelledby="directorsTitle">
+            <div class="container">
+                <h2 class="directors-section-title" id="directorsTitle">Notre équipe dirigeante</h2>
+                <p class="directors-status" id="directorsStatus" role="status">Chargement des dirigeants…</p>
+                <div class="directors-grid" id="directorsGrid"></div>
+                <p class="directors-note">Les portraits affichés sont des illustrations provisoires.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
